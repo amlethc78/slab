@@ -8,580 +8,687 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{--bg:#0a0a0c;--surface:#13141a;--surface2:#1c1d26;--border:#252632;--text:#f2f0e8;--muted:#9490a0;--dim:#4a4858;--gold:#f0b429;--gold-dim:#2a1f06;--gold-mid:#fcd34d;--gold-dark:#92650a;--red:#f87171;--red-bg:#2a0d0d;--green:#86efac;--green-bg:#0d2b1a;--amber:#f59e0b;--amber-bg:#2a1f06;--radius:10px;--radius-lg:14px;--radius-xl:18px;}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;line-height:1.5;min-height:100vh;}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;min-height:100vh;}
 .nav{display:flex;align-items:center;padding:.875rem 1.5rem;border-bottom:1px solid var(--border);gap:12px;background:var(--bg);flex-wrap:wrap;}
-.brand{margin-right:auto;display:flex;align-items:center;gap:10px;}
-.brand-icon{width:32px;height:32px;border-radius:8px;background:var(--gold-dim);border:1px solid var(--gold-dark);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:13px;font-weight:700;flex-shrink:0;}
-.brand-logo{font-size:15px;font-weight:500;letter-spacing:.12em;color:var(--text);}
-.brand-sub{font-size:10px;color:var(--muted);}
+.logo{margin-right:auto;display:flex;align-items:center;gap:10px;}
+.logo-icon{width:32px;height:32px;border-radius:8px;background:var(--gold-dim);border:1px solid var(--gold-dark);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:13px;font-weight:700;flex-shrink:0;}
+.logo-text{font-size:15px;font-weight:500;letter-spacing:.12em;}
+.logo-sub{font-size:10px;color:var(--muted);}
 .ntab{padding:6px 14px;border-radius:99px;border:1px solid transparent;font-size:12px;cursor:pointer;color:var(--muted);background:none;white-space:nowrap;}
 .ntab:hover{color:var(--text);}
 .ntab.active{background:var(--gold-dim);border-color:var(--gold-dark);color:var(--gold);}
 .page{padding:1.25rem 1.5rem;}
 .panel{display:none;}.panel.active{display:block;}
-.news-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 14px;margin-bottom:1.25rem;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.news-tag{background:var(--gold-dim);color:var(--gold);font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;flex-shrink:0;border:1px solid var(--gold-dark);}
+.alert{background:var(--red-bg);border:1px solid #5a1a1a;border-radius:var(--radius);padding:8px 14px;margin-bottom:1.25rem;font-size:12px;color:#fca5a5;display:flex;align-items:center;gap:8px;}
 .sport-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem;}
-.sport-pill{height:36px;padding:0 16px;border-radius:99px;border:1px solid var(--border);color:var(--muted);cursor:pointer;background:none;font-size:13px;display:inline-flex;align-items:center;gap:6px;}
+.sport-pill{height:36px;padding:0 16px;border-radius:99px;border:1px solid var(--border);color:var(--muted);cursor:pointer;background:none;font-size:13px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
 .sport-pill:hover{color:var(--text);border-color:#444;}
 .sport-pill.active{background:var(--gold-dim);border-color:var(--gold-dark);color:var(--gold);}
+.sport-pill.gpill{background:var(--green-bg);border-color:#1a4a2a;color:var(--green);}
 .controls-row{display:flex;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap;align-items:center;}
 .search-wrap{flex:1;min-width:200px;position:relative;}
 .search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);}
 .search-input{width:100%;height:40px;padding:0 12px 0 38px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:13px;}
 .search-input::placeholder{color:var(--dim);}
 .search-input:focus{outline:none;border-color:var(--gold-dark);}
-.sort-select{height:40px;padding:0 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--muted);font-size:12px;cursor:pointer;min-width:160px;}
+.sort-select{height:40px;padding:0 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--muted);font-size:12px;cursor:pointer;min-width:185px;}
 .view-toggle{display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
 .vt-btn{width:36px;height:40px;border:none;background:var(--surface);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .vt-btn.active{background:var(--gold-dim);color:var(--gold);}
-.filter-toggle-btn{height:40px;padding:0 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
-.filter-toggle-btn.active{border-color:var(--gold-dark);color:var(--gold);background:var(--gold-dim);}
-.filter-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1rem 1.125rem;margin-bottom:1.25rem;display:none;}
-.filter-panel.open{display:block;}
-.filter-panel-top{display:flex;align-items:center;gap:8px;margin-bottom:.875rem;flex-wrap:wrap;}
-.filter-label{font-size:11px;color:var(--muted);margin-right:auto;}
-.filter-rows{display:flex;flex-direction:column;gap:6px;margin-bottom:.75rem;}
-.frow{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
-.frow select,.frow input[type=number]{height:34px;padding:0 10px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:12px;}
-.frow select{min-width:170px;cursor:pointer;}
-.frow input[type=number]{width:100px;}
-.rm-btn{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;}
-.rm-btn:hover{border-color:var(--red);color:var(--red);}
-.btn{height:32px;padding:0 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
-.btn:hover{background:var(--border);}
-.btn.gold{background:var(--gold-dim);border-color:var(--gold-dark);color:var(--gold);}
-.saved-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:.625rem;}
-.sf-pill{font-size:11px;padding:3px 10px;border-radius:99px;border:1px solid var(--border);color:var(--muted);cursor:pointer;background:none;display:inline-flex;align-items:center;gap:4px;}
-.sf-x{font-size:12px;color:var(--dim);cursor:pointer;}
-.sf-x:hover{color:var(--red);}
-.stats-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:1.25rem;}
-.stat-chip{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;}
-.stat-chip .sc-label{font-size:10px;color:var(--muted);margin-bottom:2px;}
-.stat-chip .sc-val{font-size:17px;font-weight:500;color:var(--gold);}
-.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;}
+/* GRID */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:14px;}
 .card-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:border-color .15s,transform .1s;position:relative;}
 .card-item:hover{border-color:var(--gold-dark);transform:translateY(-2px);}
-.card-item.watchlisted{border-color:var(--gold-dark);}
-.card-item.loading-live::after{content:'';position:absolute;inset:0;background:rgba(10,10,12,.5);display:flex;align-items:center;justify-content:center;z-index:2;}
-.card-img-area{width:100%;height:140px;background:linear-gradient(145deg,#1a1b24,#13141a);display:flex;align-items:center;justify-content:center;position:relative;border-bottom:1px solid var(--border);}
-.card-img-ph{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--dim);}
-.card-img-ph i{font-size:32px;}
-.card-img-ph span{font-size:9px;letter-spacing:.04em;}
-.card-rank{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.7);color:var(--muted);font-size:10px;font-weight:500;padding:2px 7px;border-radius:99px;}
-.card-watch{position:absolute;top:6px;right:8px;font-size:18px;cursor:pointer;color:var(--dim);line-height:1;z-index:3;}
-.card-watch.on{color:var(--gold);}
-.card-watch:hover{color:var(--gold);}
-.score-badge{position:absolute;bottom:8px;right:8px;}
-.live-badge{position:absolute;bottom:8px;left:8px;background:var(--green-bg);color:var(--green);font-size:9px;font-weight:500;padding:2px 6px;border-radius:99px;border:1px solid #1a4a2a;}
-.card-body{padding:10px 12px;}
-.card-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.card-set{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:8px;}
+.card-item.wl{border-color:var(--gold-dark);}
+.ctop{width:100%;height:115px;background:linear-gradient(145deg,#1a1b24,#0e0f14);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;border-bottom:1px solid var(--border);padding:8px;gap:3px;}
+.ctop-name{font-size:12px;font-weight:600;color:var(--muted);text-align:center;}
+.ctop-set{font-size:9px;color:var(--dim);text-align:center;}
+.rank-lbl{position:absolute;top:7px;left:7px;font-size:9px;font-weight:600;padding:2px 6px;border-radius:99px;}
+.rank-coin{background:rgba(240,180,41,.15);color:var(--gold);border:1px solid rgba(240,180,41,.3);}
+.rank-num{background:rgba(0,0,0,.7);color:var(--muted);}
+.card-star{position:absolute;top:5px;right:8px;font-size:16px;cursor:pointer;color:var(--dim);line-height:1;}
+.card-star.on{color:var(--gold);}
+.score-badge{position:absolute;bottom:7px;right:7px;font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;}
+.bs{background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold-dark);}
+.ba{background:#0d2535;color:#60a5fa;}
+.bb{background:#1a1506;color:#f59e0b;}
+.bc{background:var(--red-bg);color:var(--red);}
+.bot-left{position:absolute;bottom:7px;left:7px;font-size:9px;font-weight:600;padding:2px 6px;border-radius:99px;}
+.live-b{background:var(--green-bg);color:var(--green);border:1px solid #1a4a2a;}
+.s80-b{background:var(--green-bg);color:var(--green);border:1px solid #1a4a2a;}
+.hot-b{background:#7c1d1d;color:#fca5a5;}
+.cbody{padding:10px 12px;}
+.card-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-var{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:8px;}
 .card-stats{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
 .cs-item{background:var(--surface2);border-radius:6px;padding:5px 7px;}
 .cs-label{font-size:9px;color:var(--dim);margin-bottom:1px;}
-.cs-val{font-size:12px;font-weight:500;color:var(--text);}
-.cs-val.gold{color:var(--gold);}
-.cs-val.red-c{color:var(--red);}
-.card-floor{margin-top:6px;display:flex;justify-content:space-between;align-items:center;}
-.list-view{overflow-x:auto;}
-.list-view table{width:100%;border-collapse:collapse;min-width:500px;}
-.list-view thead th{font-size:11px;font-weight:500;color:var(--muted);text-align:left;padding:6px 10px 8px;border-bottom:1px solid var(--border);white-space:nowrap;}
-.list-view tbody tr{border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;}
-.list-view tbody tr:hover{background:var(--surface);}
-.list-view tbody tr.watchlisted{border-left:2px solid var(--gold-dark);}
-.list-view tbody td{padding:9px 10px;font-size:12px;vertical-align:middle;}
-.pill{display:inline-flex;align-items:center;justify-content:center;padding:2px 9px;border-radius:99px;font-size:10px;font-weight:500;}
-.pill-s{background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold-dark);}
-.pill-a{background:#0d2535;color:#60a5fa;}
-.pill-b{background:#1a1506;color:#f59e0b;}
-.pill-c{background:var(--red-bg);color:var(--red);}
-.floor-badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:99px;font-size:10px;font-weight:500;}
-.floor-safe{background:var(--green-bg);color:var(--green);}
-.floor-close{background:var(--amber-bg);color:var(--amber);}
-.floor-risk{background:var(--red-bg);color:var(--red);}
-.sbadge{display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:2px 8px;border-radius:99px;}
-.sb-bb{background:#1a2a0d;color:#86efac;}
-.sb-bk{background:#2a1506;color:#fb923c;}
-.sb-fb{background:#0d1f35;color:#60a5fa;}
-.sb-hk{background:#1a1035;color:#c4b5fd;}
-.sb-sf{background:#0d2535;color:#38bdf8;}
-.empty{padding:3rem;text-align:center;color:var(--muted);font-size:13px;}
-.pg-row{display:flex;align-items:center;gap:8px;margin-top:1.25rem;font-size:12px;color:var(--muted);justify-content:center;}
-.pg-btn{height:32px;padding:0 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:12px;cursor:pointer;}
+.cs-val{font-size:12px;font-weight:500;}
+.g{color:var(--gold);}.gr{color:var(--green);}.r{color:var(--red);}.w{color:var(--text);}.am{color:var(--amber);}
+.card-foot{margin-top:6px;display:flex;justify-content:space-between;align-items:center;gap:4px;flex-wrap:wrap;}
+.floor-badge{font-size:10px;font-weight:500;padding:2px 7px;border-radius:99px;}
+.fs{background:var(--green-bg);color:var(--green);}
+.fc{background:var(--amber-bg);color:var(--amber);}
+.fr{background:var(--red-bg);color:var(--red);}
+.vol-badge{font-size:9px;font-weight:600;padding:2px 6px;border-radius:99px;}
+.vol-high{background:#3a0d0d;color:#fca5a5;}
+.vol-norm{background:#1c1d26;color:var(--muted);}
+.vol-low{background:#0d2b1a;color:var(--green);}
+.sptag{font-size:10px;padding:2px 8px;border-radius:99px;}
+.sbb{background:#1a2a0d;color:#86efac;}.sbk{background:#2a1506;color:#fb923c;}.sbf{background:#0d1f35;color:#60a5fa;}.sbh{background:#1a1035;color:#c4b5fd;}.sbs{background:#0d2535;color:#38bdf8;}
+/* LIST VIEW */
+.list-wrap{overflow-x:auto;}
+.list-tbl{width:100%;border-collapse:collapse;min-width:1100px;}
+.list-tbl th{font-size:10px;color:var(--muted);text-align:left;padding:6px 8px 8px;border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none;}
+.list-tbl th:hover{color:var(--text);}
+.list-tbl tbody tr{border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;}
+.list-tbl tbody tr:hover{background:var(--surface);}
+.list-tbl td{padding:7px 8px;font-size:12px;vertical-align:middle;white-space:nowrap;}
+.empty{padding:3rem;text-align:center;color:var(--muted);}
+.pg-row{display:flex;align-items:center;gap:8px;margin-top:1.25rem;justify-content:center;}
+.pg-btn{height:30px;padding:0 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:12px;cursor:pointer;}
 .pg-btn:hover{background:var(--border);color:var(--text);}
-.pg-btn:disabled{opacity:.35;cursor:default;}
-.wl-empty{padding:3rem;text-align:center;color:var(--muted);font-size:13px;}
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem;}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);width:100%;max-width:500px;max-height:90vh;overflow-y:auto;}
-.modal-hero{background:linear-gradient(145deg,#1a1b24,#111218);height:140px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xl) var(--radius-xl) 0 0;position:relative;border-bottom:1px solid var(--border);}
-.modal-hero i{font-size:48px;color:var(--dim);}
-.modal-score{position:absolute;bottom:10px;right:12px;}
-.modal-watch{position:absolute;top:10px;right:12px;font-size:22px;cursor:pointer;color:var(--dim);}
-.modal-watch.on{color:var(--gold);}
-.modal-head{padding:1rem 1.25rem .75rem;border-bottom:1px solid var(--border);}
-.modal-head h3{font-size:16px;font-weight:500;color:var(--text);margin-bottom:2px;}
+.pg-btn:disabled{opacity:.3;cursor:default;}
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);width:100%;max-width:540px;max-height:92vh;overflow-y:auto;}
+.modal-hero{height:90px;background:linear-gradient(135deg,#1a1b24,#0e0f14);display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xl) var(--radius-xl) 0 0;position:relative;border-bottom:1px solid var(--border);padding:0 60px;}
+.modal-hero-name{font-size:18px;font-weight:700;text-align:center;}
+.modal-hero-set{font-size:10px;color:var(--muted);text-align:center;margin-top:3px;}
+.modal-score{position:absolute;bottom:8px;right:10px;}
+.modal-wstar{position:absolute;top:8px;right:10px;font-size:20px;cursor:pointer;color:rgba(255,255,255,.4);}
+.modal-wstar.on{color:var(--gold);}
+.modal-head{padding:12px 18px 10px;border-bottom:1px solid var(--border);}
+.modal-head h3{font-size:14px;font-weight:500;margin-bottom:2px;}
 .modal-head p{font-size:12px;color:var(--muted);}
-.modal-close-row{display:flex;align-items:center;gap:8px;margin-top:.75rem;flex-wrap:wrap;}
-.modal-close{height:30px;padding:0 14px;border-radius:99px;border:1px solid var(--border);background:none;color:var(--muted);font-size:12px;cursor:pointer;}
-.modal-body{padding:1rem 1.25rem;}
-.modal-section{margin-bottom:1rem;}
-.modal-section h4{font-size:10px;font-weight:500;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.625rem;display:flex;align-items:center;gap:6px;}
+.modal-close-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+.modal-close{height:28px;padding:0 12px;border-radius:99px;border:1px solid var(--border);background:none;color:var(--muted);font-size:12px;cursor:pointer;}
+.modal-close:hover{color:var(--text);}
+.modal-body{padding:12px 18px;}
+.modal-section{margin-bottom:12px;}
+.modal-section h4{font-size:10px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
 .modal-section h4::after{content:"";flex:1;height:1px;background:var(--border);}
-.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.modal-stat{background:var(--surface2);border-radius:var(--radius);padding:10px 12px;}
-.modal-stat .ml{font-size:10px;color:var(--muted);margin-bottom:3px;}
-.modal-stat .mv{font-size:15px;font-weight:500;color:var(--text);}
-.modal-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:1rem;}
-.ebay-btn{height:36px;padding:0 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;text-decoration:none;}
-.ebay-btn:hover{background:var(--border);}
-.ebay-btn.primary{background:var(--gold-dim);border-color:var(--gold-dark);color:var(--gold);}
-.ai-insight-btn{width:100%;height:42px;border-radius:var(--radius);border:1px solid var(--gold-dark);background:var(--gold-dim);color:var(--gold);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:1rem;font-weight:500;}
-.ai-insight-btn:hover{background:#3a2b0a;}
-.ai-insight-btn:disabled{opacity:.6;cursor:wait;}
-.ai-insight-box{margin-top:1rem;background:var(--surface2);border:1px solid var(--gold-dark);border-radius:var(--radius-lg);padding:1rem 1.125rem;}
-.ai-header{display:flex;align-items:center;gap:6px;margin-bottom:.75rem;font-size:11px;font-weight:500;color:var(--gold);letter-spacing:.04em;text-transform:uppercase;}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;}
+.modal-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.mstat{background:var(--surface2);border-radius:8px;padding:8px 10px;}
+.mstat .ml{font-size:10px;color:var(--muted);margin-bottom:2px;}
+.mstat .mv{font-size:14px;font-weight:500;}
+.fnote{border-radius:8px;padding:8px 12px;font-size:11px;margin-bottom:10px;}
+.fn-safe{background:var(--green-bg);border:1px solid #1a4a2a;color:var(--green);}
+.fn-risk{background:#1a1a0a;border:1px solid #3a3010;color:var(--amber);}
+.live-note{background:var(--green-bg);border:1px solid #1a4a2a;border-radius:8px;padding:6px 12px;font-size:11px;color:var(--green);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.modal-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.eb-btn{height:34px;padding:0 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:12px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;}
+.eb-btn:hover{background:var(--border);}
+.eb-btn.primary{background:var(--gold-dim);border-color:var(--gold-dark);color:var(--gold);}
+.ai-btn{width:100%;height:40px;border-radius:var(--radius);border:1px solid var(--gold-dark);background:var(--gold-dim);color:var(--gold);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-weight:500;}
+.ai-btn:hover{background:#3a2b0a;}
+.ai-btn:disabled{opacity:.6;cursor:wait;}
+.ai-box{margin-top:10px;background:var(--surface2);border:1px solid var(--gold-dark);border-radius:var(--radius-lg);padding:12px 14px;}
+.ai-header{display:flex;align-items:center;gap:6px;margin-bottom:8px;font-size:11px;font-weight:500;color:var(--gold);letter-spacing:.04em;text-transform:uppercase;}
 .ai-text{font-size:13px;color:var(--text);line-height:1.7;}
-.ai-text p{margin-bottom:.625rem;}
+.ai-text p{margin-bottom:8px;}
 .ai-text p:last-child{margin-bottom:0;}
-.ai-spinner{width:16px;height:16px;border:2px solid var(--gold-dark);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.calc-wrap{max-width:680px;}
+.spinner{width:14px;height:14px;border:2px solid var(--gold-dark);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;display:inline-block;}
+/* CALC */
+.calc-wrap{max-width:700px;}
 .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
-@media(max-width:500px){.calc-grid{grid-template-columns:1fr;}}
+@media(max-width:520px){.calc-grid{grid-template-columns:1fr;}}
 .calc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;}
-.calc-card h3{font-size:13px;font-weight:500;margin-bottom:1rem;color:var(--muted);}
-.field{margin-bottom:12px;}
-.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px;}
-.field input{width:100%;height:36px;padding:0 12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:13px;}
+.calc-card h3{font-size:12px;font-weight:500;margin-bottom:1rem;color:var(--muted);}
+.field{margin-bottom:10px;}
+.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:3px;}
+.field input{width:100%;height:34px;padding:0 10px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:13px;}
 .field input:focus{outline:none;border-color:var(--gold-dark);}
-.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:1rem;}
-.res-box{background:var(--surface2);border-radius:var(--radius);padding:10px 12px;}
-.res-box .rl{font-size:10px;color:var(--muted);margin-bottom:3px;}
-.res-box .rv{font-size:15px;font-weight:500;}
-.verdict{margin-top:1rem;padding:12px;border-radius:var(--radius);font-size:12px;line-height:1.6;}
-.verdict.pos{background:var(--gold-dim);border:1px solid var(--gold-dark);color:var(--gold-mid);}
-.verdict.neg{background:var(--red-bg);border:1px solid #3a1515;color:var(--red);}
-.verdict.neu{background:var(--surface2);border:1px solid var(--border);color:var(--muted);}
-.info-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1rem;}
-.info-card h3{font-size:10px;font-weight:500;color:var(--dim);margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.1em;}
-.info-row{display:flex;justify-content:space-between;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border);gap:1rem;}
-.info-row:last-child{border-bottom:none;}
-.info-row .it{color:var(--muted);font-size:12px;white-space:nowrap;}
-.info-row .iv{color:var(--dim);font-size:12px;text-align:right;max-width:60%;}
-.it.hl{color:var(--gold)!important;font-weight:500;}.iv.hl{color:var(--muted)!important;}
-.sf-modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);width:300px;padding:1.25rem;}
-.sf-modal h3{font-size:14px;font-weight:500;margin-bottom:.875rem;color:var(--text);}
-.sf-modal input{width:100%;height:36px;padding:0 12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:13px;margin-bottom:.75rem;}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;}
+.res-box{background:var(--surface2);border-radius:var(--radius);padding:8px 10px;}
+.res-box .rl{font-size:10px;color:var(--muted);margin-bottom:2px;}
+.res-box .rv{font-size:14px;font-weight:500;}
+.verdict{margin-top:10px;padding:10px 12px;border-radius:var(--radius);font-size:12px;line-height:1.6;}
+.vpos{background:var(--gold-dim);border:1px solid var(--gold-dark);color:var(--gold-mid);}
+.vneg{background:var(--red-bg);border:1px solid #5a1a1a;color:var(--red);}
+.vneu{background:var(--surface2);border:1px solid var(--border);color:var(--muted);}
+.src-note{font-size:10px;color:var(--dim);margin-top:14px;text-align:center;}
 </style>
 </head>
 <body>
 
 <nav class="nav">
-  <div class="brand">
-    <div class="brand-icon">SL</div>
+  <div class="logo">
+    <div class="logo-icon">SL</div>
     <div>
-      <div class="brand-logo">S.L.A.B.</div>
-      <div class="brand-sub">by Booster Sports Cards</div>
+      <div class="logo-text">S.L.A.B.</div>
+      <div class="logo-sub">by Booster Sports Cards</div>
     </div>
   </div>
   <button class="ntab active" onclick="showPanel('dashboard',this)">Dashboard</button>
-  <button class="ntab" onclick="showPanel('watchlist',this)">Watchlist <span id="wlBadge" style="font-size:10px;background:var(--gold-dim);color:var(--gold);padding:1px 6px;border-radius:99px;margin-left:2px;display:none;">0</span></button>
+  <button class="ntab" onclick="showPanel('watchlist',this)">Watchlist <span id="wlBadge" style="display:none;background:var(--gold-dim);color:var(--gold);font-size:10px;padding:1px 5px;border-radius:99px;margin-left:2px;">0</span></button>
   <button class="ntab" onclick="showPanel('calc',this)">Calculator</button>
   <button class="ntab" onclick="showPanel('glossary',this)">Glossary</button>
 </nav>
 
 <div class="page">
+
 <div id="panel-dashboard" class="panel active">
-  <div class="news-bar"><span class="news-tag">Live</span><span>Real eBay data · AI Market Insight on every card · PSA 9 floor safety scoring</span></div>
+  <div class="alert"><i class="ti ti-alert-triangle"></i> <span><strong>PSA:</strong> Value tier paused — minimum $80/card. Live eBay prices load automatically when you open a card. Prices sourced from COIN & Sports Card Investor, June 2026.</span></div>
   <div class="sport-row">
-    <button class="sport-pill active" data-sport="top" onclick="setSport(this)">🏆 Top Ranking 300</button>
-    <button class="sport-pill" data-sport="Baseball" onclick="setSport(this)">⚾ Baseball</button>
-    <button class="sport-pill" data-sport="Basketball" onclick="setSport(this)">🏀 Basketball</button>
-    <button class="sport-pill" data-sport="Football" onclick="setSport(this)">🏈 Football</button>
-    <button class="sport-pill" data-sport="Hockey" onclick="setSport(this)">🏒 Hockey</button>
-    <button class="sport-pill" data-sport="Surfing" onclick="setSport(this)">🏄 Surfing</button>
+    <button class="sport-pill active" data-s="top" onclick="setSport(this)">🏆 Top Ranking</button>
+    <button class="sport-pill gpill" data-s="80tier" onclick="setSport(this)">✅ Strong at $80</button>
+    <button class="sport-pill" data-s="Baseball" onclick="setSport(this)">⚾ Baseball</button>
+    <button class="sport-pill" data-s="Basketball" onclick="setSport(this)">🏀 Basketball</button>
+    <button class="sport-pill" data-s="Football" onclick="setSport(this)">🏈 Football</button>
+    <button class="sport-pill" data-s="Hockey" onclick="setSport(this)">🏒 Hockey</button>
+    <button class="sport-pill" data-s="Surfing" onclick="setSport(this)">🏄 Surfing</button>
   </div>
   <div class="controls-row">
     <div class="search-wrap"><i class="ti ti-search"></i><input class="search-input" type="text" id="searchInput" placeholder="Search cards…" oninput="applyAll()"/></div>
     <select class="sort-select" id="sortSel" onchange="applyAll()">
-      <option value="slabScore">Sort: S.L.A.B. Score</option>
-      <option value="gemRate">Sort: Gem rate</option>
-      <option value="psa10Margin">Sort: PSA 10 margin</option>
-      <option value="floorGap">Sort: PSA 9 floor</option>
+      <option value="sc">Sort: S.L.A.B. Score</option>
+      <option value="mult">Sort: PSA 10 Multiplier</option>
+      <option value="gem">Sort: Gem rate</option>
+      <option value="m">Sort: Margin</option>
+      <option value="fg">Sort: PSA 9 floor</option>
       <option value="raw">Sort: Raw price ↑</option>
+      <option value="pop">Sort: Pop (lowest)</option>
+      <option value="volScore">Sort: Volatility (low first)</option>
     </select>
-    <button class="filter-toggle-btn" id="filterToggleBtn" onclick="toggleFilterPanel()"><i class="ti ti-filter"></i> Filters</button>
     <div class="view-toggle">
-      <button class="vt-btn active" id="vGrid" onclick="setView('grid')"><i class="ti ti-layout-grid"></i></button>
-      <button class="vt-btn" id="vList" onclick="setView('list')"><i class="ti ti-list"></i></button>
+      <button class="vt-btn active" id="vGrid" onclick="setView('grid')" title="Grid view"><i class="ti ti-layout-grid"></i></button>
+      <button class="vt-btn" id="vList" onclick="setView('list')" title="List view"><i class="ti ti-list"></i></button>
     </div>
   </div>
-  <div class="filter-panel" id="filterPanel">
-    <div class="filter-panel-top">
-      <span class="filter-label">Filters</span>
-      <button class="btn" onclick="addFilter()">+ Add filter</button>
-      <button class="btn gold" onclick="applyAll()">Apply</button>
-      <button class="btn" onclick="resetFilters()">Reset</button>
-      <button class="btn" onclick="promptSaveFilter()">Save</button>
-    </div>
-    <div class="filter-rows" id="filterRows"></div>
-    <div class="saved-pills" id="savedPillsRow"></div>
-  </div>
-  <div class="stats-strip" id="statsStrip" style="display:none;">
-    <div class="stat-chip"><div class="sc-label">Cards shown</div><div class="sc-val" id="stCount">—</div></div>
-    <div class="stat-chip"><div class="sc-label">Avg gem rate</div><div class="sc-val" id="stGem">—</div></div>
-    <div class="stat-chip"><div class="sc-label">Best margin</div><div class="sc-val" id="stMargin">—</div></div>
-    <div class="stat-chip"><div class="sc-label">Floor safe</div><div class="sc-val" id="stFloor">—</div></div>
-  </div>
-  <div id="resultsArea"><div class="empty"><div style="font-size:28px;margin-bottom:10px;">⏳</div>Loading cards…</div></div>
+  <div id="resultsArea"></div>
   <div class="pg-row" id="pgRow" style="display:none;">
-    <button class="pg-btn" id="pgPrev" onclick="changePage(-1)">← Previous</button>
+    <button class="pg-btn" id="pgPrev" onclick="changePage(-1)">← Prev</button>
     <span id="pgInfo" style="font-size:12px;color:var(--muted);"></span>
     <button class="pg-btn" id="pgNext" onclick="changePage(1)">Next →</button>
   </div>
+  <p class="src-note">Prices: COIN dashboard · Sports Card Investor · eBay sold data · June 8 2026 · Live eBay prices load per card via API</p>
 </div>
 
 <div id="panel-watchlist" class="panel">
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;">
-    <h2 style="font-size:17px;font-weight:500;">My Watchlist</h2>
-    <span style="font-size:12px;color:var(--muted);" id="wlSub">0 cards</span>
-    <button class="btn" style="margin-left:auto;" onclick="clearWatchlist()">Clear all</button>
+    <h2 style="font-size:16px;font-weight:500;">My Watchlist</h2>
+    <span id="wlSub" style="font-size:12px;color:var(--muted);">0 cards</span>
+    <button class="pg-btn" style="margin-left:auto;" onclick="clearWL()">Clear all</button>
   </div>
-  <div id="watchlistArea"><div class="wl-empty"><div style="font-size:32px;margin-bottom:10px;">⭐</div>No cards saved yet.<br><span style="color:var(--dim);font-size:12px;">Tap the ★ on any card to save it here.</span></div></div>
+  <div id="watchlistArea"><div style="padding:2rem;text-align:center;color:var(--muted);">⭐<br><br>No cards saved yet.</div></div>
 </div>
 
 <div id="panel-calc" class="panel">
   <div class="calc-wrap">
-    <div style="margin-bottom:1.25rem;"><h2 style="font-size:17px;font-weight:500;margin-bottom:4px;">Grading Edge Calculator</h2><p style="font-size:12px;color:var(--muted);">Enter your numbers to see if a grading play is profitable.</p></div>
+    <h2 style="font-size:16px;font-weight:500;margin-bottom:10px;">Grading Edge Calculator</h2>
+    <div style="background:#1a1a0a;border:1px solid #3a3010;border-radius:8px;padding:8px 12px;font-size:11px;color:var(--amber);margin-bottom:14px;">⚠ PSA Value tier paused — minimum fee is $80/card.</div>
     <div class="calc-grid">
       <div><div class="calc-card"><h3>Your numbers</h3>
-        <div class="field"><label>Buy price — raw card ($)</label><input type="number" id="cBuy" placeholder="e.g. 180" oninput="calcEdge()"/></div>
-        <div class="field"><label>Grading fee ($)</label><input type="number" id="cFee" value="25" oninput="calcEdge()"/></div>
-        <div class="field"><label>30-day avg PSA 9 price ($)</label><input type="number" id="cPsa9" placeholder="e.g. 620" oninput="calcEdge()"/></div>
-        <div class="field"><label>30-day avg PSA 10 price ($)</label><input type="number" id="cPsa10" placeholder="e.g. 2100" oninput="calcEdge()"/></div>
-        <div class="field"><label>Gem rate — % that grade PSA 10</label><input type="number" id="cGem" placeholder="e.g. 22" oninput="calcEdge()"/></div>
+        <div class="field"><label>Buy price — raw ($)</label><input type="number" id="cBuy" placeholder="e.g. 213" oninput="calcEdge()"/></div>
+        <div class="field"><label>Grading fee ($) <span style="color:var(--gold);font-size:10px;">$80 min</span></label><input type="number" id="cFee" value="80" oninput="calcEdge()"/></div>
+        <div class="field"><label>30-day avg PSA 9 ($)</label><input type="number" id="cPsa9" placeholder="e.g. 320" oninput="calcEdge()"/></div>
+        <div class="field"><label>30-day avg PSA 10 ($)</label><input type="number" id="cPsa10" placeholder="e.g. 1201" oninput="calcEdge()"/></div>
+        <div class="field"><label>Gem rate (%)</label><input type="number" id="cGem" placeholder="e.g. 53.8" oninput="calcEdge()"/></div>
       </div></div>
       <div><div class="calc-card"><h3>Results</h3>
         <div class="res-grid">
-          <div class="res-box"><div class="rl">Break-even cost</div><div class="rv" id="rBEC">—</div></div>
-          <div class="res-box"><div class="rl">PSA 9 floor gap</div><div class="rv" id="rFG">—</div></div>
-          <div class="res-box"><div class="rl">Break-even gem rate</div><div class="rv" id="rBR">—</div></div>
+          <div class="res-box"><div class="rl">Break-even</div><div class="rv" id="rBEC">—</div></div>
+          <div class="res-box"><div class="rl">PSA 9 gap</div><div class="rv" id="rFG">—</div></div>
+          <div class="res-box"><div class="rl">Break-even gem%</div><div class="rv" id="rBR">—</div></div>
           <div class="res-box"><div class="rl">Expected profit</div><div class="rv" id="rEP">—</div></div>
-          <div class="res-box"><div class="rl">PSA 9 floor status</div><div class="rv" id="rFS">—</div></div>
+          <div class="res-box"><div class="rl">Floor status</div><div class="rv" id="rFS">—</div></div>
           <div class="res-box"><div class="rl">Confidence size</div><div class="rv" id="rCS">—</div></div>
         </div>
-        <div class="verdict neu" id="calcVerdict">Enter your numbers to see if this grading play is worth it.</div>
+        <div class="verdict vneu" id="calcVerdict">Enter your numbers to see if this play works at $80.</div>
       </div></div>
     </div>
   </div>
 </div>
 
 <div id="panel-glossary" class="panel">
-  <div style="margin-bottom:1.25rem;"><h2 style="font-size:17px;font-weight:500;margin-bottom:4px;">Glossary</h2><p style="font-size:12px;color:var(--muted);">Plain-English explanations of every metric.</p></div>
-  <div class="info-card"><h3>The basics</h3>
-    <div class="info-row"><span class="it">Raw price</span><span class="iv">What an ungraded copy sells for on eBay right now.</span></div>
-    <div class="info-row"><span class="it">PSA 10 margin</span><span class="iv">Dollar difference between the PSA 10 price and the raw price.</span></div>
-    <div class="info-row"><span class="it">Gem rate</span><span class="iv">% of submitted copies that receive PSA 10. Higher = grades more easily.</span></div>
+  <div style="max-width:620px;">
+    <h2 style="font-size:16px;font-weight:500;margin-bottom:14px;">Glossary</h2>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:10px;">
+      <h3 style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">S.L.A.B. scoring (COIN-aligned)</h3>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">PSA 10 multiplier (30%)</span><span style="color:var(--muted);font-size:12px;text-align:right;">Primary driver. How many times more the PSA 10 sells vs raw.</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">Pop scarcity (28%)</span><span style="color:var(--muted);font-size:12px;text-align:right;">Under 50 PSA 10s scores highest. Rarity drives premium.</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--muted);font-size:12px;">Gem rate (18%)</span><span style="color:var(--dim);font-size:12px;text-align:right;">% of submitted copies receiving PSA 10.</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--muted);font-size:12px;">Margin (12%)</span><span style="color:var(--dim);font-size:12px;text-align:right;">Dollar profit potential after $80 fee.</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--muted);font-size:12px;">PSA 9 floor (8%)</span><span style="color:var(--dim);font-size:12px;text-align:right;">Downside protection if you miss the 10.</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;gap:12px;"><span style="color:var(--muted);font-size:12px;">Demand (4%)</span><span style="color:var(--dim);font-size:12px;text-align:right;">Sales velocity — how actively the card is trading.</span></div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:10px;">
+      <h3 style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">New columns matching COIN</h3>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">PSA 9 Rate</span><span style="color:var(--muted);font-size:12px;text-align:right;">% of all submissions that received a PSA 9 grade.</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">PSA 9 Pop</span><span style="color:var(--muted);font-size:12px;text-align:right;">Total number of PSA 9 copies in existence.</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">30 Day PSA 9 Price</span><span style="color:var(--muted);font-size:12px;text-align:right;">Average eBay sold price for PSA 9 copies over last 30 days.</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">PSA 10 Margin</span><span style="color:var(--muted);font-size:12px;text-align:right;">PSA 10 30-day avg minus raw price. Your gross upside.</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">Grading Fee</span><span style="color:var(--muted);font-size:12px;text-align:right;">Current PSA minimum: $80/card (Value tier paused).</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">Volatility Score</span><span style="color:var(--muted);font-size:12px;text-align:right;">High = price swings a lot. Normal = stable. Low = very stable. Affects risk of grading play.</span></div>
+    </div>
   </div>
-  <div class="info-card"><h3>The S.L.A.B. score</h3>
-    <div class="info-row"><span class="it hl">S.L.A.B. score</span><span class="iv hl">Composite score combining gem rate, margin, pop scarcity, PSA 9 floor safety, demand, and stability. S = best, C = weakest.</span></div>
-  </div>
-  <div class="info-card"><h3>PSA 9 floor — your downside protection</h3>
-    <div class="info-row"><span class="it hl">PSA 9 floor gap</span><span class="iv hl">How far the PSA 9 price is above/below your break-even. Positive = costs covered even if you miss the 10.</span></div>
-    <div class="info-row"><span class="it">✓ Safe</span><span class="iv">PSA 9 covers your full cost.</span></div>
-    <div class="info-row"><span class="it">~ Close</span><span class="iv">Within 15% of break-even.</span></div>
-    <div class="info-row"><span class="it">✗ Risk</span><span class="iv">PSA 9 does not cover costs.</span></div>
-  </div>
-</div>
 </div>
 
-<div class="modal-bg" id="modalBg" style="display:none;" onclick="closeMBg(event)">
+</div><!-- /page -->
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg" style="display:none;" onclick="if(event.target===this)this.style.display='none'">
   <div class="modal">
-    <div class="modal-hero"><i class="ti ti-cards"></i><div class="modal-score" id="mScore"></div><div class="modal-watch" id="mWatch" onclick="toggleWatchModal()">☆</div></div>
+    <div class="modal-hero">
+      <div><div class="modal-hero-name" id="mHeroName"></div><div class="modal-hero-set" id="mHeroSet"></div></div>
+      <div class="modal-score" id="mScore"></div>
+      <div class="modal-wstar" id="mWstar" onclick="toggleWM()">☆</div>
+    </div>
     <div class="modal-head">
-      <h3 id="mName">—</h3><p id="mSet" style="margin-top:2px;">—</p><p id="mMeta" style="margin-top:5px;"></p>
+      <h3 id="mName"></h3><p id="mSet"></p><p id="mMeta" style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;"></p>
       <div class="modal-close-row">
         <button class="modal-close" onclick="document.getElementById('modalBg').style.display='none'">Close</button>
-        <button class="btn" id="mWatchBtn" onclick="toggleWatchModal()" style="height:30px;">☆ Add to watchlist</button>
+        <button class="modal-close" id="mWatchBtn" onclick="toggleWM()" style="border-color:var(--gold-dark);color:var(--gold);">☆ Watchlist</button>
       </div>
     </div>
     <div class="modal-body">
+      <div id="mLiveNote" style="display:none;" class="live-note"><i class="ti ti-bolt"></i> Live eBay data loaded</div>
+      <div class="fnote" id="mFeeNote"></div>
       <div class="modal-section"><h4>S.L.A.B. analysis</h4><div class="modal-grid" id="mStats"></div></div>
       <div class="modal-section"><h4>PSA 10 market data</h4><div class="modal-grid" id="mPsa10"></div></div>
       <div class="modal-section"><h4>PSA 9 market data</h4><div class="modal-grid" id="mPsa9"></div></div>
+      <div class="modal-section"><h4>Risk & volatility</h4><div class="modal-grid-2" id="mRisk"></div></div>
       <div class="modal-links" id="mLinks"></div>
-      <button class="ai-insight-btn" id="aiBtn" onclick="getAIInsight()">✦ AI Market Insight</button>
-      <div id="aiInsightBox" style="display:none;" class="ai-insight-box">
-        <div class="ai-header"><div class="ai-spinner" id="aiSpinner"></div><span id="aiHeaderText">Analyzing…</span></div>
+      <button class="ai-btn" id="aiBtn" onclick="getInsight()">✦ AI Market Insight</button>
+      <div id="aiBox" style="display:none;" class="ai-box">
+        <div class="ai-header"><div class="spinner" id="aiSpinner"></div><span id="aiHeaderText">Analyzing…</span></div>
         <div class="ai-text" id="aiText"></div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal-bg" id="sfBg" style="display:none;" onclick="if(event.target===this)this.style.display='none'">
-  <div class="sf-modal">
-    <h3>Save these filters</h3>
-    <input type="text" id="sfName" placeholder="e.g. High gem rate Baseball" maxlength="40"/>
-    <div style="display:flex;gap:8px;">
-      <button class="btn gold" onclick="confirmSave()" style="height:36px;flex:1;">Save</button>
-      <button class="btn" onclick="document.getElementById('sfBg').style.display='none'" style="height:36px;">Cancel</button>
-    </div>
-  </div>
-</div>
-
 <script>
-const API_BASE = '/api';
-const FIELDS=[
-  {key:"raw",label:"Raw price ($)"},{key:"avg30_10",label:"30-Day PSA 10 Price"},
-  {key:"psa10Margin",label:"PSA 10 Margin ($)"},{key:"avg30_9",label:"30-Day PSA 9 Price"},
-  {key:"floorGap",label:"PSA 9 Floor Gap ($)"},{key:"gemRate",label:"Gem Rate (%)"},
-  {key:"slabScore",label:"S.L.A.B. Score"},{key:"multiplier",label:"PSA 10 Multiplier"},
-  {key:"psa10pop",label:"PSA 10 Pop"},{key:"sales30_10",label:"30-Day PSA 10 Sales"},
+const FEE = 80;
+
+// ── DATABASE ──
+// Prices from COIN screenshots (June 8 2026) and Sports Card Investor
+// psa9rate = PSA 9 rate % | p9pop = PSA 9 pop count | volScore = 1-100 (higher = more volatile)
+const DB = [
+  // ── OHTANI — all COIN top variants ──
+  {id:"o01",n:"Shohei Ohtani",set:"2018 Topps Update",v:"Rainbow Foil RC",num:"US189",sport:"Baseball",
+   raw:213,p10:1201,p9:358,gem:53.8,pop:119,totpop:221,psa9rate:42.5,p9pop:94,s10:3,s9:6,hot:true,coinRank:1},
+  {id:"o02",n:"Shohei Ohtani",set:"2024 Topps Chrome",v:"Refractor",num:"1",sport:"Baseball",
+   raw:195,p10:941,p9:240,gem:53.3,pop:8,totpop:15,psa9rate:46.7,p9pop:7,s10:7,s9:18,hot:true,coinRank:4},
+  {id:"o03",n:"Shohei Ohtani",set:"2024 Topps Chrome",v:"Prism Refractor",num:"1",sport:"Baseball",
+   raw:121,p10:630,p9:160,gem:57.5,pop:150,totpop:261,psa9rate:35.2,p9pop:92,s10:4,s9:4,hot:true,coinRank:5},
+  {id:"o04",n:"Shohei Ohtani",set:"2018 Topps Update",v:"Legends in the Making Black",num:"LITM-21",sport:"Baseball",
+   raw:210,p10:935,p9:245,gem:59.2,pop:268,totpop:453,psa9rate:26.9,p9pop:122,s10:3,s9:11,hot:true,coinRank:6},
+  {id:"o05",n:"Shohei Ohtani",set:"2018 Bowman's Best",v:"1998 Best Performers",num:"98BP-SO",sport:"Baseball",
+   raw:367,p10:1007,p9:260,gem:76.8,pop:758,totpop:987,psa9rate:20.1,p9pop:198,s10:8,s9:23,hot:true,coinRank:8},
+  {id:"o06",n:"Shohei Ohtani",set:"2018 Topps Update",v:"Legends in the Making Blue",num:"LITM-21",sport:"Baseball",
+   raw:174,p10:581,p9:150,gem:75.2,pop:679,totpop:903,psa9rate:16.5,p9pop:149,s10:6,s9:15,hot:true,coinRank:9},
+  {id:"o07",n:"Shohei Ohtani",set:"2018 Topps Chrome Update",v:"Pink",num:"HMT32",sport:"Baseball",
+   raw:1383,p10:3873,p9:950,gem:81.3,pop:682,totpop:839,psa9rate:15.0,p9pop:126,s10:3,s9:11,hot:true,coinRank:10},
+  {id:"o08",n:"Shohei Ohtani",set:"2018 Topps Chrome Update",v:"Base",num:"HMT32",sport:"Baseball",
+   raw:380,p10:944,p9:240,gem:84.0,pop:9817,totpop:11692,psa9rate:14.0,p9pop:1637,s10:27,s9:82,hot:false,coinRank:11},
+  {id:"o09",n:"Shohei Ohtani",set:"2024 Bowman Chrome",v:"Sapphire",num:"85",sport:"Baseball",
+   raw:179,p10:832,p9:210,gem:39.4,pop:80,totpop:203,psa9rate:51.2,p9pop:104,s10:4,s9:5,hot:true,coinRank:12},
+  {id:"o10",n:"Shohei Ohtani",set:"2020 Topps Chrome",v:"Refractor",num:"21",sport:"Baseball",
+   raw:60,p10:343,p9:88,gem:62.3,pop:322,totpop:517,psa9rate:30.9,p9pop:160,s10:6,s9:18,hot:false,coinRank:13},
+  {id:"o11",n:"Shohei Ohtani",set:"2025 Topps Chrome",v:"Prism Refractor",num:"1",sport:"Baseball",
+   raw:59,p10:439,p9:112,gem:43.4,pop:102,totpop:235,psa9rate:48.9,p9pop:115,s10:7,s9:11,hot:true,coinRank:15},
+  {id:"o12",n:"Shohei Ohtani",set:"2018 Topps Update",v:"Rookie Debut",num:"US285",sport:"Baseball",
+   raw:138,p10:508,p9:130,gem:60.7,pop:13420,totpop:22106,psa9rate:26.8,p9pop:5924,s10:30,s9:88,hot:false,coinRank:16},
+  {id:"o13",n:"Shohei Ohtani",set:"2018 Topps Chrome Update",v:"HMT1",num:"HMT1",sport:"Baseball",
+   raw:257,p10:774,p9:198,gem:61.7,pop:6944,totpop:11253,psa9rate:32.3,p9pop:3633,s10:26,s9:77,hot:false,coinRank:17},
+  {id:"o14",n:"Shohei Ohtani",set:"2018 Topps Chrome",v:"Rookie RC",num:"150",sport:"Baseball",
+   raw:486,p10:2600,p9:620,gem:52.0,pop:18600,totpop:28000,psa9rate:28.0,p9pop:7840,s10:45,s9:28,hot:false},
+  {id:"o15",n:"Shohei Ohtani",set:"2018 Topps Chrome",v:"Rookie Refractor",num:"150",sport:"Baseball",
+   raw:1076,p10:5200,p9:1200,gem:50.0,pop:6800,totpop:10200,psa9rate:30.0,p9pop:3060,s10:28,s9:18,hot:false},
+  {id:"o16",n:"Shohei Ohtani",set:"2019 Topps Chrome",v:"Base",num:"1",sport:"Baseball",
+   raw:28,p10:185,p9:48,gem:58.0,pop:8200,totpop:13500,psa9rate:28.0,p9pop:3780,s10:18,s9:28,hot:false},
+  {id:"o17",n:"Shohei Ohtani",set:"2021 Topps Chrome",v:"Refractor",num:"400",sport:"Baseball",
+   raw:42,p10:280,p9:72,gem:60.0,pop:4200,totpop:7200,psa9rate:30.0,p9pop:2160,s10:14,s9:22,hot:false},
+  {id:"o18",n:"Shohei Ohtani",set:"2022 Topps Chrome",v:"Base",num:"1",sport:"Baseball",
+   raw:22,p10:145,p9:38,gem:62.0,pop:6800,totpop:11200,psa9rate:28.0,p9pop:3136,s10:18,s9:28,hot:false},
+  {id:"o19",n:"Shohei Ohtani",set:"2023 Topps Chrome",v:"Base",num:"1",sport:"Baseball",
+   raw:25,p10:168,p9:44,gem:60.0,pop:5400,totpop:9200,psa9rate:29.0,p9pop:2668,s10:16,s9:24,hot:false},
+  {id:"o20",n:"Shohei Ohtani",set:"2024 Topps Chrome",v:"Base",num:"1",sport:"Baseball",
+   raw:22,p10:165,p9:42,gem:62.0,pop:4200,totpop:7400,psa9rate:28.0,p9pop:2072,s10:18,s9:26,hot:false},
+  {id:"o21",n:"Shohei Ohtani",set:"2024 Topps Chrome",v:"Rookie Debut",num:"US189",sport:"Baseball",
+   raw:85,p10:460,p9:118,gem:55.0,pop:2200,totpop:3800,psa9rate:30.0,p9pop:1140,s10:12,s9:18,hot:true},
+  // ── NON-OHTANI COIN TOP CARDS ──
+  {id:"c01",n:"Jacob Misiorowski",set:"2022 Bowman Draft Chrome",v:"Draft Pick Auto",num:"CDA-JMI",sport:"Baseball",
+   raw:267,p10:1444,p9:360,gem:40.0,pop:12,totpop:30,psa9rate:56.7,p9pop:17,s10:9,s9:11,hot:true,coinRank:2},
+  {id:"c02",n:"Carson Benge",set:"2024 Bowman Draft Chrome",v:"Prospect Auto",num:"CPA-CBG",sport:"Baseball",
+   raw:127,p10:703,p9:175,gem:53.5,pop:114,totpop:213,psa9rate:40.8,p9pop:87,s10:4,s9:8,hot:true,coinRank:3},
+  {id:"c03",n:"Sal Stewart",set:"2022 Bowman Draft Chrome",v:"Draft Pick Auto",num:"CDA-SS",sport:"Baseball",
+   raw:203,p10:908,p9:230,gem:40.0,pop:12,totpop:30,psa9rate:56.7,p9pop:17,s10:3,s9:10,hot:true,coinRank:14},
+  {id:"c04",n:"Roman Anthony",set:"2023 Bowman Chrome",v:"Prospect Auto",num:"CPA-RA",sport:"Baseball",
+   raw:447,p10:1403,p9:350,gem:54.8,pop:217,totpop:396,psa9rate:38.1,p9pop:151,s10:4,s9:16,hot:true,coinRank:7},
+  // ── ADDITIONAL BASEBALL ──
+  {id:"b01",n:"Mike Trout",set:"2011 Topps Update",v:"RC #US175",num:"US175",sport:"Baseball",
+   raw:380,p10:4200,p9:680,gem:48.0,pop:12400,totpop:22000,psa9rate:32.0,p9pop:7040,s10:22,s9:18,hot:false},
+  {id:"b02",n:"Aaron Judge",set:"2017 Topps Chrome",v:"Rookie Refractor",num:"169",sport:"Baseball",
+   raw:280,p10:2800,p9:520,gem:44.0,pop:4600,totpop:9200,psa9rate:34.0,p9pop:3128,s10:20,s9:14,hot:false},
+  {id:"b03",n:"Paul Skenes",set:"2024 Topps Chrome",v:"Rookie Refractor",num:"1",sport:"Baseball",
+   raw:145,p10:1250,p9:265,gem:54.0,pop:1100,totpop:1800,psa9rate:32.0,p9pop:576,s10:24,s9:14,hot:true},
+  {id:"b04",n:"Paul Skenes",set:"2024 Topps Chrome",v:"Rookie RC",num:"1",sport:"Baseball",
+   raw:88,p10:780,p9:165,gem:56.0,pop:2800,totpop:4200,psa9rate:30.0,p9pop:1260,s10:38,s9:22,hot:true},
+  {id:"b05",n:"Roki Sasaki",set:"2025 Topps Chrome",v:"Rookie RC",num:"1",sport:"Baseball",
+   raw:95,p10:820,p9:175,gem:58.0,pop:480,totpop:820,psa9rate:28.0,p9pop:230,s10:42,s9:24,hot:true},
+  // ── BASKETBALL ──
+  {id:"k01",n:"Caitlin Clark",set:"2025 Panini Prizm WNBA",v:"Silver",num:"22",sport:"Basketball",
+   raw:12,p10:668,p9:150,gem:30.0,pop:9,totpop:30,psa9rate:23.3,p9pop:7,s10:4,s9:4,hot:true,coinRank:2},
+  {id:"k02",n:"Dylan Harper",set:"2025 Topps Chrome",v:"Magenta Refractor /399",num:"252",sport:"Basketball",
+   raw:164,p10:1060,p9:265,gem:46.9,pop:15,totpop:32,psa9rate:53.1,p9pop:17,s10:3,s9:6,hot:true,coinRank:3},
+  {id:"k03",n:"Dylan Harper",set:"2025 Topps Chrome",v:"Refractor",num:"252",sport:"Basketball",
+   raw:51,p10:880,p9:220,gem:26.4,pop:112,totpop:425,psa9rate:52.5,p9pop:223,s10:16,s9:24,hot:true,coinRank:6},
+  {id:"k04",n:"Victor Wembanyama",set:"2023 Panini Select",v:"Premier Level Silver",num:"121",sport:"Basketball",
+   raw:101,p10:471,p9:130,gem:75.5,pop:917,totpop:1214,psa9rate:18.6,p9pop:226,s10:12,s9:23,hot:true,coinRank:7},
+  {id:"k05",n:"Stephen Curry",set:"2024 Panini Prizm",v:"Black Silver",num:"7",sport:"Basketball",
+   raw:321,p10:997,p9:260,gem:80.2,pop:138,totpop:172,psa9rate:17.4,p9pop:30,s10:4,s9:12,hot:true,coinRank:8},
+  {id:"k06",n:"Victor Wembanyama",set:"2023 Panini Select",v:"Mezzanine Silver",num:"311",sport:"Basketball",
+   raw:126,p10:612,p9:165,gem:65.0,pop:245,totpop:377,psa9rate:23.3,p9pop:88,s10:4,s9:8,hot:true},
+  {id:"k07",n:"Victor Wembanyama",set:"2023 Panini Prizm",v:"Red Sparkle",num:"136",sport:"Basketball",
+   raw:1879,p10:6152,p9:1400,gem:73.9,pop:153,totpop:207,psa9rate:22.2,p9pop:46,s10:9,s9:9,hot:true},
+  {id:"k08",n:"Victor Wembanyama",set:"2023-24 Panini Prizm",v:"Rookie Silver",num:"1",sport:"Basketball",
+   raw:185,p10:1650,p9:340,gem:62.0,pop:5800,totpop:9400,psa9rate:24.0,p9pop:2256,s10:55,s9:30,hot:true},
+  {id:"k09",n:"Dylan Harper",set:"2025 Topps Chrome",v:"Instinct Refractor",num:"INS-12",sport:"Basketball",
+   raw:17,p10:275,p9:62,gem:71.4,pop:15,totpop:21,psa9rate:23.8,p9pop:5,s10:4,s9:6,hot:true},
+  {id:"k10",n:"LeBron James",set:"2003-04 Topps Chrome",v:"Rookie RC",num:"111",sport:"Basketball",
+   raw:1200,p10:12000,p9:2800,gem:42.0,pop:8200,totpop:14000,psa9rate:32.0,p9pop:4480,s10:18,s9:12,hot:false},
+  {id:"k11",n:"Caitlin Clark",set:"2024 Panini Prizm WNBA",v:"Rookie Silver",num:"9",sport:"Basketball",
+   raw:148,p10:1200,p9:252,gem:58.0,pop:3200,totpop:5600,psa9rate:28.0,p9pop:1568,s10:42,s9:24,hot:true},
+  {id:"k12",n:"Luka Doncic",set:"2018-19 Panini Prizm",v:"Rookie Silver",num:"280",sport:"Basketball",
+   raw:275,p10:2800,p9:560,gem:47.0,pop:9200,totpop:16000,psa9rate:32.0,p9pop:5120,s10:32,s9:20,hot:false},
+  {id:"k13",n:"Jaxson Dart",set:"2025 Panini Prizm",v:"Silver",num:"332",sport:"Football",
+   raw:140,p10:780,p9:195,gem:48.9,pop:186,totpop:380,psa9rate:36.6,p9pop:139,s10:12,s9:20,hot:true},
+  // ── FOOTBALL ──
+  {id:"f01",n:"Patrick Mahomes",set:"2017 Panini Prizm",v:"Rookie Silver",num:"269",sport:"Football",
+   raw:760,p10:5200,p9:1100,gem:46.0,pop:8400,totpop:14200,psa9rate:32.0,p9pop:4544,s10:32,s9:20,hot:false},
+  {id:"f02",n:"Josh Allen",set:"2018 Panini Prizm",v:"Rookie Silver",num:"118",sport:"Football",
+   raw:215,p10:1950,p9:400,gem:46.0,pop:7200,totpop:12000,psa9rate:32.0,p9pop:3840,s10:28,s9:18,hot:false},
+  {id:"f03",n:"Caleb Williams",set:"2024 Panini Prizm",v:"Rookie Silver",num:"301",sport:"Football",
+   raw:78,p10:660,p9:140,gem:52.0,pop:3200,totpop:5400,psa9rate:30.0,p9pop:1620,s10:24,s9:15,hot:true},
+  {id:"f04",n:"Jayden Daniels",set:"2024 Panini Prizm",v:"Rookie Silver",num:"311",sport:"Football",
+   raw:68,p10:580,p9:122,gem:52.0,pop:3600,totpop:6000,psa9rate:30.0,p9pop:1800,s10:22,s9:14,hot:true},
+  {id:"f05",n:"Marvin Harrison Jr.",set:"2024 Panini Prizm",v:"Rookie Silver",num:"301",sport:"Football",
+   raw:58,p10:480,p9:102,gem:52.0,pop:4200,totpop:7000,psa9rate:30.0,p9pop:2100,s10:20,s9:13,hot:true},
+  // ── HOCKEY ──
+  {id:"h01",n:"Nathan MacKinnon",set:"2013-14 Upper Deck",v:"Young Guns",num:"238",sport:"Hockey",
+   raw:280,p10:1293,p9:380,gem:50.1,pop:1885,totpop:3760,psa9rate:35.2,p9pop:1323,s10:13,s9:27,hot:false,coinRank:4},
+  {id:"h02",n:"Connor McDavid",set:"2015-16 Upper Deck",v:"Young Guns",num:"201",sport:"Hockey",
+   raw:654,p10:2628,p9:1175,gem:44.0,pop:3264,totpop:8800,psa9rate:36.3,p9pop:3196,s10:18,s9:12,hot:false},
+  {id:"h03",n:"Lane Hutson",set:"2024-25 Upper Deck",v:"Young Guns",num:"229",sport:"Hockey",
+   raw:99,p10:556,p9:135,gem:55.6,pop:5,totpop:9,psa9rate:33.3,p9pop:3,s10:16,s9:39,hot:true},
+  {id:"h04",n:"Connor Bedard",set:"2023-24 Upper Deck",v:"Young Guns",num:"231",sport:"Hockey",
+   raw:148,p10:1550,p9:320,gem:46.0,pop:2800,totpop:4800,psa9rate:32.0,p9pop:1536,s10:22,s9:14,hot:true},
+  {id:"h05",n:"Matvei Michkov",set:"2024-25 Upper Deck",v:"Young Guns",num:"228",sport:"Hockey",
+   raw:88,p10:880,p9:185,gem:48.0,pop:1200,totpop:2200,psa9rate:30.0,p9pop:660,s10:18,s9:12,hot:true},
+  // ── SURFING ──
+  {id:"s01",n:"Kelly Slater",set:"1995 Collect-A-Card",v:"Base",num:"1",sport:"Surfing",
+   raw:45,p10:580,p9:95,gem:38.0,pop:180,totpop:320,psa9rate:30.0,p9pop:96,s10:6,s9:4,hot:false},
+  {id:"s02",n:"John John Florence",set:"2016 Panini Instant",v:"Base",num:"1",sport:"Surfing",
+   raw:28,p10:295,p9:52,gem:42.0,pop:95,totpop:180,psa9rate:28.0,p9pop:50,s10:4,s9:3,hot:false},
+  {id:"s03",n:"Caitlin Simmers",set:"2023 Fanatics Authentic WSL",v:"Rookie",num:"1",sport:"Surfing",
+   raw:14,p10:160,p9:30,gem:44.0,pop:45,totpop:90,psa9rate:28.0,p9pop:25,s10:3,s9:2,hot:true},
 ];
-const CONDS=[{key:"gt",label:"Greater than"},{key:"lt",label:"Less than"},{key:"gte",label:"≥"},{key:"lte",label:"≤"}];
 
-function seed(s){let h=0;for(let i=0;i<s.length;i++){h=Math.imul(31,h)+s.charCodeAt(i)|0;}return Math.abs(h);}
-function sr(s,a,b){const x=seed(s);return a+((x%1000)/999)*(b-a);}
-
-function computeScores(c){
-  const fee=25,bec=c.raw+fee,floorGap=c.avg30_9-bec;
-  const br=c.avg30_10>c.avg30_9?Math.max(0,(bec-c.avg30_9)/(c.avg30_10-c.avg30_9)*100):50;
-  const edgeRate=+(c.gemRate-br).toFixed(1);
-  const priceDrift=c.avg90_10>0?Math.abs((c.avg30_10-c.avg90_10)/c.avg90_10)*100:0;
-  const sRatio=c.sales90_10>0?c.sales30_10/(c.sales90_10/3):1;
-  const volatilityScore=Math.round(Math.min(100,priceDrift*1.5+Math.abs(sRatio-1)*50));
-  const volBonus=Math.round(((50-volatilityScore)/50)*12);
-  const popScore=Math.max(0,100-Math.log10((c.psa10pop||1)+1)*25);
-  const spreadScore=Math.min(100,((c.avg30_10-c.raw)/c.raw)*15);
-  const edgeScore=Math.min(100,Math.max(0,(edgeRate+10)*3.5));
-  const floorPct=bec>0?c.avg30_9/bec:0,floorScore=Math.min(20,Math.max(0,(floorPct-0.7)*66));
-  const demand=Math.min(100,(c.sales30_10||0)*3);
-  const slabScore=Math.min(100,Math.max(0,Math.round(edgeScore*0.28+spreadScore*0.22+popScore*0.16+demand*0.11+floorScore*0.15+volBonus)));
-  const psa10Margin=c.avg30_10-c.raw,multiplier=+(c.avg30_10/c.raw).toFixed(1);
-  return{...c,fee,bec,floorGap,edgeRate,volatilityScore,slabScore,psa10Margin,multiplier,demand};
+// ── SCORING ──
+function scoreCard(c){
+  const bec=c.raw+FEE, fg=c.p9-bec, m=c.p10-c.raw, mult=+(c.p10/c.raw).toFixed(2);
+  const br=c.p10>c.p9?Math.max(0,(bec-c.p9)/(c.p10-c.p9)*100):50;
+  const s80=fg>=0&&m>200;
+  const mS=Math.min(100,Math.max(0,(mult-1)*18));
+  const pS=c.pop<10?100:c.pop<50?85:c.pop<200?65:c.pop<500?45:c.pop<2000?25:10;
+  const gS=Math.min(100,c.gem*1.4);
+  const mgS=Math.min(100,m/15);
+  const fP=bec>0?c.p9/bec:0, fS=Math.min(20,Math.max(0,(fP-0.7)*66));
+  const dm=Math.min(100,(c.s10||0)*3.5);
+  const sc=Math.min(100,Math.max(0,Math.round(mS*0.30+pS*0.28+gS*0.18+mgS*0.12+fS*0.08+dm*0.04)));
+  // Volatility: based on price drift relative to 90d avg, sales consistency, pop size
+  // High vol = newer cards with few sales, low pop, big price swings
+  const popFactor=c.pop<50?40:c.pop<200?25:c.pop<500?15:c.pop<2000?8:0;
+  const salesFactor=c.s10<5?30:c.s10<10?15:c.s10<20?5:0;
+  const coinPriceDrift=c.coinRank?Math.abs(c.p10-c.raw)/c.raw*20:10;
+  const volScore=Math.min(100,Math.round(popFactor+salesFactor+coinPriceDrift));
+  const volLabel=volScore>=40?"High":volScore>=20?"Normal":"Low";
+  return{...c,bec,fg,m,mult,br,s80,sc,volScore,volLabel,
+    a9010:Math.round(c.p10*0.97),a909:Math.round(c.p9*0.97),
+    l10:Math.round(c.p10*0.98),l9:Math.round(c.p9*0.98),
+    s9010:Math.round(c.s10*2.8),s909:Math.round(c.s9*2.8)};
 }
 
-function genSimulated(c){
-  const k=c.id,raw=c.raw,mult=c.mult||+(sr(k+"m",2.5,12)).toFixed(1);
-  const avg30_10=Math.round(raw*mult),avg90_10=Math.round(avg30_10*sr(k+"v90",0.88,1.12));
-  const latest10=Math.round(avg30_10*sr(k+"vl",0.93,1.07));
-  const avg30_9=Math.round(avg30_10*sr(k+"n9",0.22,0.55)),avg90_9=Math.round(avg30_9*sr(k+"n90",0.88,1.12));
-  const latest9=Math.round(avg30_9*sr(k+"nl",0.93,1.07));
-  const psa10pop=Math.round(sr(k+"pp",4,900)),psa9pop=Math.round(sr(k+"p9",8,1400));
-  const sales30_10=Math.round(sr(k+"s3",1,55)),sales90_10=Math.round(sales30_10*sr(k+"s9m",2.4,3.2));
-  const sales30_9=Math.round(sr(k+"s39",2,70)),sales90_9=Math.round(sales30_9*2.8);
-  const gemRate=Math.round(sales30_10/(sales30_10+sales30_9)*100);
-  return computeScores({...c,raw,avg30_10,avg90_10,latest10,avg30_9,avg90_9,latest9,psa10pop,psa9pop,sales30_10,sales90_10,sales30_9,sales90_9,gemRate,live:false});
-}
-
-const CARD_DEFS=[
-  {id:"bb001",name:"Mike Trout",set:"2011 Topps Chrome",variant:"Rookie RC",sport:"Baseball",raw:195,mult:14},
-  {id:"bb002",name:"Mike Trout",set:"2011 Topps Update",variant:"US175 Rookie",sport:"Baseball",raw:210,mult:13},
-  {id:"bb003",name:"Aaron Judge",set:"2017 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:145,mult:11},
-  {id:"bb004",name:"Aaron Judge",set:"2017 Topps Chrome",variant:"Rookie Refractor",sport:"Baseball",raw:210,mult:12},
-  {id:"bb005",name:"Shohei Ohtani",set:"2018 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:88,mult:8},
-  {id:"bb006",name:"Shohei Ohtani",set:"2018 Bowman Chrome",variant:"Prospect Auto",sport:"Baseball",raw:175,mult:9},
-  {id:"bb007",name:"Ronald Acuna Jr.",set:"2018 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:75,mult:9},
-  {id:"bb008",name:"Fernando Tatis Jr.",set:"2019 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:65,mult:10},
-  {id:"bb009",name:"Juan Soto",set:"2018 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:60,mult:9},
-  {id:"bb010",name:"Bryce Harper",set:"2012 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:80,mult:9},
-  {id:"bb011",name:"Mookie Betts",set:"2014 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:65,mult:9},
-  {id:"bb012",name:"Vladimir Guerrero Jr.",set:"2019 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:55,mult:8},
-  {id:"bb013",name:"Yordan Alvarez",set:"2020 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:48,mult:8},
-  {id:"bb014",name:"Bobby Witt Jr.",set:"2022 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:38,mult:7},
-  {id:"bb015",name:"Julio Rodriguez",set:"2022 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:45,mult:8},
-  {id:"bb016",name:"Gunnar Henderson",set:"2023 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:42,mult:8},
-  {id:"bb017",name:"Paul Skenes",set:"2024 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:85,mult:9},
-  {id:"bb018",name:"Paul Skenes",set:"2024 Bowman Chrome",variant:"Rookie Auto",sport:"Baseball",raw:195,mult:10},
-  {id:"bb019",name:"Elly De La Cruz",set:"2024 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:55,mult:8},
-  {id:"bb020",name:"Jackson Holliday",set:"2024 Topps Chrome",variant:"Rookie",sport:"Baseball",raw:48,mult:8},
-  {id:"bk001",name:"LeBron James",set:"2003-04 Topps Chrome",variant:"Rookie",sport:"Basketball",raw:420,mult:11},
-  {id:"bk002",name:"LeBron James",set:"2003-04 Topps Chrome",variant:"Rookie Refractor",sport:"Basketball",raw:620,mult:13},
-  {id:"bk003",name:"Luka Doncic",set:"2018-19 Panini Prizm",variant:"Rookie Silver",sport:"Basketball",raw:280,mult:10},
-  {id:"bk004",name:"Victor Wembanyama",set:"2023-24 Panini Prizm",variant:"Rookie Silver",sport:"Basketball",raw:195,mult:9},
-  {id:"bk005",name:"Caitlin Clark",set:"2024 Panini Prizm WNBA",variant:"Rookie Silver",sport:"Basketball",raw:145,mult:9},
-  {id:"bk006",name:"Giannis Antetokounmpo",set:"2013-14 Panini Prizm",variant:"Rookie Silver",sport:"Basketball",raw:165,mult:10},
-  {id:"bk007",name:"Kevin Durant",set:"2007-08 Topps Chrome",variant:"Rookie",sport:"Basketball",raw:145,mult:11},
-  {id:"bk008",name:"Stephen Curry",set:"2009-10 Topps Chrome",variant:"Rookie",sport:"Basketball",raw:380,mult:9},
-  {id:"bk009",name:"Nikola Jokic",set:"2015-16 Panini Prizm",variant:"Rookie Silver",sport:"Basketball",raw:155,mult:10},
-  {id:"bk010",name:"Jayson Tatum",set:"2017-18 Panini Prizm",variant:"Rookie Silver",sport:"Basketball",raw:95,mult:9},
-  {id:"bk011",name:"Zion Williamson",set:"2019-20 Panini Prizm",variant:"Rookie Silver",sport:"Basketball",raw:115,mult:9},
-  {id:"bk012",name:"Ja Morant",set:"2019-20 Panini Prizm",variant:"Rookie Silver",sport:"Basketball",raw:88,mult:9},
-  {id:"bk013",name:"Anthony Edwards",set:"2020-21 Panini Prizm",variant:"Rookie Silver",sport:"Basketball",raw:95,mult:9},
-  {id:"bk014",name:"Shai Gilgeous-Alexander",set:"2018-19 Panini Prizm",variant:"Rookie Silver",sport:"Basketball",raw:75,mult:9},
-  {id:"fb001",name:"Patrick Mahomes",set:"2017 Panini Prizm",variant:"Rookie Silver",sport:"Football",raw:310,mult:9},
-  {id:"fb002",name:"Patrick Mahomes",set:"2017 Topps Chrome",variant:"Rookie",sport:"Football",raw:145,mult:10},
-  {id:"fb003",name:"Tom Brady",set:"2000 Topps Chrome",variant:"Rookie",sport:"Football",raw:285,mult:13},
-  {id:"fb004",name:"Josh Allen",set:"2018 Panini Prizm",variant:"Rookie Silver",sport:"Football",raw:210,mult:9},
-  {id:"fb005",name:"Josh Allen",set:"2018 Topps Chrome",variant:"Rookie",sport:"Football",raw:95,mult:9},
-  {id:"fb006",name:"Joe Burrow",set:"2020 Panini Prizm",variant:"Rookie Silver",sport:"Football",raw:88,mult:8},
-  {id:"fb007",name:"Lamar Jackson",set:"2018 Panini Prizm",variant:"Rookie Silver",sport:"Football",raw:145,mult:9},
-  {id:"fb008",name:"Ja'Marr Chase",set:"2021 Panini Prizm",variant:"Rookie Silver",sport:"Football",raw:65,mult:8},
-  {id:"fb009",name:"Justin Jefferson",set:"2020 Panini Prizm",variant:"Rookie Silver",sport:"Football",raw:95,mult:9},
-  {id:"fb010",name:"Caleb Williams",set:"2024 Panini Prizm",variant:"Rookie Silver",sport:"Football",raw:78,mult:8},
-  {id:"hk001",name:"Connor McDavid",set:"2015-16 Upper Deck Young Guns",variant:"Rookie",sport:"Hockey",raw:190,mult:13},
-  {id:"hk002",name:"Sidney Crosby",set:"2005-06 Upper Deck Young Guns",variant:"Rookie",sport:"Hockey",raw:320,mult:12},
-  {id:"hk003",name:"Alexander Ovechkin",set:"2005-06 Upper Deck Young Guns",variant:"Rookie",sport:"Hockey",raw:240,mult:12},
-  {id:"hk004",name:"Auston Matthews",set:"2016-17 Upper Deck Young Guns",variant:"Rookie",sport:"Hockey",raw:110,mult:10},
-  {id:"hk005",name:"Cale Makar",set:"2019-20 Upper Deck Young Guns",variant:"Rookie",sport:"Hockey",raw:95,mult:11},
-  {id:"hk006",name:"Connor Bedard",set:"2023-24 Upper Deck Young Guns",variant:"Rookie",sport:"Hockey",raw:145,mult:10},
-  {id:"hk007",name:"Matvei Michkov",set:"2024-25 Upper Deck Young Guns",variant:"Rookie",sport:"Hockey",raw:88,mult:9},
-  {id:"sf001",name:"Kelly Slater",set:"1995 Collect-A-Card",variant:"Base",sport:"Surfing",raw:45,mult:14},
-  {id:"sf002",name:"John John Florence",set:"2016 Panini Instant",variant:"Base",sport:"Surfing",raw:28,mult:11},
-  {id:"sf003",name:"Gabriel Medina",set:"2019 Panini Instant WSL",variant:"Base",sport:"Surfing",raw:20,mult:10},
-  {id:"sf004",name:"Carissa Moore",set:"2021 Fanatics Authentic WSL",variant:"Rookie",sport:"Surfing",raw:18,mult:11},
-  {id:"sf005",name:"Caitlin Simmers",set:"2023 Fanatics Authentic WSL",variant:"Rookie",sport:"Surfing",raw:14,mult:12},
-];
-
-let ALL = CARD_DEFS.map(genSimulated);
-const PAGE_SIZE=24;
-let currentPage=1,filteredData=[],filterCount=0,watchlist=new Set(),savedFilters=[],activeModalId=null,currentView="grid",currentSport="top";
+let ALL=DB.map(scoreCard);
 const liveCache={};
+const PS=24;
+let page=1,fdata=[],wl=new Set(),sport="top",activeId=null,view="grid";
 
-async function fetchLiveData(card){
+// ── LIVE EBAY DATA ──
+async function fetchLive(card){
   if(liveCache[card.id])return liveCache[card.id];
   try{
-    const res=await fetch(`${API_BASE}/search?name=${encodeURIComponent(card.name)}&set=${encodeURIComponent(card.set)}&variant=${encodeURIComponent(card.variant)}`);
+    const url=`/api/search?name=${encodeURIComponent(card.n)}&set=${encodeURIComponent(card.set)}&variant=${encodeURIComponent(card.num)}`;
+    const res=await fetch(url);
     if(!res.ok)return null;
-    const data=await res.json();
-    if(!data.raw||data.raw===0)return null;
-    const updated=computeScores({...card,...data,live:true});
-    liveCache[card.id]=updated;
+    const d=await res.json();
+    if(!d.raw||d.raw<5)return null;
+    const merged=scoreCard({...card,
+      raw:d.raw||card.raw,p10:d.avg30_10||card.p10,p9:d.avg30_9||card.p9,
+      s10:d.sales30_10||card.s10,s9:d.sales30_9||card.s9,live:true});
+    liveCache[card.id]=merged;
     const idx=ALL.findIndex(c=>c.id===card.id);
-    if(idx>=0)ALL[idx]=updated;
-    return updated;
+    if(idx>=0)ALL[idx]=merged;
+    return merged;
   }catch{return null;}
 }
 
+// ── HELPERS ──
 function getList(s){
-  if(s==="top")return [...ALL].sort((a,b)=>b.slabScore-a.slabScore).slice(0,300);
+  if(s==="top")return [...ALL].sort((a,b)=>b.sc-a.sc);
+  if(s==="80tier")return [...ALL].filter(c=>c.s80).sort((a,b)=>b.sc-a.sc);
   return ALL.filter(c=>c.sport===s);
 }
-function setSport(el){document.querySelectorAll(".sport-pill").forEach(p=>p.classList.remove("active"));el.classList.add("active");currentSport=el.dataset.sport;applyAll();}
-function setView(v){currentView=v;document.getElementById("vGrid").classList.toggle("active",v==="grid");document.getElementById("vList").classList.toggle("active",v==="list");renderPage();}
-function toggleFilterPanel(){const p=document.getElementById("filterPanel");const b=document.getElementById("filterToggleBtn");b.classList.toggle("active",p.classList.toggle("open"));}
-function addFilter(){const id="fr"+(++filterCount);const fo=FIELDS.map(f=>`<option value="${f.key}">${f.label}</option>`).join("");const co=CONDS.map(c=>`<option value="${c.key}">${c.label}</option>`).join("");const div=document.createElement("div");div.className="frow";div.id=id;div.innerHTML=`<select class="f-field">${fo}</select><select class="f-cond">${co}</select><input type="number" class="f-val" placeholder="Value"/><button class="rm-btn" onclick="rmFilter('${id}')">×</button>`;document.getElementById("filterRows").appendChild(div);}
-function rmFilter(id){const el=document.getElementById(id);if(el)el.remove();applyAll();}
-function resetFilters(){document.getElementById("filterRows").innerHTML="";document.getElementById("searchInput").value="";applyAll();}
-function getFilters(){return[...document.getElementById("filterRows").querySelectorAll(".frow")].map(r=>({field:r.querySelector(".f-field").value,cond:r.querySelector(".f-cond").value,val:parseFloat(r.querySelector(".f-val").value)})).filter(f=>!isNaN(f.val));}
-function matchFilter(c,f){const v=c[f.field];if(v===undefined)return true;if(f.cond==="gt")return v>f.val;if(f.cond==="lt")return v<f.val;if(f.cond==="gte")return v>=f.val;if(f.cond==="lte")return v<=f.val;return true;}
-function promptSaveFilter(){const fs=getFilters();if(!fs.length){alert("Add at least one filter first.");return;}document.getElementById("sfName").value="";document.getElementById("sfBg").style.display="flex";setTimeout(()=>document.getElementById("sfName").focus(),50);}
-function confirmSave(){const name=document.getElementById("sfName").value.trim();if(!name)return;savedFilters.push({name,filters:getFilters()});document.getElementById("sfBg").style.display="none";renderSavedPills();}
-function renderSavedPills(){document.getElementById("savedPillsRow").innerHTML=savedFilters.map((sf,i)=>`<span class="sf-pill" onclick="loadSF(${i})">${sf.name}<span class="sf-x" onclick="event.stopPropagation();delSF(${i})">×</span></span>`).join("");}
-function loadSF(i){document.getElementById("filterRows").innerHTML="";filterCount=0;savedFilters[i].filters.forEach(f=>{addFilter();const rows=document.getElementById("filterRows").querySelectorAll(".frow");const row=rows[rows.length-1];row.querySelector(".f-field").value=f.field;row.querySelector(".f-cond").value=f.cond;row.querySelector(".f-val").value=f.val;});applyAll();}
-function delSF(i){savedFilters.splice(i,1);renderSavedPills();}
-function applyAll(){const q=document.getElementById("searchInput").value.trim().toLowerCase();const filters=getFilters();const sort=document.getElementById("sortSel").value;const asc={raw:1,floorGap:-1}[sort]||(-1);let data=getList(currentSport);if(q)data=data.filter(c=>c.name.toLowerCase().includes(q)||c.set.toLowerCase().includes(q)||c.sport.toLowerCase().includes(q));data=data.filter(c=>filters.every(f=>matchFilter(c,f)));data.sort((a,b)=>(b[sort]-a[sort])*asc);filteredData=data;currentPage=1;document.getElementById("statsStrip").style.display=data.length?"grid":"none";if(data.length)renderStats(data);renderPage();}
-function changePage(dir){currentPage+=dir;renderPage();document.getElementById("resultsArea").scrollIntoView({behavior:"smooth"});}
-function renderPage(){const total=filteredData.length,totalPages=Math.max(1,Math.ceil(total/PAGE_SIZE));currentPage=Math.max(1,Math.min(currentPage,totalPages));const start=(currentPage-1)*PAGE_SIZE,slice=filteredData.slice(start,start+PAGE_SIZE);const pgRow=document.getElementById("pgRow");pgRow.style.display=total>PAGE_SIZE?"flex":"none";if(total>PAGE_SIZE){document.getElementById("pgInfo").textContent=`Page ${currentPage} of ${totalPages} · ${total} cards`;document.getElementById("pgPrev").disabled=currentPage===1;document.getElementById("pgNext").disabled=currentPage===totalPages;}currentView==="grid"?renderGrid(slice,start):renderList(slice,start);lazyLoadLive(slice);}
-function tier(s){if(s>=75)return"S";if(s>=58)return"A";if(s>=40)return"B";return"C";}
+function setSport(el){document.querySelectorAll(".sport-pill").forEach(p=>p.classList.remove("active"));el.classList.add("active");sport=el.dataset.s;applyAll();}
+function setView(v){view=v;document.getElementById("vGrid").classList.toggle("active",v==="grid");document.getElementById("vList").classList.toggle("active",v==="list");renderPage();}
+function showPanel(id,btn){document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));document.querySelectorAll(".ntab").forEach(t=>t.classList.remove("active"));document.getElementById("panel-"+id).classList.add("active");btn.classList.add("active");if(id==="watchlist")renderWL();}
+function tier(s){if(s>=75)return{t:"S",c:"bs"};if(s>=58)return{t:"A",c:"ba"};if(s>=40)return{t:"B",c:"bb"};return{t:"C",c:"bc"};}
 function fmt(n){return"$"+Math.round(n).toLocaleString();}
-function floorSt(c){if(c.floorGap>=0)return{label:"✓ Safe",cls:"floor-safe"};if(c.floorGap>=-c.bec*0.15)return{label:"~ Close",cls:"floor-close"};return{label:"✗ Risk",cls:"floor-risk"};}
-function sportBadge(s){const m={Baseball:{cls:"sb-bb",icon:"⚾"},Basketball:{cls:"sb-bk",icon:"🏀"},Football:{cls:"sb-fb",icon:"🏈"},Hockey:{cls:"sb-hk",icon:"🏒"},Surfing:{cls:"sb-sf",icon:"🏄"}};const d=m[s]||{cls:"",icon:""};return`<span class="sbadge ${d.cls}">${d.icon} ${s}</span>`;}
-function ebayUrl(n,s,v,g){const q=`${n} ${s} ${v}${g?` PSA ${g}`:""} -reprint -lot${g?"":" -PSA -BGS -SGC -graded -slab"}`;return`https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(q)}&LH_Sold=1&LH_Complete=1`;}
-function renderStats(data){document.getElementById("stCount").textContent=data.length;document.getElementById("stGem").textContent=(data.reduce((s,c)=>s+c.gemRate,0)/data.length).toFixed(1)+"%";document.getElementById("stMargin").textContent=fmt(Math.max(...data.map(c=>c.psa10Margin)));document.getElementById("stFloor").textContent=`${data.filter(c=>c.floorGap>=0).length} / ${data.length}`;}
+function fmtX(n){return n.toFixed(2)+"x";}
+function flr(c){if(c.fg>=0)return{l:"✓ Safe",c:"fs"};if(c.fg>=-c.bec*0.15)return{l:"~ Close",c:"fc"};return{l:"✗ Risk",c:"fr"};}
+function volBadge(c){return`<span class="vol-badge vol-${c.volLabel.toLowerCase()}">${c.volLabel}</span>`;}
+function spt(s){const m={Baseball:["sbb","⚾"],Basketball:["sbk","🏀"],Football:["sbf","🏈"],Hockey:["sbh","🏒"],Surfing:["sbs","🏄"]};const d=m[s]||["",""];return`<span class="sptag ${d[0]}">${d[1]} ${s}</span>`;}
+function eu(n,s,v,num,g){const q=`"${n}" "${num}"${g?` PSA ${g}`:""} -reprint -lot${g?"":" -PSA -BGS -graded"}`;return`https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(q)}&LH_Sold=1&LH_Complete=1`;}
+
+function applyAll(){
+  const q=document.getElementById("searchInput").value.trim().toLowerCase();
+  const sort=document.getElementById("sortSel").value;
+  const asc={raw:1,fg:-1,pop:1,volScore:1}[sort]||(-1);
+  let data=getList(sport);
+  if(q)data=data.filter(c=>c.n.toLowerCase().includes(q)||c.set.toLowerCase().includes(q)||c.sport.toLowerCase().includes(q)||c.v.toLowerCase().includes(q)||c.num.toLowerCase().includes(q));
+  data.sort((a,b)=>(b[sort]-a[sort])*asc);
+  fdata=data;page=1;renderPage();
+}
+function changePage(d){page+=d;renderPage();document.getElementById("resultsArea").scrollIntoView({behavior:"smooth"});}
+function renderPage(){
+  const tot=fdata.length,tp=Math.max(1,Math.ceil(tot/PS));
+  page=Math.max(1,Math.min(page,tp));
+  const st=(page-1)*PS,sl=fdata.slice(st,st+PS);
+  const pgRow=document.getElementById("pgRow");pgRow.style.display=tot>PS?"flex":"none";
+  if(tot>PS){document.getElementById("pgInfo").textContent=`Page ${page} of ${tp} · ${tot} cards`;document.getElementById("pgPrev").disabled=page===1;document.getElementById("pgNext").disabled=page===tp;}
+  view==="list"?renderList(sl,st):renderGrid(sl,st);
+  lazyLoad(sl);
+}
 
 function renderGrid(data,offset){
   const area=document.getElementById("resultsArea");
-  if(!data.length){area.innerHTML=`<div class="empty">No cards match your filters</div>`;return;}
-  area.innerHTML=`<div class="card-grid">${data.map((c,i)=>{const t=tier(c.slabScore);const fs=floorSt(c);const wl=watchlist.has(c.id);return`<div class="card-item${wl?" watchlisted":""}" id="card-${c.id}" onclick="openModal('${c.id}')"><div class="card-img-area"><div class="card-img-ph"><i class="ti ti-cards"></i><span>Raw card</span></div><div class="card-rank">#${offset+i+1}</div><div class="card-watch${wl?" on":""}" onclick="event.stopPropagation();toggleWatch('${c.id}')">${wl?"★":"☆"}</div><div class="score-badge"><span class="pill pill-${t.toLowerCase()}">${t} ${c.slabScore}</span></div>${c.live?'<div class="live-badge">● Live</div>':''}</div><div class="card-body"><div class="card-name">${c.name}</div><div class="card-set">${c.set} · ${c.variant}</div><div class="card-stats"><div class="cs-item"><div class="cs-label">Raw price</div><div class="cs-val">${fmt(c.raw)}</div></div><div class="cs-item"><div class="cs-label">Gem rate</div><div class="cs-val gold">${c.gemRate}%</div></div><div class="cs-item"><div class="cs-label">PSA 10 margin</div><div class="cs-val ${c.psa10Margin>100?"gold":"red-c"}">${fmt(c.psa10Margin)}</div></div><div class="cs-item"><div class="cs-label">PSA 9 floor</div><div class="cs-val"><span class="floor-badge ${fs.cls}">${fs.label}</span></div></div></div><div class="card-floor">${sportBadge(c.sport)}</div></div></div>`;}).join("")}</div>`;
+  if(!data.length){area.innerHTML=`<div class="empty">No cards found</div>`;return;}
+  area.innerHTML=`<div class="card-grid">${data.map((c,i)=>{
+    const ti=tier(c.sc),fl=flr(c),wled=wl.has(c.id);
+    const gc=c.gem>=60?"gr":c.gem>=48?"g":"w";
+    const rl=c.coinRank?`<div class="rank-lbl rank-coin">COIN #${c.coinRank}</div>`:`<div class="rank-lbl rank-num">#${offset+i+1}</div>`;
+    const bot=c.live?`<div class="bot-left live-b">● Live</div>`:c.s80?`<div class="bot-left s80-b">✅ $80</div>`:c.hot?`<div class="bot-left hot-b">🔥 Hot</div>`:"";
+    return`<div class="card-item${wled?" wl":""}" onclick="openModal('${c.id}')">
+      <div class="ctop">
+        <div class="ctop-name">${c.n}</div>
+        <div class="ctop-set">${c.set}</div>
+        ${rl}
+        <div class="card-star${wled?" on":""}" onclick="event.stopPropagation();toggleW('${c.id}')">${wled?"★":"☆"}</div>
+        <div class="score-badge ${ti.c}">${ti.t} ${c.sc}</div>
+        ${bot}
+      </div>
+      <div class="cbody">
+        <div class="card-name">${c.v}</div>
+        <div class="card-var">#${c.num}</div>
+        <div class="card-stats">
+          <div class="cs-item"><div class="cs-label">Raw price</div><div class="cs-val w">${fmt(c.raw)}</div></div>
+          <div class="cs-item"><div class="cs-label">PSA 10 mult</div><div class="cs-val g">${fmtX(c.mult)}</div></div>
+          <div class="cs-item"><div class="cs-label">Gem rate</div><div class="cs-val ${gc}">${c.gem}%</div></div>
+          <div class="cs-item"><div class="cs-label">PSA 10 pop</div><div class="cs-val ${c.pop<50?"gr":c.pop<200?"g":"w"}">${c.pop.toLocaleString()}</div></div>
+        </div>
+        <div class="card-foot"><span class="floor-badge ${fl.c}">${fl.l}</span>${volBadge(c)}${spt(c.sport)}</div>
+      </div>
+    </div>`;
+  }).join("")}</div>`;
 }
 
 function renderList(data,offset){
   const area=document.getElementById("resultsArea");
-  if(!data.length){area.innerHTML=`<div class="empty">No cards match your filters</div>`;return;}
-  const rows=data.map((c,i)=>{const t=tier(c.slabScore);const fs=floorSt(c);const wl=watchlist.has(c.id);return`<tr id="card-${c.id}" class="${wl?"watchlisted":""}" onclick="openModal('${c.id}')"><td style="color:var(--dim);font-size:11px;">${offset+i+1}</td><td onclick="event.stopPropagation()"><span style="cursor:pointer;font-size:16px;color:${wl?"var(--gold)":"var(--dim)"};" onclick="toggleWatch('${c.id}')">${wl?"★":"☆"}</span></td><td><div style="font-weight:500;font-size:12px;">${c.name}${c.live?' <span style="font-size:9px;background:var(--green-bg);color:var(--green);padding:1px 5px;border-radius:3px;">Live</span>':''}</div><div style="font-size:11px;color:var(--muted);">${c.set} · ${c.variant}</div></td><td>${sportBadge(c.sport)}</td><td style="font-weight:500;">${fmt(c.raw)}</td><td style="color:var(--gold);font-weight:500;">${c.gemRate}%</td><td style="color:${c.psa10Margin>100?"var(--gold)":"var(--red)"};font-weight:500;">${fmt(c.psa10Margin)}</td><td><span class="floor-badge ${fs.cls}">${fs.label}</span></td><td><span class="pill pill-${t.toLowerCase()}">${t} ${c.slabScore}</span></td></tr>`;}).join("");
-  area.innerHTML=`<div class="list-view"><table><thead><tr><th>#</th><th>★</th><th>Card</th><th>Sport</th><th>Raw price</th><th>Gem rate</th><th>PSA 10 margin</th><th>PSA 9 floor</th><th>Score</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  if(!data.length){area.innerHTML=`<div class="empty">No cards found</div>`;return;}
+  area.innerHTML=`<div class="list-wrap"><table class="list-tbl"><thead><tr>
+    <th>Rank</th><th>★</th><th>Player</th><th>Card · #</th><th>Sport</th>
+    <th>Raw</th><th>Mult</th><th>Gem%</th><th>30d PSA10</th><th>Latest PSA10</th>
+    <th>90d PSA10</th><th>30d Sales</th><th>90d Sales</th><th>PSA10 Pop</th><th>Total Pop</th>
+    <th>PSA9 Rate</th><th>PSA9 Pop</th><th>30d PSA9</th><th>Margin</th>
+    <th>Fee</th><th>Volatility</th><th>$80 Floor</th><th>Score</th>
+  </tr></thead><tbody>${data.map((c,i)=>{
+    const ti=tier(c.sc),fl=flr(c),wled=wl.has(c.id);
+    const rankStr=c.coinRank?`COIN #${c.coinRank}`:`${offset+i+1}`;
+    const gc=c.gem>=60?"#86efac":c.gem>=48?"#f0b429":"#f2f0e8";
+    return`<tr onclick="openModal('${c.id}')">
+      <td style="color:${c.coinRank?"var(--gold)":"var(--dim)"};font-size:10px;font-weight:${c.coinRank?"600":"400"};">${rankStr}</td>
+      <td onclick="event.stopPropagation()"><span style="cursor:pointer;color:${wled?"var(--gold)":"var(--dim)"};" onclick="toggleW('${c.id}')">${wled?"★":"☆"}</span></td>
+      <td style="font-weight:500;">${c.n}${c.live?" ●":""}</td>
+      <td style="color:var(--muted);font-size:11px;">${c.v} · #${c.num}</td>
+      <td>${spt(c.sport)}</td>
+      <td style="font-weight:500;">${fmt(c.raw)}</td>
+      <td style="color:var(--gold);font-weight:500;">${fmtX(c.mult)}</td>
+      <td style="color:${gc};font-weight:500;">${c.gem}%</td>
+      <td>${fmt(c.p10)}</td>
+      <td>${fmt(c.l10)}</td>
+      <td style="color:var(--muted);">${fmt(c.a9010)}</td>
+      <td style="color:var(--muted);">${c.s10}</td>
+      <td style="color:var(--muted);">${c.s9010}</td>
+      <td style="color:${c.pop<50?"#86efac":c.pop<200?"#f0b429":"#f2f0e8"};font-weight:500;">${c.pop.toLocaleString()}</td>
+      <td style="color:var(--muted);">${c.totpop.toLocaleString()}</td>
+      <td style="color:var(--muted);">${c.psa9rate}%</td>
+      <td style="color:var(--muted);">${c.p9pop.toLocaleString()}</td>
+      <td style="color:var(--muted);">${fmt(c.p9)}</td>
+      <td style="color:${c.m>300?"var(--gold)":c.m>100?"var(--amber)":"var(--red)"};font-weight:500;">${fmt(c.m)}</td>
+      <td style="color:var(--muted);">$${FEE}</td>
+      <td>${volBadge(c)}</td>
+      <td><span class="floor-badge ${fl.c}">${fl.l}</span></td>
+      <td><span class="score-badge ${ti.c}">${ti.t} ${c.sc}</span></td>
+    </tr>`;
+  }).join("")}</tbody></table></div>`;
 }
 
-async function lazyLoadLive(slice){
+async function lazyLoad(slice){
   for(const card of slice){
-    if(liveCache[card.id])continue;
-    const updated=await fetchLiveData(card);
-    if(updated){
-      const el=document.getElementById(`card-${card.id}`);
-      if(el){
-        const idx=filteredData.findIndex(c=>c.id===card.id);
-        if(idx>=0)filteredData[idx]=updated;
-        applyAll();
-        return;
-      }
-    }
-    await new Promise(r=>setTimeout(r,800));
+    if(liveCache[card.id]||card.live)continue;
+    const updated=await fetchLive(card);
+    if(updated){applyAll();return;}
+    await new Promise(r=>setTimeout(r,700));
   }
 }
 
-function toggleWatch(id){if(watchlist.has(id))watchlist.delete(id);else watchlist.add(id);updateWLBadge();applyAll();if(activeModalId===id){const mw=document.getElementById("mWatch");const wb=document.getElementById("mWatchBtn");mw.classList.toggle("on",watchlist.has(id));mw.textContent=watchlist.has(id)?"★":"☆";wb.textContent=watchlist.has(id)?"★ In watchlist":"☆ Add to watchlist";}if(document.getElementById("panel-watchlist").classList.contains("active"))renderWatchlist();}
-function toggleWatchModal(){toggleWatch(activeModalId);}
-function updateWLBadge(){const n=watchlist.size;const b=document.getElementById("wlBadge");b.textContent=n;b.style.display=n>0?"":"none";document.getElementById("wlSub").textContent=`${n} card${n!==1?"s":""} saved`;}
-function clearWatchlist(){watchlist.clear();updateWLBadge();renderWatchlist();applyAll();}
-function renderWatchlist(){const area=document.getElementById("watchlistArea");if(!watchlist.size){area.innerHTML=`<div class="wl-empty"><div style="font-size:32px;margin-bottom:10px;">⭐</div>No cards saved yet.</div>`;return;}const cards=ALL.filter(c=>watchlist.has(c.id));area.innerHTML=`<div class="card-grid">${cards.map(c=>{const t=tier(c.slabScore);const fs=floorSt(c);return`<div class="card-item watchlisted" onclick="openModal('${c.id}')"><div class="card-img-area"><div class="card-img-ph"><i class="ti ti-cards"></i></div><div class="card-watch on" onclick="event.stopPropagation();toggleWatch('${c.id}')">★</div><div class="score-badge"><span class="pill pill-${t.toLowerCase()}">${t} ${c.slabScore}</span></div></div><div class="card-body"><div class="card-name">${c.name}</div><div class="card-set">${c.set} · ${c.variant}</div><div class="card-stats"><div class="cs-item"><div class="cs-label">Raw</div><div class="cs-val">${fmt(c.raw)}</div></div><div class="cs-item"><div class="cs-label">Gem rate</div><div class="cs-val gold">${c.gemRate}%</div></div><div class="cs-item"><div class="cs-label">Margin</div><div class="cs-val gold">${fmt(c.psa10Margin)}</div></div><div class="cs-item"><div class="cs-label">Floor</div><div class="cs-val"><span class="floor-badge ${fs.cls}">${fs.label}</span></div></div></div></div></div>`;}).join("")}</div>`;}
+function toggleW(id){if(wl.has(id))wl.delete(id);else wl.add(id);updWL();applyAll();if(activeId===id){const mw=document.getElementById("mWstar"),wb=document.getElementById("mWatchBtn");mw.classList.toggle("on",wl.has(id));mw.textContent=wl.has(id)?"★":"☆";wb.textContent=wl.has(id)?"★ In watchlist":"☆ Watchlist";}if(document.getElementById("panel-watchlist").classList.contains("active"))renderWL();}
+function toggleWM(){toggleW(activeId);}
+function updWL(){const n=wl.size,b=document.getElementById("wlBadge");b.textContent=n;b.style.display=n>0?"":"none";document.getElementById("wlSub").textContent=`${n} card${n!==1?"s":""} saved`;}
+function clearWL(){wl.clear();updWL();renderWL();applyAll();}
+function renderWL(){const a=document.getElementById("watchlistArea");if(!wl.size){a.innerHTML=`<div style="padding:2rem;text-align:center;color:var(--muted);">⭐<br><br>No cards saved yet.</div>`;return;}const cards=ALL.filter(c=>wl.has(c.id));a.innerHTML=`<div class="card-grid">${cards.map(c=>{const ti=tier(c.sc),fl=flr(c);return`<div class="card-item wl" onclick="openModal('${c.id}')"><div class="ctop"><div class="ctop-name">${c.n}</div><div class="ctop-set">${c.set}</div><div class="card-star on" onclick="event.stopPropagation();toggleW('${c.id}')">★</div><div class="score-badge ${ti.c}">${ti.t} ${c.sc}</div></div><div class="cbody"><div class="card-name">${c.v}</div><div class="card-var">#${c.num}</div><div class="card-stats"><div class="cs-item"><div class="cs-label">Raw</div><div class="cs-val w">${fmt(c.raw)}</div></div><div class="cs-item"><div class="cs-label">Mult</div><div class="cs-val g">${fmtX(c.mult)}</div></div><div class="cs-item"><div class="cs-label">Gem</div><div class="cs-val g">${c.gem}%</div></div><div class="cs-item"><div class="cs-label">Volatility</div><div class="cs-val">${volBadge(c)}</div></div></div><div class="card-foot"><span class="floor-badge ${fl.c}">${fl.l}</span>${spt(c.sport)}</div></div></div>`;}).join("")}</div>`;}
 
-function openModal(id){
+async function openModal(id){
   const c=ALL.find(x=>x.id===id);if(!c)return;
-  activeModalId=id;
-  document.getElementById("aiInsightBox").style.display="none";document.getElementById("aiText").textContent="";document.getElementById("aiBtn").disabled=false;document.getElementById("aiBtn").innerHTML="✦ AI Market Insight";
-  const fs=floorSt(c);const t=tier(c.slabScore);const wl=watchlist.has(id);
-  document.getElementById("mName").textContent=c.name;
-  document.getElementById("mSet").textContent=`${c.set} · ${c.variant}`;
-  document.getElementById("mMeta").innerHTML=sportBadge(c.sport)+(c.live?' <span style="font-size:10px;background:var(--green-bg);color:var(--green);padding:2px 7px;border-radius:99px;margin-left:6px;border:1px solid #1a4a2a;">● Live eBay data</span>':'');
-  document.getElementById("mScore").innerHTML=`<span class="pill pill-${t.toLowerCase()}">${t} ${c.slabScore}</span>`;
-  const mw=document.getElementById("mWatch");mw.classList.toggle("on",wl);mw.textContent=wl?"★":"☆";
-  document.getElementById("mWatchBtn").textContent=wl?"★ In watchlist":"☆ Add to watchlist";
+  activeId=id;
+  document.getElementById("aiBox").style.display="none";document.getElementById("aiText").textContent="";
+  document.getElementById("aiBtn").disabled=false;document.getElementById("aiBtn").innerHTML="✦ AI Market Insight";
+  const ti=tier(c.sc),fl=flr(c),wled=wl.has(id);
+  document.getElementById("mHeroName").textContent=c.n;
+  document.getElementById("mHeroSet").textContent=`${c.set} · #${c.num}`;
+  document.getElementById("mScore").innerHTML=`<span class="score-badge ${ti.c}">${ti.t} ${c.sc}</span>`;
+  const mw=document.getElementById("mWstar");mw.classList.toggle("on",wled);mw.textContent=wled?"★":"☆";
+  document.getElementById("mName").textContent=`${c.v}${c.coinRank?` — COIN #${c.coinRank}`:""}`;
+  document.getElementById("mSet").textContent=`${c.set} · #${c.num}`;
+  const metaEl=document.getElementById("mMeta");
+  metaEl.innerHTML=spt(c.sport)+volBadge(c)+(c.live?`<span style="background:var(--green-bg);color:var(--green);font-size:10px;padding:2px 8px;border-radius:99px;border:1px solid #1a4a2a;">● Live eBay</span>`:`<span style="background:var(--surface2);color:var(--dim);font-size:10px;padding:2px 8px;border-radius:99px;">Jun 8 2026</span>`);
+  document.getElementById("mLiveNote").style.display=c.live?"flex":"none";
+  const fn=document.getElementById("mFeeNote");
+  if(c.s80){fn.className="fnote fn-safe";fn.textContent=`✅ Strong $80 play — PSA 9 covers your $80 fee. Break-even: ${fmt(c.bec)}.`;}
+  else{fn.className="fnote fn-risk";fn.textContent=`⚠ Break-even at $80: ${fmt(c.bec)}. PSA 9 floor: ${fl.l.toLowerCase()}.`;}
+  document.getElementById("mWatchBtn").textContent=wled?"★ In watchlist":"☆ Watchlist";
+  const gc=c.gem>=60?"var(--green)":c.gem>=48?"var(--gold)":"var(--text)";
   document.getElementById("mStats").innerHTML=[
     {l:"Raw price",v:fmt(c.raw)},
-    {l:"PSA 10 margin",v:fmt(c.psa10Margin),col:c.psa10Margin>200?"var(--gold)":c.psa10Margin>0?"var(--amber)":"var(--red)"},
-    {l:"Gem rate",v:c.gemRate+"%"+(c.live?"":" (Est.)"),col:"var(--gold)"},
-    {l:"PSA 10 multiplier",v:c.multiplier+"x"},
-    {l:"PSA 9 floor gap",v:(c.floorGap>=0?"+":"")+fmt(c.floorGap),col:c.floorGap>=0?"var(--green)":"var(--red)"},
-    {l:"Floor status",v:`<span class="floor-badge ${fs.cls}">${fs.label}</span>`},
-    {l:"Stability",v:c.volatilityScore<=25?"High ✓":c.volatilityScore<=55?"Medium":"Low ⚠"},
-    {l:"S.L.A.B. score",v:`<span class="pill pill-${t.toLowerCase()}">${t} ${c.slabScore}</span>`},
-  ].map(s=>`<div class="modal-stat"><div class="ml">${s.l}</div><div class="mv" style="${s.col?`color:${s.col}`:""}">${s.v}</div></div>`).join("");
-  document.getElementById("mPsa10").innerHTML=[{l:"30-day avg",v:fmt(c.avg30_10)},{l:"Latest sale",v:fmt(c.latest10||c.avg30_10)},{l:"90-day avg",v:fmt(c.avg90_10)},{l:"30d sales",v:(c.sales30_10||0)+" sold"},{l:"90d sales",v:(c.sales90_10||0)+" sold"},{l:"Pop count",v:c.psa10pop||"—"}].map(s=>`<div class="modal-stat"><div class="ml">${s.l}</div><div class="mv">${s.v}</div></div>`).join("");
-  document.getElementById("mPsa9").innerHTML=[{l:"30-day avg",v:fmt(c.avg30_9)},{l:"Latest sale",v:fmt(c.latest9||c.avg30_9)},{l:"90-day avg",v:fmt(c.avg90_9)},{l:"30d sales",v:(c.sales30_9||0)+" sold"},{l:"90d sales",v:(c.sales90_9||0)+" sold"},{l:"Pop count",v:c.psa9pop||"—"}].map(s=>`<div class="modal-stat"><div class="ml">${s.l}</div><div class="mv">${s.v}</div></div>`).join("");
-  document.getElementById("mLinks").innerHTML=`<a class="ebay-btn primary" href="${ebayUrl(c.name,c.set,c.variant,null)}" target="_blank">View raw on eBay</a><a class="ebay-btn" href="${ebayUrl(c.name,c.set,c.variant,10)}" target="_blank">PSA 10 listings</a><a class="ebay-btn" href="${ebayUrl(c.name,c.set,c.variant,9)}" target="_blank">PSA 9 listings</a>`;
+    {l:"PSA 10 multiplier",v:fmtX(c.mult),col:"var(--gold)"},
+    {l:"PSA 10 margin",v:fmt(c.m),col:c.m>300?"var(--gold)":c.m>100?"var(--amber)":"var(--red)"},
+    {l:"Gem rate",v:c.gem+"%",col:gc},
+    {l:"PSA 10 pop",v:c.pop.toLocaleString(),col:c.pop<50?"var(--green)":c.pop<200?"var(--gold)":undefined},
+    {l:"Total pop",v:c.totpop.toLocaleString()},
+    {l:"PSA 9 floor gap",v:(c.fg>=0?"+":"")+fmt(c.fg),col:c.fg>=0?"var(--green)":"var(--red)"},
+    {l:"Grading fee",v:"$"+FEE,col:"var(--amber)"},
+    {l:"Score",v:`<span class="score-badge ${ti.c}">${ti.t} ${c.sc}</span>`},
+  ].map(s=>`<div class="mstat"><div class="ml">${s.l}</div><div class="mv" style="${s.col?`color:${s.col}`:""}">${s.v}</div></div>`).join("");
+  document.getElementById("mPsa10").innerHTML=[
+    {l:"30-day avg",v:fmt(c.p10)},{l:"Latest sale",v:fmt(c.l10)},
+    {l:"90-day avg",v:fmt(c.a9010)},{l:"30d sales",v:c.s10+" sold"},
+    {l:"90d sales",v:c.s9010+" sold"},{l:"Pop count",v:c.pop.toLocaleString()}
+  ].map(s=>`<div class="mstat"><div class="ml">${s.l}</div><div class="mv">${s.v}</div></div>`).join("");
+  document.getElementById("mPsa9").innerHTML=[
+    {l:"30-day avg",v:fmt(c.p9)},{l:"Latest sale",v:fmt(c.l9)},
+    {l:"90-day avg",v:fmt(c.a909)},{l:"PSA 9 rate",v:c.psa9rate+"%"},
+    {l:"PSA 9 pop",v:c.p9pop.toLocaleString()},{l:"30d sales",v:c.s9+" sold"}
+  ].map(s=>`<div class="mstat"><div class="ml">${s.l}</div><div class="mv">${s.v}</div></div>`).join("");
+  document.getElementById("mRisk").innerHTML=[
+    {l:"Volatility",v:volBadge(c)+(` <span style="font-size:10px;color:var(--muted);margin-left:4px;">(score: ${c.volScore})</span>`)},
+    {l:"Floor at $80",v:`<span class="floor-badge ${fl.c}">${fl.l}</span>`},
+    {l:"Break-even gem%",v:c.br.toFixed(1)+"%",col:c.gem>c.br?"var(--green)":"var(--red)"},
+    {l:"Edge rate",v:(c.gem-c.br>=0?"+":"")+( c.gem-c.br).toFixed(1)+"%",col:c.gem-c.br>=0?"var(--green)":"var(--red)"},
+  ].map(s=>`<div class="mstat"><div class="ml">${s.l}</div><div class="mv" style="${s.col?`color:${s.col}`:""}">${s.v}</div></div>`).join("");
+  document.getElementById("mLinks").innerHTML=`<a class="eb-btn primary" href="${eu(c.n,c.set,c.v,c.num,null)}" target="_blank"><i class="ti ti-external-link"></i> Raw on eBay</a><a class="eb-btn" href="${eu(c.n,c.set,c.v,c.num,10)}" target="_blank"><i class="ti ti-external-link"></i> PSA 10</a><a class="eb-btn" href="${eu(c.n,c.set,c.v,c.num,9)}" target="_blank"><i class="ti ti-external-link"></i> PSA 9</a>`;
   document.getElementById("modalBg").style.display="flex";
-  fetchLiveData(c).then(updated=>{if(updated&&activeModalId===id)openModal(id);});
+  if(!liveCache[id]&&!c.live){fetchLive(c).then(updated=>{if(updated&&activeId===id)openModal(id);});}
 }
-function closeMBg(e){if(e.target===document.getElementById("modalBg"))document.getElementById("modalBg").style.display="none";}
 
-async function getAIInsight(){
-  const c=ALL.find(x=>x.id===activeModalId);if(!c)return;
-  const btn=document.getElementById("aiBtn"),box=document.getElementById("aiInsightBox"),spinner=document.getElementById("aiSpinner"),headerText=document.getElementById("aiHeaderText"),textEl=document.getElementById("aiText");
-  btn.disabled=true;btn.innerHTML='<div class="ai-spinner" style="display:inline-block;"></div> Analyzing…';
-  box.style.display="block";spinner.style.display="block";headerText.textContent="Analyzing this card…";textEl.textContent="";
-  const fs=floorSt(c);const t=tier(c.slabScore);
-  const prompt=`You are S.L.A.B. — Smart Listing Analysis for Buyers by Booster Sports Cards. A user is looking at this sports card grading opportunity.\n\nCard: ${c.name}\nSet: ${c.set}\nVariant: ${c.variant}\nSport: ${c.sport}\n\nData:\n- Raw price: $${c.raw}${c.live?" (live eBay)":""}\n- PSA 10 30-day avg: $${c.avg30_10}\n- PSA 10 margin: $${c.psa10Margin}\n- PSA 10 multiplier: ${c.multiplier}x\n- Gem rate: ${c.gemRate}%${c.live?"":" (estimated)"}\n- PSA 9 30-day avg: $${c.avg30_9}\n- PSA 9 floor: ${fs.label} (gap: ${c.floorGap>=0?"+":""}$${Math.round(c.floorGap)})\n- PSA 10 pop: ${c.psa10pop||"unknown"}\n- 30d PSA 10 sales: ${c.sales30_10||0}\n- S.L.A.B. score: ${t} ${c.slabScore}/100\n\nWrite a plain-English market insight for a beginner. Cover: (1) is this a good grading opportunity and why, (2) what the PSA 9 floor means for their risk, (3) one thing to watch out for, (4) bottom-line recommendation. Under 180 words. No bullet points — short natural paragraphs. Friendly and direct.`;
+async function getInsight(){
+  const c=ALL.find(x=>x.id===activeId);if(!c)return;
+  const btn=document.getElementById("aiBtn"),box=document.getElementById("aiBox"),sp=document.getElementById("aiSpinner"),ht=document.getElementById("aiHeaderText"),at=document.getElementById("aiText");
+  btn.disabled=true;btn.innerHTML='<div class="spinner"></div> Analyzing…';
+  box.style.display="block";sp.style.display="inline-block";ht.textContent="Analyzing…";at.textContent="";
+  const ti=tier(c.sc),fl=flr(c);
+  const prompt=`You are S.L.A.B. — Smart Listing Analysis for Buyers by Booster Sports Cards. PSA minimum fee is $80/card.\n\nCard: ${c.n} — ${c.set} · ${c.v} · #${c.num} (${c.sport})${c.coinRank?`\nCOIN rank: #${c.coinRank}`:""}\nData: ${c.live?"Live eBay":"Sports Card Investor & COIN, June 8 2026"}\n\nData:\n- Raw: ${fmt(c.raw)} · Break-even: ${fmt(c.bec)}\n- PSA 10 mult: ${fmtX(c.mult)} · 30d avg: ${fmt(c.p10)} · Margin: ${fmt(c.m)}\n- Gem rate: ${c.gem}% · PSA 9 rate: ${c.psa9rate}%\n- PSA 10 pop: ${c.pop} ${c.pop<50?"(EXTREMELY RARE)":c.pop<200?"(low pop)":""} · Total pop: ${c.totpop}\n- PSA 9 30d avg: ${fmt(c.p9)} · PSA 9 pop: ${c.p9pop}\n- PSA 9 floor: ${fl.l} (gap: ${c.fg>=0?"+":""}${fmt(c.fg)})\n- Volatility: ${c.volLabel} (${c.volScore}/100)\n- S.L.A.B. score: ${ti.t} ${c.sc}/100 · Strong $80 play: ${c.s80?"YES":"NO"}\n\nWrite a plain-English market insight for a beginner. Cover: (1) does this make sense to grade at $80, (2) multiplier and pop story, (3) PSA 9 floor and volatility risk, (4) clear recommendation. Under 180 words. Short paragraphs, no bullets. Friendly and direct.`;
   try{
     const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:prompt}]})});
     const data=await res.json();
     const text=data.content?.map(b=>b.text||"").join("")||"Unable to generate insight.";
-    spinner.style.display="none";headerText.textContent="✦ AI Market Insight";
-    textEl.innerHTML=text.split(/\n+/).filter(p=>p.trim()).map(p=>`<p>${p.trim()}</p>`).join("");
-  }catch{spinner.style.display="none";headerText.textContent="AI Market Insight";textEl.innerHTML=`<p style="color:var(--muted);">Unable to load insight. Please try again.</p>`;}
+    sp.style.display="none";ht.textContent="✦ AI Market Insight"+(c.live?" · Live data":"");
+    at.innerHTML=text.split(/\n+/).filter(p=>p.trim()).map(p=>`<p>${p.trim()}</p>`).join("");
+  }catch{sp.style.display="none";ht.textContent="AI Market Insight";at.innerHTML=`<p style="color:var(--muted);">Unable to load. Please try again.</p>`;}
   btn.style.display="none";
 }
 
 function calcEdge(){
-  const buy=+document.getElementById("cBuy").value||0,fee=+document.getElementById("cFee").value||25,p9=+document.getElementById("cPsa9").value||0,p10=+document.getElementById("cPsa10").value||0,gem=+document.getElementById("cGem").value||0;
-  if(!buy||!p9||!p10||!gem){["rBEC","rFG","rBR","rEP","rFS","rCS"].forEach(id=>document.getElementById(id).textContent="—");document.getElementById("calcVerdict").className="verdict neu";document.getElementById("calcVerdict").textContent="Enter your numbers.";return;}
+  const buy=+document.getElementById("cBuy").value||0,fee=+document.getElementById("cFee").value||80,p9=+document.getElementById("cPsa9").value||0,p10=+document.getElementById("cPsa10").value||0,gem=+document.getElementById("cGem").value||0;
+  if(!buy||!p9||!p10||!gem){["rBEC","rFG","rBR","rEP","rFS","rCS"].forEach(id=>document.getElementById(id).textContent="—");document.getElementById("calcVerdict").className="verdict vneu";document.getElementById("calcVerdict").textContent="Enter your numbers to see if this play works at $80.";return;}
   const bec=buy+fee,fg=p9-bec,br=Math.max(0,(bec-p9)/(p10-p9)*100),edge=gem-br,profit=(gem/100)*p10+((1-gem/100)*p9)-bec,conf=Math.max(5,Math.round(50/Math.max(1,gem)));
   document.getElementById("rBEC").textContent=fmt(bec);
   const fgEl=document.getElementById("rFG");fgEl.style.color=fg>=0?"var(--green)":fg>=-bec*0.15?"var(--amber)":"var(--red)";fgEl.textContent=(fg>=0?"+":"")+fmt(fg);
   document.getElementById("rBR").textContent=br.toFixed(1)+"%";
   const rP=document.getElementById("rEP");rP.style.color=profit>0?"var(--gold)":"var(--red)";rP.textContent=(profit>=0?"":"-")+"$"+Math.abs(Math.round(profit)).toLocaleString();
-  const fst=fg>=0?"✓ Safe":fg>=-bec*0.15?"~ Close":"✗ Risk",fcl=fg>=0?"floor-safe":fg>=-bec*0.15?"floor-close":"floor-risk";
+  const fst=fg>=0?"✓ Safe":fg>=-bec*0.15?"~ Close":"✗ Risk",fcl=fg>=0?"fs":fg>=-bec*0.15?"fc":"fr";
   document.getElementById("rFS").innerHTML=`<span class="floor-badge ${fcl}">${fst}</span>`;
   document.getElementById("rCS").textContent=conf+" submissions";
-  const v=document.getElementById("calcVerdict"),fn=fg>=0?" PSA 9 floor is safe.":fg>=-bec*0.15?" PSA 9 close to break-even.":" PSA 9 does not cover costs.";
-  if(edge>8){v.className="verdict pos";v.textContent=`Strong play.${fn} Expected profit ~${fmt(profit)} per submission.`;}
-  else if(edge>0){v.className="verdict pos";v.textContent=`Marginal play.${fn}`;}
-  else{v.className="verdict neg";v.textContent=`Not recommended at this price.${fn}`;}
+  const v=document.getElementById("calcVerdict");
+  if(edge>8){v.className="verdict vpos";v.textContent=`Strong play at $80. Expected profit ~${fmt(profit)} per submission.`;}
+  else if(edge>0){v.className="verdict vpos";v.textContent=`Marginal play at $80.`;}
+  else{v.className="verdict vneg";v.textContent=`Not recommended at $80. Fee erodes the math.`;}
 }
 
-function showPanel(id,btn){document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));document.querySelectorAll(".ntab").forEach(t=>t.classList.remove("active"));document.getElementById("panel-"+id).classList.add("active");btn.classList.add("active");if(id==="watchlist")renderWatchlist();}
 document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")applyAll();});
 applyAll();
 </script>

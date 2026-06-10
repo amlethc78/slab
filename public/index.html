@@ -43,6 +43,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .ctop{width:100%;height:115px;background:linear-gradient(145deg,#1a1b24,#0e0f14);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;border-bottom:1px solid var(--border);padding:8px;gap:3px;}
 .ctop-name{font-size:12px;font-weight:600;color:var(--muted);text-align:center;}
 .ctop-set{font-size:9px;color:var(--dim);text-align:center;}
+.ctop-year{font-size:9px;color:var(--gold);text-align:center;font-weight:500;}
 .rank-lbl{position:absolute;top:7px;left:7px;font-size:9px;font-weight:600;padding:2px 6px;border-radius:99px;}
 .rank-coin{background:rgba(240,180,41,.15);color:var(--gold);border:1px solid rgba(240,180,41,.3);}
 .rank-num{background:rgba(0,0,0,.7);color:var(--muted);}
@@ -59,7 +60,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .hot-b{background:#7c1d1d;color:#fca5a5;}
 .cbody{padding:10px 12px;}
 .card-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.card-var{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:8px;}
+.card-var{font-size:10px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.4;}
 .card-stats{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
 .cs-item{background:var(--surface2);border-radius:6px;padding:5px 7px;}
 .cs-label{font-size:9px;color:var(--dim);margin-bottom:1px;}
@@ -526,15 +527,16 @@ function renderGrid(data,offset){
     return`<div class="card-item${wled?" wl":""}" onclick="openModal('${c.id}')">
       <div class="ctop">
         <div class="ctop-name">${c.n}</div>
-        <div class="ctop-set">${c.set}</div>
+        <div class="ctop-year">${c.set.match(/\d{4}/)?.[0]||''}</div>
+        <div class="ctop-set">${c.v}</div>
         ${rl}
         <div class="card-star${wled?" on":""}" onclick="event.stopPropagation();toggleW('${c.id}')">${wled?"★":"☆"}</div>
         <div class="score-badge ${ti.c}">${ti.t} ${c.sc}</div>
         ${bot}
       </div>
       <div class="cbody">
-        <div class="card-name">${c.v}</div>
-        <div class="card-var">#${c.num}</div>
+        <div class="card-name">${c.n}</div>
+        <div class="card-var">${c.set} · ${c.v} · #${c.num}</div>
         <div class="card-stats">
           <div class="cs-item"><div class="cs-label">Raw price</div><div class="cs-val w">${fmt(c.raw)}</div></div>
           <div class="cs-item"><div class="cs-label">PSA 10 mult</div><div class="cs-val g">${fmtX(c.mult)}</div></div>
@@ -601,7 +603,7 @@ function toggleW(id){if(wl.has(id))wl.delete(id);else wl.add(id);updWL();applyAl
 function toggleWM(){toggleW(activeId);}
 function updWL(){const n=wl.size,b=document.getElementById("wlBadge");b.textContent=n;b.style.display=n>0?"":"none";document.getElementById("wlSub").textContent=`${n} card${n!==1?"s":""} saved`;}
 function clearWL(){wl.clear();updWL();renderWL();applyAll();}
-function renderWL(){const a=document.getElementById("watchlistArea");if(!wl.size){a.innerHTML=`<div style="padding:2rem;text-align:center;color:var(--muted);">⭐<br><br>No cards saved yet.</div>`;return;}const cards=ALL.filter(c=>wl.has(c.id));a.innerHTML=`<div class="card-grid">${cards.map(c=>{const ti=tier(c.sc),fl=flr(c);return`<div class="card-item wl" onclick="openModal('${c.id}')"><div class="ctop"><div class="ctop-name">${c.n}</div><div class="ctop-set">${c.set}</div><div class="card-star on" onclick="event.stopPropagation();toggleW('${c.id}')">★</div><div class="score-badge ${ti.c}">${ti.t} ${c.sc}</div></div><div class="cbody"><div class="card-name">${c.v}</div><div class="card-var">#${c.num}</div><div class="card-stats"><div class="cs-item"><div class="cs-label">Raw</div><div class="cs-val w">${fmt(c.raw)}</div></div><div class="cs-item"><div class="cs-label">Mult</div><div class="cs-val g">${fmtX(c.mult)}</div></div><div class="cs-item"><div class="cs-label">Gem</div><div class="cs-val g">${c.gem}%</div></div><div class="cs-item"><div class="cs-label">Volatility</div><div class="cs-val">${volBadge(c)}</div></div></div><div class="card-foot"><span class="floor-badge ${fl.c}">${fl.l}</span>${spt(c.sport)}</div></div></div>`;}).join("")}</div>`;}
+function renderWL(){const a=document.getElementById("watchlistArea");if(!wl.size){a.innerHTML=`<div style="padding:2rem;text-align:center;color:var(--muted);">⭐<br><br>No cards saved yet.</div>`;return;}const cards=ALL.filter(c=>wl.has(c.id));a.innerHTML=`<div class="card-grid">${cards.map(c=>{const ti=tier(c.sc),fl=flr(c);return`<div class="card-item wl" onclick="openModal('${c.id}')"><div class="ctop"><div class="ctop-name">${c.n}</div><div class="ctop-year">${c.set.match(/\d{4}/)?.[0]||''}</div><div class="ctop-set">${c.v}</div><div class="card-star on" onclick="event.stopPropagation();toggleW('${c.id}')">★</div><div class="score-badge ${ti.c}">${ti.t} ${c.sc}</div></div><div class="cbody"><div class="card-name">${c.n}</div><div class="card-var">${c.set} · ${c.v} · #${c.num}</div><div class="card-stats"><div class="cs-item"><div class="cs-label">Raw</div><div class="cs-val w">${fmt(c.raw)}</div></div><div class="cs-item"><div class="cs-label">Mult</div><div class="cs-val g">${fmtX(c.mult)}</div></div><div class="cs-item"><div class="cs-label">Gem</div><div class="cs-val g">${c.gem}%</div></div><div class="cs-item"><div class="cs-label">Volatility</div><div class="cs-val">${volBadge(c)}</div></div></div><div class="card-foot"><span class="floor-badge ${fl.c}">${fl.l}</span>${spt(c.sport)}</div></div></div>`;}).join("")}</div>`;}
 
 async function openModal(id){
   const c=ALL.find(x=>x.id===id);if(!c)return;

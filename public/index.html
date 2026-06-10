@@ -653,6 +653,59 @@ async function openModal(id){
   document.getElementById("mLinks").innerHTML=`<a class="eb-btn primary" href="${eu(c.n,c.set,c.v,c.num,null)}" target="_blank"><i class="ti ti-external-link"></i> Raw on eBay</a><a class="eb-btn" href="${eu(c.n,c.set,c.v,c.num,10)}" target="_blank"><i class="ti ti-external-link"></i> PSA 10</a><a class="eb-btn" href="${eu(c.n,c.set,c.v,c.num,9)}" target="_blank"><i class="ti ti-external-link"></i> PSA 9</a>`;
   document.getElementById("modalBg").style.display="flex";
   if(!liveCache[id]&&!c.live){fetchLive(c).then(updated=>{if(updated&&activeId===id)openModal(id);});}
+  // Fetch real PSA pop data if not cached
+  if(!psaCache[id]){fetchPSA(c);}
+}
+
+// ── PSA POPULATION DATA ──
+const psaCache={};
+async function fetchPSA(card){
+  try{
+    const res=await fetch(`/api/psa?cardId=${card.id}`);
+    if(!res.ok)return;
+    const d=await res.json();
+    if(d.error||!d.psa10pop)return;
+    psaCache[card.id]=d;
+    // Update the card in ALL array with real PSA data
+    const idx=ALL.findIndex(c=>c.id===card.id);
+    if(idx>=0){
+      ALL[idx]={...ALL[idx],
+        pop:d.psa10pop||ALL[idx].pop,
+        p9pop:d.psa9pop||ALL[idx].p9pop,
+        totpop:d.totalpop||ALL[idx].totpop,
+        gem:d.gemRate||ALL[idx].gem,
+        psa9rate:d.psa9Rate||ALL[idx].psa9rate,
+        psaLive:true
+      };
+      ALL[idx]=scoreCard(ALL[idx]);
+    }
+    // If this card is still open, refresh the PSA section in the modal
+    if(activeId===card.id){
+      const gc=d.gemRate>=60?"var(--green)":d.gemRate>=48?"var(--gold)":"var(--text)";
+      // Update gem rate display
+      const ms1=document.getElementById("mStats");
+      if(ms1){
+        const gemEl=ms1.querySelector('[data-field="gem"]');
+        if(gemEl)gemEl.textContent=d.gemRate+"%";
+      }
+      // Update PSA 9 section
+      const ms3=document.getElementById("mPsa9");
+      if(ms3&&d.psa9Rate){
+        const r9=ms3.querySelector('[data-field="psa9rate"]');
+        if(r9)r9.textContent=d.psa9Rate+"%";
+        const p9=ms3.querySelector('[data-field="psa9pop"]');
+        if(p9)p9.textContent=(d.psa9pop||0).toLocaleString();
+      }
+      // Show PSA live badge
+      const meta=document.getElementById("mMeta");
+      if(meta&&!meta.innerHTML.includes("PSA Live")){
+        meta.innerHTML+=`<span style="background:#0d1f35;color:#60a5fa;font-size:10px;padding:2px 8px;border-radius:99px;border:1px solid #1a3a5a;">PSA Live</span>`;
+      }
+    }
+    console.log(`PSA live for ${card.id}: 10pop=${d.psa10pop}, gem=${d.gemRate}%, 9pop=${d.psa9pop}`);
+  }catch(err){
+    console.log(`PSA fetch failed for ${card.id}:`,err.message);
+  }
 }
 
 async function getInsight(){

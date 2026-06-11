@@ -1,16 +1,14 @@
-// api/psa.js — PSA Population Report lookup via Apify lulzasaur/psa-pop-scraper
-// Input field is "specID" (integer) per Apify schema
+// api/psa.js — PSA Population Report via Apify lulzasaur/psa-pop-scraper
+// CommonJS format for Vercel @vercel/node compatibility
 
 const APIFY_TOKEN = process.env.APIFY_TOKEN;
 const ACTOR = 'lulzasaur~psa-pop-scraper';
 
-// PSA spec IDs — integer values from psacard.com URLs
-// URL pattern: psacard.com/auctionprices/[sport]/[set]/[player]/values/[SPEC_ID]
 const SPEC_IDS = {
   'o01': 2694018,   // 2018 Topps Update Rainbow Foil #US189
   'o07': 2659441,   // 2018 Topps Chrome Update Pink #HMT32
   'o12': 2662525,   // 2018 Topps Update Rookie Debut #US285
-  'o14': 2618202,   // 2018 Topps Chrome Rookie (Prism Refractor spec)
+  'o14': 2618202,   // 2018 Topps Chrome Rookie RC #150
   'h01': 2089244,   // Nathan MacKinnon 2013-14 Upper Deck Young Guns #238
 };
 
@@ -19,7 +17,7 @@ async function fetchPopData(specID) {
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ specID })  // integer, capital ID
+    body: JSON.stringify({ specID })
   });
   if (!res.ok) throw new Error(`Apify error: ${res.status} ${await res.text()}`);
   const data = await res.json();
@@ -29,27 +27,22 @@ async function fetchPopData(specID) {
 function parseGrades(items) {
   if (!items || !items.length) return null;
   const item = items[0];
-  console.log('Apify raw item keys:', Object.keys(item));
-  console.log('Apify raw item:', JSON.stringify(item).slice(0, 500));
+  console.log('Apify keys:', Object.keys(item));
+  console.log('Apify data:', JSON.stringify(item).slice(0, 500));
 
-  // The scraper returns population report — try all possible field names
   const psa10 = item.grade10 ?? item.psa10 ?? item['10'] ?? item.gemMint10 ??
-    item.gradeBreakdown?.['10'] ?? item.gradeBreakdown?.['PSA 10'] ??
-    item.population?.['10'] ?? null;
+    (item.gradeBreakdown && (item.gradeBreakdown['10'] ?? item.gradeBreakdown['PSA 10'])) ??
+    (item.population && (item.population['10'] ?? item.population['PSA 10'])) ?? null;
 
   const psa9 = item.grade9 ?? item.psa9 ?? item['9'] ?? item.mint9 ??
-    item.gradeBreakdown?.['9'] ?? item.gradeBreakdown?.['PSA 9'] ??
-    item.population?.['9'] ?? null;
+    (item.gradeBreakdown && (item.gradeBreakdown['9'] ?? item.gradeBreakdown['PSA 9'])) ??
+    (item.population && (item.population['9'] ?? item.population['PSA 9'])) ?? null;
 
-  const total = item.total ?? item.totalPop ?? item.totalPopulation ??
-    item.totalSubmissions ?? item.pop ?? null;
+  const total = item.total ?? item.totalPop ?? item.totalPopulation ?? item.pop ?? null;
 
   if (psa10 === null && total === null) return null;
 
-  const realTotal = parseInt(total) ||
-    Object.values(item.gradeBreakdown || item.population || {})
-      .reduce((a, b) => a + (parseInt(b) || 0), 0) || null;
-
+  const realTotal = parseInt(total) || null;
   const gemRate = (psa10 && realTotal) ? +((parseInt(psa10) / realTotal) * 100).toFixed(1) : null;
   const psa9Rate = (psa9 && realTotal) ? +((parseInt(psa9) / realTotal) * 100).toFixed(1) : null;
 
@@ -62,7 +55,7 @@ function parseGrades(items) {
   };
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET');
   if (req.method === 'OPTIONS') return res.status(200).end();
@@ -103,4 +96,4 @@ export default async function handler(req, res) {
     console.error('PSA error:', err.message);
     return res.status(500).json({ error: err.message });
   }
-}
+};

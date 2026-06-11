@@ -1,5 +1,4 @@
 // api/psa.js — PSA Population Report via Apify lulzasaur/psa-pop-scraper
-// CommonJS format for Vercel @vercel/node compatibility
 
 const APIFY_TOKEN = process.env.APIFY_TOKEN;
 const ACTOR = 'lulzasaur~psa-pop-scraper';
@@ -13,22 +12,58 @@ const SPEC_IDS = {
 };
 
 async function fetchPopData(specID) {
-  const url = `https://api.apify.com/v2/acts/${ACTOR}/run-sync-get-dataset-items?token=${APIFY_TOKEN}&timeout=55`;
-  const res = await fetch(url, {
+  // Step 1: Start the actor run
+  const runUrl = `https://api.apify.com/v2/acts/${ACTOR}/runs?token=${APIFY_TOKEN}`;
+  const runRes = await fetch(runUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ specID })
   });
-  if (!res.ok) throw new Error(`Apify error: ${res.status} ${await res.text()}`);
-  const data = await res.json();
-  return Array.isArray(data) ? data : [];
+  if (!runRes.ok) throw new Error(`Apify run error: ${runRes.status} ${await runRes.text()}`);
+  const runData = await runRes.json();
+  const runId = runData.data?.id;
+  if (!runId) throw new Error('No run ID returned from Apify');
+
+  console.log(`Apify run started: ${runId}`);
+
+  // Step 2: Poll until finished (max 50 seconds)
+  const maxWait = 50000;
+  const pollInterval = 3000;
+  const start = Date.now();
+
+  while (Date.now() - start < maxWait) {
+    await new Promise(r => setTimeout(r, pollInterval));
+
+    const statusRes = await fetch(
+      `https://api.apify.com/v2/acts/${ACTOR}/runs/${runId}?token=${APIFY_TOKEN}`
+    );
+    const statusData = await statusRes.json();
+    const status = statusData.data?.status;
+    console.log(`Run status: ${status}`);
+
+    if (status === 'SUCCEEDED') {
+      // Step 3: Get dataset items
+      const datasetId = statusData.data?.defaultDatasetId;
+      const itemsRes = await fetch(
+        `https://api.apify.com/v2/datasets/${datasetId}/items?token=${APIFY_TOKEN}&limit=10`
+      );
+      const items = await itemsRes.json();
+      return Array.isArray(items) ? items : [];
+    }
+
+    if (status === 'FAILED' || status === 'ABORTED' || status === 'TIMED-OUT') {
+      throw new Error(`Apify run ${status}`);
+    }
+  }
+
+  throw new Error('Apify run timed out after 50 seconds');
 }
 
 function parseGrades(items) {
   if (!items || !items.length) return null;
   const item = items[0];
   console.log('Apify keys:', Object.keys(item));
-  console.log('Apify data:', JSON.stringify(item).slice(0, 500));
+  console.log('Apify data:', JSON.stringify(item).slice(0, 600));
 
   const psa10 = item.grade10 ?? item.psa10 ?? item['10'] ?? item.gemMint10 ??
     (item.gradeBreakdown && (item.gradeBreakdown['10'] ?? item.gradeBreakdown['PSA 10'])) ??
@@ -86,7 +121,7 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({
         error: 'Could not parse grade data',
         rawKeys: Object.keys(items[0] || {}),
-        rawSample: JSON.stringify(items[0]).slice(0, 300)
+        rawSample: JSON.stringify(items[0]).slice(0, 400)
       });
     }
 

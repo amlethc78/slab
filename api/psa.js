@@ -4,95 +4,15 @@ const APIFY_TOKEN = process.env.APIFY_TOKEN;
 const ACTOR = 'lulzasaur~psa-pop-scraper';
 
 const SPEC_IDS = {
-  'o01': 2694018,   // 2018 Topps Update Rainbow Foil #US189
-  'o07': 2659441,   // 2018 Topps Chrome Update Pink #HMT32
-  'o12': 2662525,   // 2018 Topps Update Rookie Debut #US285
-  'o14': 2618202,   // 2018 Topps Chrome Rookie RC #150
-  'h01': 2089244,   // Nathan MacKinnon 2013-14 Upper Deck Young Guns #238
+  'o01': 2694018,
+  'o07': 2659441,
+  'o12': 2662525,
+  'o14': 2618202,
+  'h01': 2089244,
 };
-
-async function fetchPopData(specID) {
-  // Step 1: Start the actor run
-  const runUrl = `https://api.apify.com/v2/acts/${ACTOR}/runs?token=${APIFY_TOKEN}`;
-  const runRes = await fetch(runUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ specID })
-  });
-  if (!runRes.ok) throw new Error(`Apify run error: ${runRes.status} ${await runRes.text()}`);
-  const runData = await runRes.json();
-  const runId = runData.data?.id;
-  if (!runId) throw new Error('No run ID returned from Apify');
-
-  console.log(`Apify run started: ${runId}`);
-
-  // Step 2: Poll until finished (max 50 seconds)
-  const maxWait = 50000;
-  const pollInterval = 3000;
-  const start = Date.now();
-
-  while (Date.now() - start < maxWait) {
-    await new Promise(r => setTimeout(r, pollInterval));
-
-    const statusRes = await fetch(
-      `https://api.apify.com/v2/acts/${ACTOR}/runs/${runId}?token=${APIFY_TOKEN}`
-    );
-    const statusData = await statusRes.json();
-    const status = statusData.data?.status;
-    console.log(`Run status: ${status}`);
-
-    if (status === 'SUCCEEDED') {
-      // Step 3: Get dataset items
-      const datasetId = statusData.data?.defaultDatasetId;
-      const itemsRes = await fetch(
-        `https://api.apify.com/v2/datasets/${datasetId}/items?token=${APIFY_TOKEN}&limit=10`
-      );
-      const items = await itemsRes.json();
-      return Array.isArray(items) ? items : [];
-    }
-
-    if (status === 'FAILED' || status === 'ABORTED' || status === 'TIMED-OUT') {
-      throw new Error(`Apify run ${status}`);
-    }
-  }
-
-  throw new Error('Apify run timed out after 50 seconds');
-}
-
-function parseGrades(items) {
-  if (!items || !items.length) return null;
-  const item = items[0];
-  console.log('Apify keys:', Object.keys(item));
-  console.log('Apify data:', JSON.stringify(item).slice(0, 600));
-
-  const psa10 = item.grade10 ?? item.psa10 ?? item['10'] ?? item.gemMint10 ??
-    (item.gradeBreakdown && (item.gradeBreakdown['10'] ?? item.gradeBreakdown['PSA 10'])) ??
-    (item.population && (item.population['10'] ?? item.population['PSA 10'])) ?? null;
-
-  const psa9 = item.grade9 ?? item.psa9 ?? item['9'] ?? item.mint9 ??
-    (item.gradeBreakdown && (item.gradeBreakdown['9'] ?? item.gradeBreakdown['PSA 9'])) ??
-    (item.population && (item.population['9'] ?? item.population['PSA 9'])) ?? null;
-
-  const total = item.total ?? item.totalPop ?? item.totalPopulation ?? item.pop ?? null;
-
-  if (psa10 === null && total === null) return null;
-
-  const realTotal = parseInt(total) || null;
-  const gemRate = (psa10 && realTotal) ? +((parseInt(psa10) / realTotal) * 100).toFixed(1) : null;
-  const psa9Rate = (psa9 && realTotal) ? +((parseInt(psa9) / realTotal) * 100).toFixed(1) : null;
-
-  return {
-    psa10pop: parseInt(psa10) || null,
-    psa9pop: parseInt(psa9) || null,
-    totalpop: realTotal,
-    gemRate,
-    psa9Rate,
-  };
-}
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   const { cardId } = req.query;
@@ -100,33 +20,79 @@ module.exports = async function handler(req, res) {
   if (!APIFY_TOKEN) return res.status(500).json({ error: 'APIFY_TOKEN not set' });
 
   const specID = SPEC_IDS[cardId];
-  if (!specID) {
-    return res.status(404).json({
-      error: `No PSA spec ID for ${cardId}`,
-      available: Object.keys(SPEC_IDS)
-    });
-  }
+  if (!specID) return res.status(404).json({ error: `No spec ID for ${cardId}`, available: Object.keys(SPEC_IDS) });
 
   try {
-    console.log(`PSA lookup: cardId=${cardId}, specID=${specID}`);
-    const items = await fetchPopData(specID);
-    console.log(`Apify returned ${items.length} item(s)`);
+    // Start async run — pass maxItems to satisfy Apify requirement
+    const runRes = await fetch(
+      `https://api.apify.com/v2/acts/${ACTOR}/runs?token=${APIFY_TOKEN}&maxItems=10`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ specID, maxItems: 10 })
+      }
+    );
+    if (!runRes.ok) {
+      const errText = await runRes.text();
+      throw new Error(`Start run failed: ${runRes.status} ${errText}`);
+    }
+    const runJson = await runRes.json();
+    const runId = runJson.data?.id;
+    const datasetId = runJson.data?.defaultDatasetId;
+    if (!runId) throw new Error(`No run ID. Response: ${JSON.stringify(runJson).slice(0,200)}`);
+    console.log(`Run started: ${runId}, dataset: ${datasetId}`);
 
-    if (!items.length) {
-      return res.status(200).json({ error: 'No data from Apify', specID });
+    // Poll for completion (max 45 seconds)
+    let status = runJson.data?.status || 'RUNNING';
+    const deadline = Date.now() + 45000;
+    while (!['SUCCEEDED','FAILED','ABORTED','TIMED-OUT'].includes(status) && Date.now() < deadline) {
+      await new Promise(r => setTimeout(r, 3000));
+      const checkRes = await fetch(`https://api.apify.com/v2/actor-runs/${runId}?token=${APIFY_TOKEN}`);
+      const checkJson = await checkRes.json();
+      status = checkJson.data?.status;
+      console.log(`Status: ${status}`);
     }
 
-    const popData = parseGrades(items);
-    if (!popData) {
+    if (status !== 'SUCCEEDED') throw new Error(`Run ended: ${status}`);
+
+    // Fetch dataset
+    const itemsRes = await fetch(
+      `https://api.apify.com/v2/datasets/${datasetId}/items?token=${APIFY_TOKEN}&limit=10`
+    );
+    const items = await itemsRes.json();
+    if (!items.length) return res.status(200).json({ error: 'Empty dataset', runId });
+
+    const item = items[0];
+    console.log('Keys:', Object.keys(item));
+    console.log('Data:', JSON.stringify(item).slice(0, 600));
+
+    // Parse grades
+    const psa10 = item.grade10 ?? item.psa10 ?? item['10'] ?? item.gemMint10 ??
+      item.gradeBreakdown?.['10'] ?? item.gradeBreakdown?.['PSA 10'] ?? null;
+    const psa9 = item.grade9 ?? item.psa9 ?? item['9'] ?? item.mint9 ??
+      item.gradeBreakdown?.['9'] ?? item.gradeBreakdown?.['PSA 9'] ?? null;
+    const total = item.total ?? item.totalPop ?? item.totalPopulation ?? item.pop ?? null;
+
+    if (psa10 === null && total === null) {
       return res.status(200).json({
-        error: 'Could not parse grade data',
-        rawKeys: Object.keys(items[0] || {}),
-        rawSample: JSON.stringify(items[0]).slice(0, 400)
+        error: 'Could not parse grades',
+        keys: Object.keys(item),
+        sample: JSON.stringify(item).slice(0, 400)
       });
     }
 
-    console.log(`Result: PSA10=${popData.psa10pop}, PSA9=${popData.psa9pop}, Total=${popData.totalpop}, Gem%=${popData.gemRate}`);
-    return res.status(200).json(popData);
+    const realTotal = parseInt(total) || null;
+    const gemRate = (psa10 && realTotal) ? +((parseInt(psa10)/realTotal)*100).toFixed(1) : null;
+    const psa9Rate = (psa9 && realTotal) ? +((parseInt(psa9)/realTotal)*100).toFixed(1) : null;
+
+    return res.status(200).json({
+      psa10pop: parseInt(psa10)||null,
+      psa9pop: parseInt(psa9)||null,
+      totalpop: realTotal,
+      gemRate,
+      psa9Rate
+    });
+
   } catch (err) {
     console.error('PSA error:', err.message);
     return res.status(500).json({ error: err.message });

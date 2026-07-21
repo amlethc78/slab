@@ -423,12 +423,12 @@ let page=1,fdata=[],wl=new Set(),sport="top",activeId=null,view="grid";
 async function fetchLive(card){
   if(liveCache[card.id])return liveCache[card.id];
   try{
-    const url=`/api/search?name=${encodeURIComponent(card.n)}&set=${encodeURIComponent(card.set)}&variant=${encodeURIComponent(card.num)}`;
+    const url=`/api/search?name=${encodeURIComponent(card.n)}&set=${encodeURIComponent(card.set)}&variant=${encodeURIComponent(card.v)}&num=${encodeURIComponent(card.num)}`;
     const res=await fetch(url);
     if(!res.ok)return null;
     const d=await res.json();
-    if(!d.raw||d.raw<5)return null;
-    const merged=scoreCard({...card,raw:d.raw||card.raw,p10:d.avg30_10||card.p10,p9:d.avg30_9||card.p9,s10:d.sales30_10||card.s10,s9:d.sales30_9||card.s9,img:d.image||null,live:true});
+    if(!d.image)return null;
+    const merged=scoreCard({...card,img:d.image});
     liveCache[card.id]=merged;
     const idx=ALL.findIndex(c=>c.id===card.id);
     if(idx>=0)ALL[idx]=merged;

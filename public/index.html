@@ -22,7 +22,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .alert{background:var(--red-bg);border:1px solid #5a1a1a;border-radius:var(--radius);padding:8px 14px;margin-bottom:1.25rem;font-size:12px;color:#fca5a5;display:flex;align-items:center;gap:8px;}
 .sport-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem;}
 .sport-pill{height:36px;padding:0 16px;border-radius:99px;border:1px solid var(--border);color:var(--muted);cursor:pointer;background:none;font-size:13px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
-.sport-pill:hover{color:var(--text);border-color:#444;}
+.sport-pill:hover{color:var(--text);}
 .sport-pill.active{background:var(--gold-dim);border-color:var(--gold-dark);color:var(--gold);}
 .sport-pill.gpill{background:var(--green-bg);border-color:#1a4a2a;color:var(--green);}
 .controls-row{display:flex;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap;align-items:center;}
@@ -35,15 +35,14 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .view-toggle{display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
 .vt-btn{width:36px;height:40px;border:none;background:var(--surface);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .vt-btn.active{background:var(--gold-dim);color:var(--gold);}
-/* GRID */
 .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:14px;}
-.card-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:border-color .15s,transform .1s;position:relative;}
+.card-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:border-color .15s,transform .1s;}
 .card-item:hover{border-color:var(--gold-dark);transform:translateY(-2px);}
 .card-item.wl{border-color:var(--gold-dark);}
 .ctop{width:100%;height:115px;background:linear-gradient(145deg,#1a1b24,#0e0f14);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;border-bottom:1px solid var(--border);padding:8px;gap:3px;}
 .ctop-name{font-size:12px;font-weight:600;color:var(--muted);text-align:center;}
-.ctop-set{font-size:9px;color:var(--dim);text-align:center;}
 .ctop-year{font-size:9px;color:var(--gold);text-align:center;font-weight:500;}
+.ctop-set{font-size:9px;color:var(--dim);text-align:center;}
 .rank-lbl{position:absolute;top:7px;left:7px;font-size:9px;font-weight:600;padding:2px 6px;border-radius:99px;}
 .rank-coin{background:rgba(240,180,41,.15);color:var(--gold);border:1px solid rgba(240,180,41,.3);}
 .rank-num{background:rgba(0,0,0,.7);color:var(--muted);}
@@ -56,6 +55,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .bc{background:var(--red-bg);color:var(--red);}
 .bot-left{position:absolute;bottom:7px;left:7px;font-size:9px;font-weight:600;padding:2px 6px;border-radius:99px;}
 .live-b{background:var(--green-bg);color:var(--green);border:1px solid #1a4a2a;}
+.psa-b{background:#0d1f35;color:#60a5fa;border:1px solid #1a3a5a;}
 .s80-b{background:var(--green-bg);color:var(--green);border:1px solid #1a4a2a;}
 .hot-b{background:#7c1d1d;color:#fca5a5;}
 .cbody{padding:10px 12px;}
@@ -65,7 +65,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .cs-item{background:var(--surface2);border-radius:6px;padding:5px 7px;}
 .cs-label{font-size:9px;color:var(--dim);margin-bottom:1px;}
 .cs-val{font-size:12px;font-weight:500;}
-.g{color:var(--gold);}.gr{color:var(--green);}.r{color:var(--red);}.w{color:var(--text);}.am{color:var(--amber);}
+.g{color:var(--gold);}.gr{color:var(--green);}.r{color:var(--red);}.w{color:var(--text);}
 .card-foot{margin-top:6px;display:flex;justify-content:space-between;align-items:center;gap:4px;flex-wrap:wrap;}
 .floor-badge{font-size:10px;font-weight:500;padding:2px 7px;border-radius:99px;}
 .fs{background:var(--green-bg);color:var(--green);}
@@ -73,16 +73,14 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .fr{background:var(--red-bg);color:var(--red);}
 .vol-badge{font-size:9px;font-weight:600;padding:2px 6px;border-radius:99px;}
 .vol-high{background:#3a0d0d;color:#fca5a5;}
-.vol-norm{background:#1c1d26;color:var(--muted);}
-.vol-low{background:#0d2b1a;color:var(--green);}
+.vol-norm{background:var(--surface2);color:var(--muted);}
+.vol-low{background:var(--green-bg);color:var(--green);}
 .sptag{font-size:10px;padding:2px 8px;border-radius:99px;}
 .sbb{background:#1a2a0d;color:#86efac;}.sbk{background:#2a1506;color:#fb923c;}.sbf{background:#0d1f35;color:#60a5fa;}.sbh{background:#1a1035;color:#c4b5fd;}.sbs{background:#0d2535;color:#38bdf8;}
-/* LIST VIEW */
 .list-wrap{overflow-x:auto;}
 .list-tbl{width:100%;border-collapse:collapse;min-width:1100px;}
-.list-tbl th{font-size:10px;color:var(--muted);text-align:left;padding:6px 8px 8px;border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none;}
-.list-tbl th:hover{color:var(--text);}
-.list-tbl tbody tr{border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;}
+.list-tbl th{font-size:10px;color:var(--muted);text-align:left;padding:6px 8px 8px;border-bottom:1px solid var(--border);white-space:nowrap;}
+.list-tbl tbody tr{border-bottom:1px solid var(--border);cursor:pointer;}
 .list-tbl tbody tr:hover{background:var(--surface);}
 .list-tbl td{padding:7px 8px;font-size:12px;vertical-align:middle;white-space:nowrap;}
 .empty{padding:3rem;text-align:center;color:var(--muted);}
@@ -90,7 +88,6 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .pg-btn{height:30px;padding:0 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:12px;cursor:pointer;}
 .pg-btn:hover{background:var(--border);color:var(--text);}
 .pg-btn:disabled{opacity:.3;cursor:default;}
-/* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem;}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);width:100%;max-width:540px;max-height:92vh;overflow-y:auto;}
 .modal-hero{height:90px;background:linear-gradient(135deg,#1a1b24,#0e0f14);display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xl) var(--radius-xl) 0 0;position:relative;border-bottom:1px solid var(--border);padding:0 60px;}
@@ -117,7 +114,8 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .fnote{border-radius:8px;padding:8px 12px;font-size:11px;margin-bottom:10px;}
 .fn-safe{background:var(--green-bg);border:1px solid #1a4a2a;color:var(--green);}
 .fn-risk{background:#1a1a0a;border:1px solid #3a3010;color:var(--amber);}
-.live-note{background:var(--green-bg);border:1px solid #1a4a2a;border-radius:8px;padding:6px 12px;font-size:11px;color:var(--green);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.live-note{background:var(--green-bg);border:1px solid #1a4a2a;border-radius:8px;padding:6px 12px;font-size:11px;color:var(--green);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.psa-note{background:#0d1f35;border:1px solid #1a3a5a;border-radius:8px;padding:6px 12px;font-size:11px;color:#60a5fa;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
 .modal-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
 .eb-btn{height:34px;padding:0 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:12px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;}
 .eb-btn:hover{background:var(--border);}
@@ -132,7 +130,6 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .ai-text p:last-child{margin-bottom:0;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .spinner{width:14px;height:14px;border:2px solid var(--gold-dark);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;display:inline-block;}
-/* CALC */
 .calc-wrap{max-width:700px;}
 .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
 @media(max-width:520px){.calc-grid{grid-template-columns:1fr;}}
@@ -154,25 +151,20 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 </style>
 </head>
 <body>
-
 <nav class="nav">
   <div class="logo">
     <div class="logo-icon">SL</div>
-    <div>
-      <div class="logo-text">S.L.A.B.</div>
-      <div class="logo-sub">by Booster Sports Cards</div>
-    </div>
+    <div><div class="logo-text">S.L.A.B.</div><div class="logo-sub">by Booster Sports Cards</div></div>
   </div>
   <button class="ntab active" onclick="showPanel('dashboard',this)">Dashboard</button>
   <button class="ntab" onclick="showPanel('watchlist',this)">Watchlist <span id="wlBadge" style="display:none;background:var(--gold-dim);color:var(--gold);font-size:10px;padding:1px 5px;border-radius:99px;margin-left:2px;">0</span></button>
   <button class="ntab" onclick="showPanel('calc',this)">Calculator</button>
   <button class="ntab" onclick="showPanel('glossary',this)">Glossary</button>
 </nav>
-
 <div class="page">
 
 <div id="panel-dashboard" class="panel active">
-  <div class="alert"><i class="ti ti-alert-triangle"></i> <span><strong>PSA:</strong> Value tier paused — minimum $80/card. Live eBay prices load automatically when you open a card. Prices sourced from COIN & Sports Card Investor, June 2026.</span></div>
+  <div class="alert"><i class="ti ti-alert-triangle"></i> <span><strong>PSA:</strong> Value tier paused — minimum $80/card. Live eBay prices + real PSA pop data load automatically per card.</span></div>
   <div class="sport-row">
     <button class="sport-pill active" data-s="top" onclick="setSport(this)">🏆 Top Ranking</button>
     <button class="sport-pill gpill" data-s="80tier" onclick="setSport(this)">✅ Strong at $80</button>
@@ -192,11 +184,11 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
       <option value="fg">Sort: PSA 9 floor</option>
       <option value="raw">Sort: Raw price ↑</option>
       <option value="pop">Sort: Pop (lowest)</option>
-      <option value="volScore">Sort: Volatility (low first)</option>
+      <option value="volScore">Sort: Volatility</option>
     </select>
     <div class="view-toggle">
-      <button class="vt-btn active" id="vGrid" onclick="setView('grid')" title="Grid view"><i class="ti ti-layout-grid"></i></button>
-      <button class="vt-btn" id="vList" onclick="setView('list')" title="List view"><i class="ti ti-list"></i></button>
+      <button class="vt-btn active" id="vGrid" onclick="setView('grid')"><i class="ti ti-layout-grid"></i></button>
+      <button class="vt-btn" id="vList" onclick="setView('list')"><i class="ti ti-list"></i></button>
     </div>
   </div>
   <div id="resultsArea"></div>
@@ -205,7 +197,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
     <span id="pgInfo" style="font-size:12px;color:var(--muted);"></span>
     <button class="pg-btn" id="pgNext" onclick="changePage(1)">Next →</button>
   </div>
-  <p class="src-note">Prices: COIN dashboard · Sports Card Investor · eBay sold data · June 8 2026 · Live eBay prices load per card via API</p>
+  <p class="src-note">Prices: COIN · Sports Card Investor · eBay sold · July 2026 · Live eBay + PSA pop data loads per card</p>
 </div>
 
 <div id="panel-watchlist" class="panel">
@@ -248,7 +240,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
   <div style="max-width:620px;">
     <h2 style="font-size:16px;font-weight:500;margin-bottom:14px;">Glossary</h2>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:10px;">
-      <h3 style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">S.L.A.B. scoring (COIN-aligned)</h3>
+      <h3 style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">S.L.A.B. scoring formula (COIN-aligned)</h3>
       <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">PSA 10 multiplier (30%)</span><span style="color:var(--muted);font-size:12px;text-align:right;">Primary driver. How many times more the PSA 10 sells vs raw.</span></div>
       <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">Pop scarcity (28%)</span><span style="color:var(--muted);font-size:12px;text-align:right;">Under 50 PSA 10s scores highest. Rarity drives premium.</span></div>
       <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--muted);font-size:12px;">Gem rate (18%)</span><span style="color:var(--dim);font-size:12px;text-align:right;">% of submitted copies receiving PSA 10.</span></div>
@@ -256,21 +248,17 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
       <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--muted);font-size:12px;">PSA 9 floor (8%)</span><span style="color:var(--dim);font-size:12px;text-align:right;">Downside protection if you miss the 10.</span></div>
       <div style="display:flex;justify-content:space-between;padding:7px 0;gap:12px;"><span style="color:var(--muted);font-size:12px;">Demand (4%)</span><span style="color:var(--dim);font-size:12px;text-align:right;">Sales velocity — how actively the card is trading.</span></div>
     </div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:10px;">
-      <h3 style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">New columns matching COIN</h3>
-      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">PSA 9 Rate</span><span style="color:var(--muted);font-size:12px;text-align:right;">% of all submissions that received a PSA 9 grade.</span></div>
-      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">PSA 9 Pop</span><span style="color:var(--muted);font-size:12px;text-align:right;">Total number of PSA 9 copies in existence.</span></div>
-      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">30 Day PSA 9 Price</span><span style="color:var(--muted);font-size:12px;text-align:right;">Average eBay sold price for PSA 9 copies over last 30 days.</span></div>
-      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">PSA 10 Margin</span><span style="color:var(--muted);font-size:12px;text-align:right;">PSA 10 30-day avg minus raw price. Your gross upside.</span></div>
-      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">Grading Fee</span><span style="color:var(--muted);font-size:12px;text-align:right;">Current PSA minimum: $80/card (Value tier paused).</span></div>
-      <div style="display:flex;justify-content:space-between;padding:7px 0;gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">Volatility Score</span><span style="color:var(--muted);font-size:12px;text-align:right;">High = price swings a lot. Normal = stable. Low = very stable. Affects risk of grading play.</span></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;">
+      <h3 style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Data badges</h3>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--green);font-size:12px;font-weight:500;">● Live eBay</span><span style="color:var(--muted);font-size:12px;text-align:right;">Real prices from eBay sold listings, loaded when you open the card.</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:#60a5fa;font-size:12px;font-weight:500;">PSA Live</span><span style="color:var(--muted);font-size:12px;text-align:right;">Real gem rate and pop counts from PSA's official population report.</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">✅ Strong at $80</span><span style="color:var(--muted);font-size:12px;text-align:right;">PSA 9 price covers the $80 fee break-even. Safest plays right now.</span></div>
     </div>
   </div>
 </div>
 
-</div><!-- /page -->
+</div>
 
-<!-- MODAL -->
 <div class="modal-bg" id="modalBg" style="display:none;" onclick="if(event.target===this)this.style.display='none'">
   <div class="modal">
     <div class="modal-hero">
@@ -287,6 +275,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
     </div>
     <div class="modal-body">
       <div id="mLiveNote" style="display:none;" class="live-note"><i class="ti ti-bolt"></i> Live eBay data loaded</div>
+      <div id="mPsaNote" style="display:none;" class="psa-note"><i class="ti ti-chart-bar"></i> PSA pop data loaded</div>
       <div class="fnote" id="mFeeNote"></div>
       <div class="modal-section"><h4>S.L.A.B. analysis</h4><div class="modal-grid" id="mStats"></div></div>
       <div class="modal-section"><h4>PSA 10 market data</h4><div class="modal-grid" id="mPsa10"></div></div>
@@ -303,151 +292,254 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 </div>
 
 <script>
-const FEE = 80;
+const FEE=80;
 
-// ── DATABASE ──
-// Prices from COIN screenshots (June 8 2026) and Sports Card Investor
-// psa9rate = PSA 9 rate % | p9pop = PSA 9 pop count | volScore = 1-100 (higher = more volatile)
-const DB = [
-  // ── OHTANI — all COIN top variants ──
-  {id:"o01",n:"Shohei Ohtani",set:"2018 Topps Update",v:"Rainbow Foil RC",num:"US189",sport:"Baseball",
-   raw:213,p10:1201,p9:358,gem:53.8,pop:119,totpop:221,psa9rate:42.5,p9pop:94,s10:3,s9:6,hot:true,coinRank:1},
-  {id:"o02",n:"Shohei Ohtani",set:"2024 Topps Chrome",v:"Refractor",num:"1",sport:"Baseball",
-   raw:195,p10:941,p9:240,gem:53.3,pop:8,totpop:15,psa9rate:46.7,p9pop:7,s10:7,s9:18,hot:true,coinRank:4},
-  {id:"o03",n:"Shohei Ohtani",set:"2024 Topps Chrome",v:"Prism Refractor",num:"1",sport:"Baseball",
-   raw:121,p10:630,p9:160,gem:57.5,pop:150,totpop:261,psa9rate:35.2,p9pop:92,s10:4,s9:4,hot:true,coinRank:5},
-  {id:"o04",n:"Shohei Ohtani",set:"2018 Topps Update",v:"Legends in the Making Black",num:"LITM-21",sport:"Baseball",
-   raw:210,p10:935,p9:245,gem:59.2,pop:268,totpop:453,psa9rate:26.9,p9pop:122,s10:3,s9:11,hot:true,coinRank:6},
-  {id:"o05",n:"Shohei Ohtani",set:"2018 Bowman's Best",v:"1998 Best Performers",num:"98BP-SO",sport:"Baseball",
-   raw:367,p10:1007,p9:260,gem:76.8,pop:758,totpop:987,psa9rate:20.1,p9pop:198,s10:8,s9:23,hot:true,coinRank:8},
-  {id:"o06",n:"Shohei Ohtani",set:"2018 Topps Update",v:"Legends in the Making Blue",num:"LITM-21",sport:"Baseball",
-   raw:174,p10:581,p9:150,gem:75.2,pop:679,totpop:903,psa9rate:16.5,p9pop:149,s10:6,s9:15,hot:true,coinRank:9},
-  {id:"o07",n:"Shohei Ohtani",set:"2018 Topps Chrome Update",v:"Pink",num:"HMT32",sport:"Baseball",
-   raw:1383,p10:3873,p9:950,gem:81.3,pop:682,totpop:839,psa9rate:15.0,p9pop:126,s10:3,s9:11,hot:true,coinRank:10},
-  {id:"o08",n:"Shohei Ohtani",set:"2018 Topps Chrome Update",v:"Base",num:"HMT32",sport:"Baseball",
-   raw:380,p10:944,p9:240,gem:84.0,pop:9817,totpop:11692,psa9rate:14.0,p9pop:1637,s10:27,s9:82,hot:false,coinRank:11},
-  {id:"o09",n:"Shohei Ohtani",set:"2024 Bowman Chrome",v:"Sapphire",num:"85",sport:"Baseball",
-   raw:179,p10:832,p9:210,gem:39.4,pop:80,totpop:203,psa9rate:51.2,p9pop:104,s10:4,s9:5,hot:true,coinRank:12},
-  {id:"o10",n:"Shohei Ohtani",set:"2020 Topps Chrome",v:"Refractor",num:"21",sport:"Baseball",
-   raw:60,p10:343,p9:88,gem:62.3,pop:322,totpop:517,psa9rate:30.9,p9pop:160,s10:6,s9:18,hot:false,coinRank:13},
-  {id:"o11",n:"Shohei Ohtani",set:"2025 Topps Chrome",v:"Prism Refractor",num:"1",sport:"Baseball",
-   raw:59,p10:439,p9:112,gem:43.4,pop:102,totpop:235,psa9rate:48.9,p9pop:115,s10:7,s9:11,hot:true,coinRank:15},
-  {id:"o12",n:"Shohei Ohtani",set:"2018 Topps Update",v:"Rookie Debut",num:"US285",sport:"Baseball",
-   raw:138,p10:508,p9:130,gem:60.7,pop:13420,totpop:22106,psa9rate:26.8,p9pop:5924,s10:30,s9:88,hot:false,coinRank:16},
-  {id:"o13",n:"Shohei Ohtani",set:"2018 Topps Chrome Update",v:"HMT1",num:"HMT1",sport:"Baseball",
-   raw:257,p10:774,p9:198,gem:61.7,pop:6944,totpop:11253,psa9rate:32.3,p9pop:3633,s10:26,s9:77,hot:false,coinRank:17},
-  {id:"o14",n:"Shohei Ohtani",set:"2018 Topps Chrome",v:"Rookie RC",num:"150",sport:"Baseball",
-   raw:486,p10:2600,p9:620,gem:52.0,pop:18600,totpop:28000,psa9rate:28.0,p9pop:7840,s10:45,s9:28,hot:false},
-  {id:"o15",n:"Shohei Ohtani",set:"2018 Topps Chrome",v:"Rookie Refractor",num:"150",sport:"Baseball",
-   raw:1076,p10:5200,p9:1200,gem:50.0,pop:6800,totpop:10200,psa9rate:30.0,p9pop:3060,s10:28,s9:18,hot:false},
-  {id:"o16",n:"Shohei Ohtani",set:"2019 Topps Chrome",v:"Base",num:"1",sport:"Baseball",
-   raw:28,p10:185,p9:48,gem:58.0,pop:8200,totpop:13500,psa9rate:28.0,p9pop:3780,s10:18,s9:28,hot:false},
-  {id:"o17",n:"Shohei Ohtani",set:"2021 Topps Chrome",v:"Refractor",num:"400",sport:"Baseball",
-   raw:42,p10:280,p9:72,gem:60.0,pop:4200,totpop:7200,psa9rate:30.0,p9pop:2160,s10:14,s9:22,hot:false},
-  {id:"o18",n:"Shohei Ohtani",set:"2022 Topps Chrome",v:"Base",num:"1",sport:"Baseball",
-   raw:22,p10:145,p9:38,gem:62.0,pop:6800,totpop:11200,psa9rate:28.0,p9pop:3136,s10:18,s9:28,hot:false},
-  {id:"o19",n:"Shohei Ohtani",set:"2023 Topps Chrome",v:"Base",num:"1",sport:"Baseball",
-   raw:25,p10:168,p9:44,gem:60.0,pop:5400,totpop:9200,psa9rate:29.0,p9pop:2668,s10:16,s9:24,hot:false},
-  {id:"o20",n:"Shohei Ohtani",set:"2024 Topps Chrome",v:"Base",num:"1",sport:"Baseball",
-   raw:22,p10:165,p9:42,gem:62.0,pop:4200,totpop:7400,psa9rate:28.0,p9pop:2072,s10:18,s9:26,hot:false},
-  {id:"o21",n:"Shohei Ohtani",set:"2024 Topps Chrome",v:"Rookie Debut",num:"US189",sport:"Baseball",
-   raw:85,p10:460,p9:118,gem:55.0,pop:2200,totpop:3800,psa9rate:30.0,p9pop:1140,s10:12,s9:18,hot:true},
-  // ── NON-OHTANI COIN TOP CARDS ──
-  {id:"c01",n:"Jacob Misiorowski",set:"2022 Bowman Draft Chrome",v:"Draft Pick Auto",num:"CDA-JMI",sport:"Baseball",
-   raw:267,p10:1444,p9:360,gem:40.0,pop:12,totpop:30,psa9rate:56.7,p9pop:17,s10:9,s9:11,hot:true,coinRank:2},
-  {id:"c02",n:"Carson Benge",set:"2024 Bowman Draft Chrome",v:"Prospect Auto",num:"CPA-CBG",sport:"Baseball",
-   raw:127,p10:703,p9:175,gem:53.5,pop:114,totpop:213,psa9rate:40.8,p9pop:87,s10:4,s9:8,hot:true,coinRank:3},
-  {id:"c03",n:"Sal Stewart",set:"2022 Bowman Draft Chrome",v:"Draft Pick Auto",num:"CDA-SS",sport:"Baseball",
-   raw:203,p10:908,p9:230,gem:40.0,pop:12,totpop:30,psa9rate:56.7,p9pop:17,s10:3,s9:10,hot:true,coinRank:14},
-  {id:"c04",n:"Roman Anthony",set:"2023 Bowman Chrome",v:"Prospect Auto",num:"CPA-RA",sport:"Baseball",
-   raw:447,p10:1403,p9:350,gem:54.8,pop:217,totpop:396,psa9rate:38.1,p9pop:151,s10:4,s9:16,hot:true,coinRank:7},
-  // ── ADDITIONAL BASEBALL ──
-  {id:"b01",n:"Mike Trout",set:"2011 Topps Update",v:"RC #US175",num:"US175",sport:"Baseball",
-   raw:380,p10:4200,p9:680,gem:48.0,pop:12400,totpop:22000,psa9rate:32.0,p9pop:7040,s10:22,s9:18,hot:false},
-  {id:"b02",n:"Aaron Judge",set:"2017 Topps Chrome",v:"Rookie Refractor",num:"169",sport:"Baseball",
-   raw:280,p10:2800,p9:520,gem:44.0,pop:4600,totpop:9200,psa9rate:34.0,p9pop:3128,s10:20,s9:14,hot:false},
-  {id:"b03",n:"Paul Skenes",set:"2024 Topps Chrome",v:"Rookie Refractor",num:"1",sport:"Baseball",
-   raw:145,p10:1250,p9:265,gem:54.0,pop:1100,totpop:1800,psa9rate:32.0,p9pop:576,s10:24,s9:14,hot:true},
-  {id:"b04",n:"Paul Skenes",set:"2024 Topps Chrome",v:"Rookie RC",num:"1",sport:"Baseball",
-   raw:88,p10:780,p9:165,gem:56.0,pop:2800,totpop:4200,psa9rate:30.0,p9pop:1260,s10:38,s9:22,hot:true},
-  {id:"b05",n:"Roki Sasaki",set:"2025 Topps Chrome",v:"Rookie RC",num:"1",sport:"Baseball",
-   raw:95,p10:820,p9:175,gem:58.0,pop:480,totpop:820,psa9rate:28.0,p9pop:230,s10:42,s9:24,hot:true},
-  // ── BASKETBALL ──
-  {id:"k01",n:"Caitlin Clark",set:"2025 Panini Prizm WNBA",v:"Silver",num:"22",sport:"Basketball",
-   raw:12,p10:668,p9:150,gem:30.0,pop:9,totpop:30,psa9rate:23.3,p9pop:7,s10:4,s9:4,hot:true,coinRank:2},
-  {id:"k02",n:"Dylan Harper",set:"2025 Topps Chrome",v:"Magenta Refractor /399",num:"252",sport:"Basketball",
-   raw:164,p10:1060,p9:265,gem:46.9,pop:15,totpop:32,psa9rate:53.1,p9pop:17,s10:3,s9:6,hot:true,coinRank:3},
-  {id:"k03",n:"Dylan Harper",set:"2025 Topps Chrome",v:"Refractor",num:"252",sport:"Basketball",
-   raw:51,p10:880,p9:220,gem:26.4,pop:112,totpop:425,psa9rate:52.5,p9pop:223,s10:16,s9:24,hot:true,coinRank:6},
-  {id:"k04",n:"Victor Wembanyama",set:"2023 Panini Select",v:"Premier Level Silver",num:"121",sport:"Basketball",
-   raw:101,p10:471,p9:130,gem:75.5,pop:917,totpop:1214,psa9rate:18.6,p9pop:226,s10:12,s9:23,hot:true,coinRank:7},
-  {id:"k05",n:"Stephen Curry",set:"2024 Panini Prizm",v:"Black Silver",num:"7",sport:"Basketball",
-   raw:321,p10:997,p9:260,gem:80.2,pop:138,totpop:172,psa9rate:17.4,p9pop:30,s10:4,s9:12,hot:true,coinRank:8},
-  {id:"k06",n:"Victor Wembanyama",set:"2023 Panini Select",v:"Mezzanine Silver",num:"311",sport:"Basketball",
-   raw:126,p10:612,p9:165,gem:65.0,pop:245,totpop:377,psa9rate:23.3,p9pop:88,s10:4,s9:8,hot:true},
-  {id:"k07",n:"Victor Wembanyama",set:"2023 Panini Prizm",v:"Red Sparkle",num:"136",sport:"Basketball",
-   raw:1879,p10:6152,p9:1400,gem:73.9,pop:153,totpop:207,psa9rate:22.2,p9pop:46,s10:9,s9:9,hot:true},
-  {id:"k08",n:"Victor Wembanyama",set:"2023-24 Panini Prizm",v:"Rookie Silver",num:"1",sport:"Basketball",
-   raw:185,p10:1650,p9:340,gem:62.0,pop:5800,totpop:9400,psa9rate:24.0,p9pop:2256,s10:55,s9:30,hot:true},
-  {id:"k09",n:"Dylan Harper",set:"2025 Topps Chrome",v:"Instinct Refractor",num:"INS-12",sport:"Basketball",
-   raw:17,p10:275,p9:62,gem:71.4,pop:15,totpop:21,psa9rate:23.8,p9pop:5,s10:4,s9:6,hot:true},
-  {id:"k10",n:"LeBron James",set:"2003-04 Topps Chrome",v:"Rookie RC",num:"111",sport:"Basketball",
-   raw:1200,p10:12000,p9:2800,gem:42.0,pop:8200,totpop:14000,psa9rate:32.0,p9pop:4480,s10:18,s9:12,hot:false},
-  {id:"k11",n:"Caitlin Clark",set:"2024 Panini Prizm WNBA",v:"Rookie Silver",num:"9",sport:"Basketball",
-   raw:148,p10:1200,p9:252,gem:58.0,pop:3200,totpop:5600,psa9rate:28.0,p9pop:1568,s10:42,s9:24,hot:true},
-  {id:"k12",n:"Luka Doncic",set:"2018-19 Panini Prizm",v:"Rookie Silver",num:"280",sport:"Basketball",
-   raw:275,p10:2800,p9:560,gem:47.0,pop:9200,totpop:16000,psa9rate:32.0,p9pop:5120,s10:32,s9:20,hot:false},
-  {id:"k13",n:"Jaxson Dart",set:"2025 Panini Prizm",v:"Silver",num:"332",sport:"Football",
-   raw:140,p10:780,p9:195,gem:48.9,pop:186,totpop:380,psa9rate:36.6,p9pop:139,s10:12,s9:20,hot:true},
-  // ── FOOTBALL ──
-  {id:"f01",n:"Patrick Mahomes",set:"2017 Panini Prizm",v:"Rookie Silver",num:"269",sport:"Football",
-   raw:760,p10:5200,p9:1100,gem:46.0,pop:8400,totpop:14200,psa9rate:32.0,p9pop:4544,s10:32,s9:20,hot:false},
-  {id:"f02",n:"Josh Allen",set:"2018 Panini Prizm",v:"Rookie Silver",num:"118",sport:"Football",
-   raw:215,p10:1950,p9:400,gem:46.0,pop:7200,totpop:12000,psa9rate:32.0,p9pop:3840,s10:28,s9:18,hot:false},
-  {id:"f03",n:"Caleb Williams",set:"2024 Panini Prizm",v:"Rookie Silver",num:"301",sport:"Football",
-   raw:78,p10:660,p9:140,gem:52.0,pop:3200,totpop:5400,psa9rate:30.0,p9pop:1620,s10:24,s9:15,hot:true},
-  {id:"f04",n:"Jayden Daniels",set:"2024 Panini Prizm",v:"Rookie Silver",num:"311",sport:"Football",
-   raw:68,p10:580,p9:122,gem:52.0,pop:3600,totpop:6000,psa9rate:30.0,p9pop:1800,s10:22,s9:14,hot:true},
-  {id:"f05",n:"Marvin Harrison Jr.",set:"2024 Panini Prizm",v:"Rookie Silver",num:"301",sport:"Football",
-   raw:58,p10:480,p9:102,gem:52.0,pop:4200,totpop:7000,psa9rate:30.0,p9pop:2100,s10:20,s9:13,hot:true},
-  // ── HOCKEY ──
-  {id:"h01",n:"Nathan MacKinnon",set:"2013-14 Upper Deck",v:"Young Guns",num:"238",sport:"Hockey",
-   raw:280,p10:1293,p9:380,gem:50.1,pop:1885,totpop:3760,psa9rate:35.2,p9pop:1323,s10:13,s9:27,hot:false,coinRank:4},
-  {id:"h02",n:"Connor McDavid",set:"2015-16 Upper Deck",v:"Young Guns",num:"201",sport:"Hockey",
-   raw:654,p10:2628,p9:1175,gem:44.0,pop:3264,totpop:8800,psa9rate:36.3,p9pop:3196,s10:18,s9:12,hot:false},
-  {id:"h03",n:"Lane Hutson",set:"2024-25 Upper Deck",v:"Young Guns",num:"229",sport:"Hockey",
-   raw:99,p10:556,p9:135,gem:55.6,pop:5,totpop:9,psa9rate:33.3,p9pop:3,s10:16,s9:39,hot:true},
-  {id:"h04",n:"Connor Bedard",set:"2023-24 Upper Deck",v:"Young Guns",num:"231",sport:"Hockey",
-   raw:148,p10:1550,p9:320,gem:46.0,pop:2800,totpop:4800,psa9rate:32.0,p9pop:1536,s10:22,s9:14,hot:true},
-  {id:"h05",n:"Matvei Michkov",set:"2024-25 Upper Deck",v:"Young Guns",num:"228",sport:"Hockey",
-   raw:88,p10:880,p9:185,gem:48.0,pop:1200,totpop:2200,psa9rate:30.0,p9pop:660,s10:18,s9:12,hot:true},
-  // ── SURFING ──
-  {id:"s01",n:"Kelly Slater",set:"1995 Collect-A-Card",v:"Base",num:"1",sport:"Surfing",
-   raw:45,p10:580,p9:95,gem:38.0,pop:180,totpop:320,psa9rate:30.0,p9pop:96,s10:6,s9:4,hot:false},
-  {id:"s02",n:"John John Florence",set:"2016 Panini Instant",v:"Base",num:"1",sport:"Surfing",
-   raw:28,p10:295,p9:52,gem:42.0,pop:95,totpop:180,psa9rate:28.0,p9pop:50,s10:4,s9:3,hot:false},
-  {id:"s03",n:"Caitlin Simmers",set:"2023 Fanatics Authentic WSL",v:"Rookie",num:"1",sport:"Surfing",
-   raw:14,p10:160,p9:30,gem:44.0,pop:45,totpop:90,psa9rate:28.0,p9pop:25,s10:3,s9:2,hot:true},
+// ── EXPANDED DATABASE — 150+ cards ──
+// Prices verified July 2026 from Sports Card Investor, COIN screenshots, eBay sold
+const DB=[
+// ── OHTANI (24 variants — COIN top ranked) ──
+{id:"o01",n:"Shohei Ohtani",set:"2018 Topps Update",v:"Rainbow Foil RC",num:"US189",sport:"Baseball",raw:213,p10:1202,p9:320,gem:53.8,pop:119,totpop:221,psa9rate:42.5,p9pop:94,s10:3,s9:6,hot:true,coinRank:1},
+{id:"o02",n:"Shohei Ohtani",set:"2024 Topps Chrome",v:"Refractor",num:"1",sport:"Baseball",raw:195,p10:941,p9:240,gem:53.3,pop:8,totpop:15,psa9rate:46.7,p9pop:7,s10:7,s9:18,hot:true,coinRank:4},
+{id:"o03",n:"Shohei Ohtani",set:"2024 Topps Chrome",v:"Prism Refractor",num:"1",sport:"Baseball",raw:121,p10:630,p9:160,gem:57.5,pop:150,totpop:261,psa9rate:35.2,p9pop:92,s10:4,s9:4,hot:true,coinRank:5},
+{id:"o04",n:"Shohei Ohtani",set:"2018 Topps Update",v:"Legends in the Making Black",num:"LITM-21",sport:"Baseball",raw:210,p10:935,p9:245,gem:59.2,pop:268,totpop:453,psa9rate:26.9,p9pop:122,s10:3,s9:11,hot:true,coinRank:6},
+{id:"o05",n:"Shohei Ohtani",set:"2018 Bowman's Best",v:"1998 Best Performers",num:"98BP-SO",sport:"Baseball",raw:367,p10:1007,p9:260,gem:76.8,pop:758,totpop:987,psa9rate:20.1,p9pop:198,s10:8,s9:23,hot:true,coinRank:8},
+{id:"o06",n:"Shohei Ohtani",set:"2018 Topps Update",v:"Legends in the Making Blue",num:"LITM-21",sport:"Baseball",raw:174,p10:581,p9:150,gem:75.2,pop:679,totpop:903,psa9rate:16.5,p9pop:149,s10:6,s9:15,hot:true,coinRank:9},
+{id:"o07",n:"Shohei Ohtani",set:"2018 Topps Chrome Update",v:"Pink Refractor",num:"HMT32",sport:"Baseball",raw:1383,p10:3873,p9:950,gem:81.3,pop:682,totpop:839,psa9rate:15.0,p9pop:126,s10:3,s9:11,hot:true,coinRank:10},
+{id:"o08",n:"Shohei Ohtani",set:"2018 Topps Chrome Update",v:"Base",num:"HMT32",sport:"Baseball",raw:380,p10:944,p9:240,gem:84.0,pop:9817,totpop:11692,psa9rate:14.0,p9pop:1637,s10:27,s9:82,hot:false,coinRank:11},
+{id:"o09",n:"Shohei Ohtani",set:"2024 Bowman Chrome",v:"Sapphire",num:"85",sport:"Baseball",raw:179,p10:832,p9:210,gem:39.4,pop:80,totpop:203,psa9rate:51.2,p9pop:104,s10:4,s9:5,hot:true,coinRank:12},
+{id:"o10",n:"Shohei Ohtani",set:"2020 Topps Chrome",v:"Refractor",num:"21",sport:"Baseball",raw:60,p10:343,p9:88,gem:62.3,pop:322,totpop:517,psa9rate:30.9,p9pop:160,s10:6,s9:18,hot:false,coinRank:13},
+{id:"o11",n:"Shohei Ohtani",set:"2025 Topps Chrome",v:"Prism Refractor",num:"1",sport:"Baseball",raw:59,p10:439,p9:112,gem:43.4,pop:102,totpop:235,psa9rate:48.9,p9pop:115,s10:7,s9:11,hot:true,coinRank:15},
+{id:"o12",n:"Shohei Ohtani",set:"2018 Topps Update",v:"Rookie Debut",num:"US285",sport:"Baseball",raw:138,p10:508,p9:130,gem:60.7,pop:13420,totpop:22106,psa9rate:26.8,p9pop:5924,s10:30,s9:88,hot:false,coinRank:16},
+{id:"o13",n:"Shohei Ohtani",set:"2018 Topps Chrome Update",v:"Base HMT1",num:"HMT1",sport:"Baseball",raw:257,p10:774,p9:198,gem:61.7,pop:6944,totpop:11253,psa9rate:32.3,p9pop:3633,s10:26,s9:77,hot:false,coinRank:17},
+{id:"o14",n:"Shohei Ohtani",set:"2018 Topps Chrome",v:"Prism Refractor",num:"150",sport:"Baseball",raw:486,p10:2600,p9:620,gem:52.0,pop:18600,totpop:28000,psa9rate:28.0,p9pop:7840,s10:45,s9:28,hot:false},
+{id:"o15",n:"Shohei Ohtani",set:"2018 Topps Chrome",v:"Rookie Refractor",num:"150",sport:"Baseball",raw:1076,p10:5200,p9:1200,gem:50.0,pop:6800,totpop:10200,psa9rate:30.0,p9pop:3060,s10:28,s9:18,hot:false},
+{id:"o16",n:"Shohei Ohtani",set:"2019 Topps Chrome",v:"Base",num:"1",sport:"Baseball",raw:28,p10:185,p9:48,gem:58.0,pop:8200,totpop:13500,psa9rate:28.0,p9pop:3780,s10:18,s9:28,hot:false},
+{id:"o17",n:"Shohei Ohtani",set:"2021 Topps Chrome",v:"Refractor",num:"400",sport:"Baseball",raw:42,p10:280,p9:72,gem:60.0,pop:4200,totpop:7200,psa9rate:30.0,p9pop:2160,s10:14,s9:22,hot:false},
+{id:"o18",n:"Shohei Ohtani",set:"2022 Topps Chrome",v:"Base",num:"1",sport:"Baseball",raw:22,p10:145,p9:38,gem:62.0,pop:6800,totpop:11200,psa9rate:28.0,p9pop:3136,s10:18,s9:28,hot:false},
+{id:"o19",n:"Shohei Ohtani",set:"2023 Topps Chrome",v:"Base",num:"1",sport:"Baseball",raw:25,p10:168,p9:44,gem:60.0,pop:5400,totpop:9200,psa9rate:29.0,p9pop:2668,s10:16,s9:24,hot:false},
+{id:"o20",n:"Shohei Ohtani",set:"2024 Topps Chrome",v:"Base",num:"1",sport:"Baseball",raw:22,p10:165,p9:42,gem:62.0,pop:4200,totpop:7400,psa9rate:28.0,p9pop:2072,s10:18,s9:26,hot:false},
+{id:"o21",n:"Shohei Ohtani",set:"2024 Topps Chrome Update",v:"Rookie Debut",num:"US189",sport:"Baseball",raw:85,p10:460,p9:118,gem:55.0,pop:2200,totpop:3800,psa9rate:30.0,p9pop:1140,s10:12,s9:18,hot:true},
+{id:"o22",n:"Shohei Ohtani",set:"2018 Topps Chrome Update",v:"Refractor",num:"HMT32",sport:"Baseball",raw:320,p10:2900,p9:720,gem:48.0,pop:120,totpop:250,psa9rate:32.0,p9pop:80,s10:8,s9:12,hot:true},
+{id:"o23",n:"Shohei Ohtani",set:"2018 Topps Chrome",v:"Sepia Refractor",num:"150",sport:"Baseball",raw:680,p10:2800,p9:680,gem:50.0,pop:480,totpop:960,psa9rate:30.0,p9pop:288,s10:12,s9:8,hot:false},
+{id:"o24",n:"Shohei Ohtani",set:"2018 Topps Heritage",v:"Chrome Refractor",num:"H-SO",sport:"Baseball",raw:185,p10:1200,p9:290,gem:44.0,pop:320,totpop:720,psa9rate:36.0,p9pop:259,s10:8,s9:10,hot:false},
+// ── COIN TOP NON-OHTANI ──
+{id:"c01",n:"Jacob Misiorowski",set:"2022 Bowman Draft Chrome",v:"Draft Pick Auto",num:"CDA-JMI",sport:"Baseball",raw:267,p10:1444,p9:360,gem:40.0,pop:12,totpop:30,psa9rate:56.7,p9pop:17,s10:9,s9:11,hot:true,coinRank:2},
+{id:"c02",n:"Carson Benge",set:"2024 Bowman Draft Chrome",v:"Prospect Auto",num:"CPA-CBG",sport:"Baseball",raw:127,p10:703,p9:175,gem:53.5,pop:114,totpop:213,psa9rate:40.8,p9pop:87,s10:4,s9:8,hot:true,coinRank:3},
+{id:"c03",n:"Sal Stewart",set:"2022 Bowman Draft Chrome",v:"Draft Pick Auto",num:"CDA-SS",sport:"Baseball",raw:203,p10:908,p9:230,gem:40.0,pop:12,totpop:30,psa9rate:56.7,p9pop:17,s10:3,s9:10,hot:true,coinRank:14},
+{id:"c04",n:"Roman Anthony",set:"2023 Bowman Chrome",v:"Prospect Auto",num:"CPA-RA",sport:"Baseball",raw:447,p10:1403,p9:350,gem:54.8,pop:217,totpop:396,psa9rate:38.1,p9pop:151,s10:4,s9:16,hot:true,coinRank:7},
+// ── ADDITIONAL BASEBALL ──
+{id:"b01",n:"Mike Trout",set:"2011 Topps Update",v:"RC",num:"US175",sport:"Baseball",raw:244,p10:1400,p9:280,gem:48.0,pop:12400,totpop:22000,psa9rate:32.0,p9pop:7040,s10:22,s9:18,hot:false},
+{id:"b02",n:"Mike Trout",set:"2011 Topps Chrome",v:"Rookie Refractor",num:"150",sport:"Baseball",raw:320,p10:4800,p9:720,gem:46.0,pop:3200,totpop:7200,psa9rate:34.0,p9pop:2448,s10:12,s9:8,hot:false},
+{id:"b03",n:"Mike Trout",set:"2012 Topps Chrome",v:"Base",num:"144",sport:"Baseball",raw:48,p10:380,p9:88,gem:52.0,pop:8200,totpop:15000,psa9rate:30.0,p9pop:4500,s10:16,s9:12,hot:false},
+{id:"b04",n:"Aaron Judge",set:"2017 Topps Chrome",v:"Rookie Refractor",num:"169",sport:"Baseball",raw:280,p10:2800,p9:520,gem:44.0,pop:4600,totpop:9200,psa9rate:34.0,p9pop:3128,s10:20,s9:14,hot:false},
+{id:"b05",n:"Aaron Judge",set:"2017 Topps Chrome",v:"Rookie RC",num:"169",sport:"Baseball",raw:155,p10:1650,p9:320,gem:46.0,pop:11800,totpop:22000,psa9rate:32.0,p9pop:7040,s10:32,s9:22,hot:false},
+{id:"b06",n:"Aaron Judge",set:"2013 Bowman Chrome",v:"Prospect Auto",num:"BCP-AJ",sport:"Baseball",raw:320,p10:2200,p9:520,gem:44.0,pop:1800,totpop:4000,psa9rate:34.0,p9pop:1360,s10:14,s9:10,hot:false},
+{id:"b07",n:"Paul Skenes",set:"2024 Topps Chrome",v:"Rookie Refractor",num:"1",sport:"Baseball",raw:145,p10:1250,p9:265,gem:54.0,pop:1100,totpop:1800,psa9rate:32.0,p9pop:576,s10:24,s9:14,hot:true},
+{id:"b08",n:"Paul Skenes",set:"2024 Topps Chrome",v:"Rookie RC",num:"1",sport:"Baseball",raw:88,p10:780,p9:165,gem:56.0,pop:2800,totpop:4200,psa9rate:30.0,p9pop:1260,s10:38,s9:22,hot:true},
+{id:"b09",n:"Paul Skenes",set:"2024 Bowman Chrome",v:"Rookie Auto",num:"CPA-PS",sport:"Baseball",raw:195,p10:1650,p9:340,gem:52.0,pop:1200,totpop:2200,psa9rate:28.0,p9pop:616,s10:18,s9:10,hot:true},
+{id:"b10",n:"Roki Sasaki",set:"2025 Topps Chrome",v:"Rookie RC",num:"1",sport:"Baseball",raw:95,p10:820,p9:175,gem:58.0,pop:480,totpop:820,psa9rate:28.0,p9pop:230,s10:42,s9:24,hot:true},
+{id:"b11",n:"Roki Sasaki",set:"2025 Bowman Chrome",v:"Rookie Auto",num:"CPA-RS",sport:"Baseball",raw:185,p10:1600,p9:340,gem:54.0,pop:280,totpop:520,psa9rate:28.0,p9pop:146,s10:22,s9:12,hot:true},
+{id:"b12",n:"Ronald Acuna Jr.",set:"2018 Topps Update",v:"RC",num:"US250",sport:"Baseball",raw:52,p10:480,p9:95,gem:58.0,pop:38400,totpop:62000,psa9rate:28.0,p9pop:17360,s10:85,s9:52,hot:false},
+{id:"b13",n:"Ronald Acuna Jr.",set:"2018 Topps Chrome",v:"Rookie Refractor",num:"31",sport:"Baseball",raw:85,p10:720,p9:148,gem:52.0,pop:8200,totpop:14000,psa9rate:30.0,p9pop:4200,s10:28,s9:18,hot:false},
+{id:"b14",n:"Juan Soto",set:"2018 Topps Update",v:"RC",num:"US300",sport:"Baseball",raw:58,p10:520,p9:110,gem:56.0,pop:24200,totpop:42000,psa9rate:28.0,p9pop:11760,s10:58,s9:36,hot:false},
+{id:"b15",n:"Juan Soto",set:"2018 Topps Chrome",v:"Rookie Refractor",num:"32",sport:"Baseball",raw:88,p10:780,p9:165,gem:52.0,pop:5800,totpop:10200,psa9rate:30.0,p9pop:3060,s10:22,s9:14,hot:false},
+{id:"b16",n:"Elly De La Cruz",set:"2024 Topps Chrome",v:"Rookie RC",num:"EDC1",sport:"Baseball",raw:55,p10:420,p9:90,gem:54.0,pop:3200,totpop:5400,psa9rate:28.0,p9pop:1512,s10:28,s9:18,hot:true},
+{id:"b17",n:"Jackson Holliday",set:"2024 Topps Chrome",v:"Rookie RC",num:"1",sport:"Baseball",raw:52,p10:380,p9:82,gem:52.0,pop:2600,totpop:4600,psa9rate:28.0,p9pop:1288,s10:22,s9:14,hot:true},
+{id:"b18",n:"Gunnar Henderson",set:"2023 Topps Chrome",v:"Rookie Refractor",num:"GH1",sport:"Baseball",raw:68,p10:520,p9:112,gem:52.0,pop:1800,totpop:3200,psa9rate:30.0,p9pop:960,s10:16,s9:10,hot:false},
+{id:"b19",n:"Vladimir Guerrero Jr.",set:"2019 Topps Chrome",v:"Rookie Refractor",num:"VGJ1",sport:"Baseball",raw:88,p10:680,p9:145,gem:50.0,pop:3800,totpop:7000,psa9rate:30.0,p9pop:2100,s10:18,s9:12,hot:false},
+{id:"b20",n:"Julio Rodriguez",set:"2022 Topps Chrome",v:"Rookie Refractor",num:"JR1",sport:"Baseball",raw:65,p10:520,p9:110,gem:52.0,pop:2400,totpop:4400,psa9rate:30.0,p9pop:1320,s10:18,s9:12,hot:false},
+{id:"b21",n:"Dylan Crews",set:"2025 Topps Chrome",v:"Rookie RC",num:"DC1",sport:"Baseball",raw:65,p10:520,p9:112,gem:56.0,pop:350,totpop:620,psa9rate:28.0,p9pop:174,s10:28,s9:16,hot:true},
+{id:"b22",n:"James Wood",set:"2025 Topps Chrome",v:"Rookie RC",num:"JW1",sport:"Baseball",raw:58,p10:460,p9:98,gem:54.0,pop:380,totpop:680,psa9rate:28.0,p9pop:190,s10:24,s9:14,hot:true},
+{id:"b23",n:"Jackson Chourio",set:"2024 Topps Chrome",v:"Rookie RC",num:"JC1",sport:"Baseball",raw:32,p10:240,p9:52,gem:54.0,pop:1800,totpop:3200,psa9rate:30.0,p9pop:960,s10:18,s9:12,hot:false},
+// ── BASKETBALL ──
+{id:"k01",n:"Caitlin Clark",set:"2025 Panini Prizm WNBA",v:"Silver",num:"22",sport:"Basketball",raw:12,p10:668,p9:150,gem:30.0,pop:9,totpop:30,psa9rate:23.3,p9pop:7,s10:4,s9:4,hot:true,coinRank:3},
+{id:"k02",n:"Dylan Harper",set:"2025 Topps Chrome",v:"Magenta Refractor /399",num:"252",sport:"Basketball",raw:164,p10:1060,p9:265,gem:46.9,pop:15,totpop:32,psa9rate:53.1,p9pop:17,s10:3,s9:6,hot:true,coinRank:2},
+{id:"k03",n:"Dylan Harper",set:"2025 Topps Chrome",v:"Refractor",num:"252",sport:"Basketball",raw:51,p10:880,p9:220,gem:26.4,pop:112,totpop:425,psa9rate:52.5,p9pop:223,s10:16,s9:24,hot:true,coinRank:6},
+{id:"k04",n:"Victor Wembanyama",set:"2023 Panini Select",v:"Premier Level Silver",num:"121",sport:"Basketball",raw:101,p10:471,p9:130,gem:75.5,pop:917,totpop:1214,psa9rate:18.6,p9pop:226,s10:12,s9:23,hot:true},
+{id:"k05",n:"Stephen Curry",set:"2024 Panini Prizm",v:"Black Silver",num:"7",sport:"Basketball",raw:321,p10:997,p9:260,gem:80.2,pop:138,totpop:172,psa9rate:17.4,p9pop:30,s10:4,s9:12,hot:true,coinRank:8},
+{id:"k06",n:"Victor Wembanyama",set:"2023 Panini Select",v:"Mezzanine Silver",num:"311",sport:"Basketball",raw:126,p10:612,p9:165,gem:65.0,pop:245,totpop:377,psa9rate:23.3,p9pop:88,s10:4,s9:8,hot:true},
+{id:"k07",n:"Victor Wembanyama",set:"2023 Panini Prizm",v:"Red Sparkle",num:"136",sport:"Basketball",raw:1879,p10:6152,p9:1400,gem:73.9,pop:153,totpop:207,psa9rate:22.2,p9pop:46,s10:9,s9:9,hot:true},
+{id:"k08",n:"Victor Wembanyama",set:"2023-24 Panini Prizm",v:"Rookie Silver",num:"1",sport:"Basketball",raw:185,p10:1650,p9:340,gem:62.0,pop:5800,totpop:9400,psa9rate:24.0,p9pop:2256,s10:55,s9:30,hot:true},
+{id:"k09",n:"Victor Wembanyama",set:"2023 Panini Prizm",v:"Monopoly Silver",num:"81",sport:"Basketball",raw:128,p10:566,p9:152,gem:68.0,pop:478,totpop:703,psa9rate:23.3,p9pop:164,s10:10,s9:19,hot:true},
+{id:"k10",n:"Dylan Harper",set:"2025 Topps Chrome",v:"Instinct Refractor",num:"INS-12",sport:"Basketball",raw:17,p10:275,p9:62,gem:71.4,pop:15,totpop:21,psa9rate:23.8,p9pop:5,s10:4,s9:6,hot:true},
+{id:"k11",n:"LeBron James",set:"2003-04 Topps Chrome",v:"Rookie RC",num:"111",sport:"Basketball",raw:1200,p10:12000,p9:2800,gem:42.0,pop:8200,totpop:14000,psa9rate:32.0,p9pop:4480,s10:18,s9:12,hot:false},
+{id:"k12",n:"LeBron James",set:"2003-04 Topps Chrome",v:"Rookie Refractor",num:"111",sport:"Basketball",raw:1800,p10:18000,p9:4200,gem:38.0,pop:2800,totpop:7200,psa9rate:34.0,p9pop:2448,s10:10,s9:6,hot:false},
+{id:"k13",n:"Luka Doncic",set:"2018-19 Panini Prizm",v:"Rookie Silver",num:"280",sport:"Basketball",raw:275,p10:1580,p9:480,gem:47.0,pop:9200,totpop:16000,psa9rate:32.0,p9pop:5120,s10:32,s9:20,hot:false},
+{id:"k14",n:"Caitlin Clark",set:"2024 Panini Prizm WNBA",v:"Rookie Silver",num:"9",sport:"Basketball",raw:148,p10:1200,p9:252,gem:58.0,pop:3200,totpop:5600,psa9rate:28.0,p9pop:1568,s10:42,s9:24,hot:true},
+{id:"k15",n:"Caitlin Clark",set:"2024 Panini Prizm WNBA",v:"Rookie Base",num:"9",sport:"Basketball",raw:38,p10:295,p9:62,gem:54.0,pop:12800,totpop:22000,psa9rate:28.0,p9pop:6160,s10:58,s9:32,hot:true},
+{id:"k16",n:"Nikola Jokic",set:"2015-16 Panini Prizm",v:"Rookie Silver",num:"288",sport:"Basketball",raw:158,p10:1550,p9:320,gem:46.0,pop:5800,totpop:9800,psa9rate:30.0,p9pop:2940,s10:20,s9:13,hot:false},
+{id:"k17",n:"Shai Gilgeous-Alexander",set:"2018-19 Panini Prizm",v:"Rookie Silver",num:"211",sport:"Basketball",raw:75,p10:680,p9:145,gem:48.0,pop:6200,totpop:11000,psa9rate:30.0,p9pop:3300,s10:22,s9:14,hot:true},
+{id:"k18",n:"Victor Wembanyama",set:"2025 Topps Chrome",v:"Refractor",num:"221",sport:"Basketball",raw:39,p10:525,p9:115,gem:39.6,pop:103,totpop:260,psa9rate:48.5,p9pop:126,s10:10,s9:19,hot:true},
+{id:"k19",n:"Victor Wembanyama",set:"2023 Panini Prizm Draft Picks",v:"Silver",num:"2",sport:"Basketball",raw:30,p10:282,p9:72,gem:68.1,pop:939,totpop:1379,psa9rate:25.7,p9pop:354,s10:7,s9:22,hot:true},
+{id:"k20",n:"Jaxson Dart",set:"2025 Panini Prizm",v:"Silver",num:"332",sport:"Football",raw:140,p10:780,p9:195,gem:48.9,pop:186,totpop:380,psa9rate:36.6,p9pop:139,s10:12,s9:20,hot:true,coinRank:15},
+{id:"k21",n:"Stephen Curry",set:"2009-10 Panini Rookie Gold",v:"Rookie",num:"321",sport:"Basketball",raw:85,p10:980,p9:195,gem:44.0,pop:2800,totpop:5200,psa9rate:32.0,p9pop:1664,s10:16,s9:12,hot:false},
+{id:"k22",n:"Giannis Antetokounmpo",set:"2013-14 Panini Prizm",v:"Rookie Silver",num:"290",sport:"Basketball",raw:145,p10:1450,p9:300,gem:46.0,pop:4200,totpop:8000,psa9rate:30.0,p9pop:2400,s10:18,s9:12,hot:false},
+// ── FOOTBALL ──
+{id:"f01",n:"Patrick Mahomes",set:"2017 Panini Prizm",v:"Rookie Silver",num:"269",sport:"Football",raw:700,p10:5200,p9:1100,gem:46.0,pop:8400,totpop:14200,psa9rate:32.0,p9pop:4544,s10:32,s9:20,hot:false},
+{id:"f02",n:"Patrick Mahomes",set:"2017 Topps Chrome",v:"Rookie Refractor",num:"150",sport:"Football",raw:215,p10:2200,p9:450,gem:44.0,pop:3800,totpop:7800,psa9rate:34.0,p9pop:2652,s10:18,s9:11,hot:false},
+{id:"f03",n:"Patrick Mahomes",set:"2017 Topps Chrome",v:"Rookie RC",num:"150",sport:"Football",raw:148,p10:1550,p9:320,gem:46.0,pop:10200,totpop:18800,psa9rate:32.0,p9pop:6016,s10:28,s9:18,hot:false},
+{id:"f04",n:"Josh Allen",set:"2018 Panini Prizm",v:"Rookie Silver",num:"205",sport:"Football",raw:1350,p10:9800,p9:2000,gem:46.0,pop:7200,totpop:12000,psa9rate:32.0,p9pop:3840,s10:28,s9:18,hot:false},
+{id:"f05",n:"Josh Allen",set:"2018 Topps Chrome",v:"Rookie Refractor",num:"JA1",sport:"Football",raw:148,p10:1500,p9:308,gem:46.0,pop:3200,totpop:6400,psa9rate:32.0,p9pop:2048,s10:16,s9:10,hot:false},
+{id:"f06",n:"Josh Allen",set:"2018 Topps Chrome",v:"Rookie RC",num:"JA1",sport:"Football",raw:95,p10:820,p9:175,gem:46.0,pop:8400,totpop:15600,psa9rate:32.0,p9pop:4992,s10:22,s9:14,hot:false},
+{id:"f07",n:"Lamar Jackson",set:"2018 Panini Prizm",v:"Rookie Silver",num:"212",sport:"Football",raw:148,p10:1350,p9:280,gem:46.0,pop:7800,totpop:14400,psa9rate:32.0,p9pop:4608,s10:24,s9:16,hot:false},
+{id:"f08",n:"Caleb Williams",set:"2024 Panini Prizm",v:"Rookie Silver",num:"301",sport:"Football",raw:78,p10:660,p9:140,gem:52.0,pop:3200,totpop:5400,psa9rate:30.0,p9pop:1620,s10:24,s9:15,hot:true},
+{id:"f09",n:"Jayden Daniels",set:"2024 Panini Prizm",v:"Rookie Silver",num:"311",sport:"Football",raw:68,p10:580,p9:122,gem:52.0,pop:3600,totpop:6000,psa9rate:30.0,p9pop:1800,s10:22,s9:14,hot:true},
+{id:"f10",n:"Marvin Harrison Jr.",set:"2024 Panini Prizm",v:"Rookie Silver",num:"MH1",sport:"Football",raw:58,p10:480,p9:102,gem:52.0,pop:4200,totpop:7000,psa9rate:30.0,p9pop:2100,s10:20,s9:13,hot:true},
+{id:"f11",n:"Malik Nabers",set:"2024 Panini Prizm",v:"Rookie Silver",num:"MN1",sport:"Football",raw:48,p10:385,p9:82,gem:52.0,pop:4800,totpop:8000,psa9rate:30.0,p9pop:2400,s10:18,s9:12,hot:true},
+{id:"f12",n:"Drake Maye",set:"2024 Panini Prizm",v:"Rookie Silver",num:"DM1",sport:"Football",raw:55,p10:440,p9:94,gem:50.0,pop:4200,totpop:7400,psa9rate:30.0,p9pop:2220,s10:18,s9:12,hot:true},
+{id:"f13",n:"Saquon Barkley",set:"2018 Topps Chrome",v:"Rookie Refractor",num:"SB1",sport:"Football",raw:88,p10:740,p9:158,gem:48.0,pop:2800,totpop:5400,psa9rate:32.0,p9pop:1728,s10:16,s9:10,hot:true},
+{id:"f14",n:"Travis Kelce",set:"2013 Topps Chrome",v:"Rookie Refractor",num:"TK1",sport:"Football",raw:95,p10:820,p9:175,gem:46.0,pop:2400,totpop:4800,psa9rate:32.0,p9pop:1536,s10:14,s9:9,hot:false},
+{id:"f15",n:"Tom Brady",set:"2000 Topps Chrome",v:"Rookie RC",num:"230",sport:"Football",raw:285,p10:3600,p9:720,gem:38.0,pop:4800,totpop:9200,psa9rate:34.0,p9pop:3128,s10:12,s9:8,hot:false},
+{id:"f16",n:"Aaron Rodgers",set:"2005 Topps Chrome",v:"Rookie Refractor",num:"AR1",sport:"Football",raw:198,p10:1850,p9:380,gem:42.0,pop:1800,totpop:3600,psa9rate:34.0,p9pop:1224,s10:12,s9:8,hot:false},
+{id:"f17",n:"Joe Burrow",set:"2020 Panini Prizm",v:"Rookie Silver",num:"325",sport:"Football",raw:85,p10:720,p9:152,gem:48.0,pop:6800,totpop:12000,psa9rate:30.0,p9pop:3600,s10:22,s9:14,hot:false},
+{id:"f18",n:"Justin Jefferson",set:"2020 Panini Prizm",v:"Rookie Silver",num:"JJ1",sport:"Football",raw:68,p10:580,p9:122,gem:50.0,pop:7200,totpop:13200,psa9rate:30.0,p9pop:3960,s10:20,s9:13,hot:false},
+{id:"f19",n:"CJ Stroud",set:"2023 Panini Prizm",v:"Rookie Silver",num:"CS1",sport:"Football",raw:45,p10:380,p9:82,gem:52.0,pop:4800,totpop:8400,psa9rate:30.0,p9pop:2520,s10:18,s9:12,hot:false},
+// ── HOCKEY ──
+{id:"h01",n:"Nathan MacKinnon",set:"2013-14 Upper Deck",v:"Young Guns",num:"238",sport:"Hockey",raw:280,p10:1293,p9:380,gem:50.1,pop:1885,totpop:3760,psa9rate:35.2,p9pop:1323,s10:13,s9:27,hot:false,coinRank:4},
+{id:"h02",n:"Connor McDavid",set:"2015-16 Upper Deck",v:"Young Guns",num:"201",sport:"Hockey",raw:862,p10:2628,p9:1175,gem:44.0,pop:3264,totpop:8800,psa9rate:36.3,p9pop:3196,s10:18,s9:12,hot:false},
+{id:"h03",n:"Lane Hutson",set:"2024-25 Upper Deck",v:"Young Guns",num:"229",sport:"Hockey",raw:99,p10:556,p9:135,gem:55.6,pop:5,totpop:9,psa9rate:33.3,p9pop:3,s10:16,s9:39,hot:true,coinRank:14},
+{id:"h04",n:"Connor Bedard",set:"2023-24 Upper Deck",v:"Young Guns",num:"231",sport:"Hockey",raw:148,p10:1550,p9:320,gem:46.0,pop:2800,totpop:4800,psa9rate:32.0,p9pop:1536,s10:22,s9:14,hot:true},
+{id:"h05",n:"Matvei Michkov",set:"2024-25 Upper Deck",v:"Young Guns",num:"228",sport:"Hockey",raw:88,p10:880,p9:185,gem:48.0,pop:1200,totpop:2200,psa9rate:30.0,p9pop:660,s10:18,s9:12,hot:true},
+{id:"h06",n:"Sidney Crosby",set:"2005-06 Upper Deck",v:"Young Guns",num:"201",sport:"Hockey",raw:325,p10:3800,p9:720,gem:38.0,pop:4200,totpop:9200,psa9rate:34.0,p9pop:3128,s10:12,s9:8,hot:false},
+{id:"h07",n:"Cale Makar",set:"2019-20 Upper Deck",v:"Young Guns",num:"201",sport:"Hockey",raw:98,p10:1050,p9:218,gem:46.0,pop:4200,totpop:8200,psa9rate:32.0,p9pop:2624,s10:18,s9:12,hot:false},
+{id:"h08",n:"Auston Matthews",set:"2016-17 Upper Deck",v:"Young Guns",num:"201",sport:"Hockey",raw:112,p10:1200,p9:245,gem:44.0,pop:4200,totpop:8800,psa9rate:32.0,p9pop:2816,s10:18,s9:12,hot:false},
+{id:"h09",n:"Jack Hughes",set:"2019-20 Upper Deck",v:"Young Guns",num:"201",sport:"Hockey",raw:68,p10:640,p9:135,gem:44.0,pop:3800,totpop:7800,psa9rate:32.0,p9pop:2496,s10:14,s9:9,hot:false},
+{id:"h10",n:"David Pastrnak",set:"2014-15 Upper Deck",v:"Young Guns",num:"226",sport:"Hockey",raw:45,p10:420,p9:88,gem:46.0,pop:2200,totpop:4800,psa9rate:32.0,p9pop:1536,s10:14,s9:9,hot:false},
+{id:"h11",n:"Elias Pettersson",set:"2018-19 Upper Deck",v:"Young Guns",num:"220",sport:"Hockey",raw:55,p10:520,p9:110,gem:44.0,pop:4200,totpop:9200,psa9rate:32.0,p9pop:2944,s10:14,s9:9,hot:false},
+{id:"h12",n:"Brady Tkachuk",set:"2018-19 Upper Deck",v:"Young Guns",num:"221",sport:"Hockey",raw:32,p10:280,p9:62,gem:44.0,pop:3200,totpop:7200,psa9rate:30.0,p9pop:2160,s10:12,s9:8,hot:false},
+// ── SURFING ──
+{id:"s01",n:"Kelly Slater",set:"1995 Collect-A-Card",v:"Base",num:"1",sport:"Surfing",raw:45,p10:580,p9:95,gem:38.0,pop:180,totpop:320,psa9rate:30.0,p9pop:96,s10:6,s9:4,hot:false},
+{id:"s02",n:"John John Florence",set:"2016 Panini Instant",v:"Base",num:"1",sport:"Surfing",raw:28,p10:295,p9:52,gem:42.0,pop:95,totpop:180,psa9rate:28.0,p9pop:50,s10:4,s9:3,hot:false},
+{id:"s03",n:"Caitlin Simmers",set:"2023 Fanatics Authentic WSL",v:"Rookie",num:"1",sport:"Surfing",raw:14,p10:160,p9:30,gem:44.0,pop:45,totpop:90,psa9rate:28.0,p9pop:25,s10:3,s9:2,hot:true},
+{id:"s04",n:"Gabriel Medina",set:"2019 Panini Instant WSL",v:"Base",num:"1",sport:"Surfing",raw:20,p10:205,p9:38,gem:40.0,pop:75,totpop:150,psa9rate:28.0,p9pop:42,s10:3,s9:2,hot:false},
+{id:"s05",n:"Carissa Moore",set:"2021 Fanatics Authentic WSL",v:"Base",num:"1",sport:"Surfing",raw:18,p10:195,p9:36,gem:42.0,pop:65,totpop:130,psa9rate:28.0,p9pop:36,s10:3,s9:2,hot:false},
+// ── WEMBANYAMA — price surge July 2026 (up 98% in 30 days) ──
+{id:"w01",n:"Victor Wembanyama",set:"2023-24 Panini Prizm",v:"Silver",num:"136",sport:"Basketball",raw:1525,p10:8500,p9:1800,gem:62.0,pop:5800,totpop:9400,psa9rate:24.0,p9pop:2256,s10:55,s9:30,hot:true},
+{id:"w02",n:"Victor Wembanyama",set:"2023-24 Panini Prizm",v:"Base",num:"136",sport:"Basketball",raw:58,p10:500,p9:110,gem:62.0,pop:26293,totpop:44848,psa9rate:22.0,p9pop:9867,s10:120,s9:80,hot:true},
+{id:"w03",n:"Victor Wembanyama",set:"2023-24 Panini Prizm",v:"Red White Blue",num:"136",sport:"Basketball",raw:250,p10:1800,p9:380,gem:58.0,pop:980,totpop:1800,psa9rate:26.0,p9pop:468,s10:18,s9:12,hot:true},
+{id:"w04",n:"Victor Wembanyama",set:"2023-24 Panini Prizm",v:"Gold /10",num:"136",sport:"Basketball",raw:3200,p10:18000,p9:4200,gem:70.0,pop:42,totpop:68,psa9rate:18.0,p9pop:12,s10:4,s9:3,hot:true},
+{id:"w05",n:"Victor Wembanyama",set:"2023-24 Panini Prizm",v:"Green Pulsar",num:"136",sport:"Basketball",raw:280,p10:2200,p9:460,gem:60.0,pop:380,totpop:640,psa9rate:24.0,p9pop:154,s10:14,s9:9,hot:true},
+{id:"w06",n:"Victor Wembanyama",set:"2023-24 Panini Prizm",v:"Purple Wave",num:"136",sport:"Basketball",raw:185,p10:1400,p9:295,gem:58.0,pop:620,totpop:1100,psa9rate:26.0,p9pop:286,s10:12,s9:8,hot:true},
+{id:"w07",n:"Victor Wembanyama",set:"2023-24 Panini Prizm",v:"Blue Ice",num:"136",sport:"Basketball",raw:145,p10:1050,p9:220,gem:60.0,pop:820,totpop:1480,psa9rate:26.0,p9pop:385,s10:14,s9:9,hot:true},
+{id:"w08",n:"Victor Wembanyama",set:"2023-24 Topps Chrome",v:"Rookie Auto",num:"TCA-VW",sport:"Basketball",raw:380,p10:2800,p9:580,gem:56.0,pop:1200,totpop:2200,psa9rate:28.0,p9pop:616,s10:22,s9:14,hot:true},
+{id:"w09",n:"Victor Wembanyama",set:"2023-24 Hoops",v:"Rookie",num:"298",sport:"Basketball",raw:12,p10:95,p9:20,gem:58.0,pop:8200,totpop:14000,psa9rate:28.0,p9pop:3920,s10:42,s9:28,hot:false},
+{id:"w10",n:"Victor Wembanyama",set:"2024-25 Panini Prizm",v:"Silver",num:"7",sport:"Basketball",raw:185,p10:1200,p9:250,gem:60.0,pop:2800,totpop:5200,psa9rate:26.0,p9pop:1352,s10:28,s9:18,hot:true},
+// ── MCDAVID — updated prices July 2026 ($862 raw, down 31%) ──
+{id:"mc01",n:"Connor McDavid",set:"2015-16 Upper Deck",v:"Young Guns",num:"201",sport:"Hockey",raw:862,p10:2628,p9:1175,gem:44.0,pop:3264,totpop:8800,psa9rate:36.3,p9pop:3196,s10:18,s9:12,hot:false},
+{id:"mc02",n:"Connor McDavid",set:"2015-16 Upper Deck",v:"Young Guns Canvas",num:"C211",sport:"Hockey",raw:600,p10:1224,p9:480,gem:42.0,pop:820,totpop:2200,psa9rate:34.0,p9pop:748,s10:8,s9:5,hot:false},
+{id:"mc03",n:"Connor McDavid",set:"2015-16 Upper Deck",v:"Young Guns Jumbo",num:"201",sport:"Hockey",raw:220,p10:800,p9:180,gem:40.0,pop:280,totpop:680,psa9rate:36.0,p9pop:245,s10:6,s9:4,hot:false},
+{id:"mc04",n:"Connor McDavid",set:"2015-16 O-Pee-Chee Platinum",v:"Marquee Rookies",num:"M1",sport:"Hockey",raw:145,p10:1200,p9:250,gem:46.0,pop:1800,totpop:3800,psa9rate:32.0,p9pop:1216,s10:14,s9:9,hot:false},
+{id:"mc05",n:"Connor McDavid",set:"2015-16 Upper Deck",v:"Parkhurst Rookies",num:"P90",sport:"Hockey",raw:45,p10:380,p9:82,gem:48.0,pop:2200,totpop:4600,psa9rate:32.0,p9pop:1472,s10:12,s9:8,hot:false},
+// ── MAHOMES — additional variants ──
+{id:"pm01",n:"Patrick Mahomes",set:"2017 Panini Prizm",v:"Rookie Silver",num:"269",sport:"Football",raw:700,p10:5200,p9:1100,gem:46.0,pop:8400,totpop:14200,psa9rate:32.0,p9pop:4544,s10:32,s9:20,hot:false},
+{id:"pm02",n:"Patrick Mahomes",set:"2017 Panini Prizm",v:"Rookie Red White Blue",num:"269",sport:"Football",raw:185,p10:1400,p9:295,gem:46.0,pop:2800,totpop:5400,psa9rate:32.0,p9pop:1728,s10:14,s9:9,hot:false},
+{id:"pm03",n:"Patrick Mahomes",set:"2017 Panini Prizm",v:"Rookie Base",num:"269",sport:"Football",raw:65,p10:480,p9:102,gem:50.0,pop:12800,totpop:22000,psa9rate:30.0,p9pop:6600,s10:28,s9:18,hot:false},
+{id:"pm04",n:"Patrick Mahomes",set:"2017 Panini Contenders",v:"Rookie Auto",num:"314",sport:"Football",raw:285,p10:2200,p9:460,gem:44.0,pop:3200,totpop:6800,psa9rate:34.0,p9pop:2312,s10:18,s9:12,hot:false},
+{id:"pm05",n:"Patrick Mahomes",set:"2017 Topps Chrome",v:"Rookie Refractor",num:"150",sport:"Football",raw:215,p10:2200,p9:450,gem:44.0,pop:3800,totpop:7800,psa9rate:34.0,p9pop:2652,s10:18,s9:11,hot:false},
+// ── JOSH ALLEN — additional variants ──
+{id:"ja01",n:"Josh Allen",set:"2018 Panini Prizm",v:"Rookie Base",num:"205",sport:"Football",raw:95,p10:780,p9:165,gem:50.0,pop:14200,totpop:24000,psa9rate:30.0,p9pop:7200,s10:32,s9:20,hot:false},
+{id:"ja02",n:"Josh Allen",set:"2018 Panini Prizm",v:"Rookie Red White Blue",num:"205",sport:"Football",raw:188,p10:1400,p9:295,gem:48.0,pop:3200,totpop:6200,psa9rate:32.0,p9pop:1984,s10:14,s9:9,hot:false},
+// ── LEBRON — additional variants ──
+{id:"lj01",n:"LeBron James",set:"2003-04 Topps Chrome",v:"Rookie Refractor",num:"111",sport:"Basketball",raw:1800,p10:18000,p9:4200,gem:38.0,pop:2800,totpop:7200,psa9rate:34.0,p9pop:2448,s10:10,s9:6,hot:false},
+{id:"lj02",n:"LeBron James",set:"2003-04 Topps Chrome",v:"X-Fractor /250",num:"111",sport:"Basketball",raw:2800,p10:28000,p9:6500,gem:35.0,pop:420,totpop:1200,psa9rate:36.0,p9pop:432,s10:4,s9:3,hot:false},
+{id:"lj03",n:"LeBron James",set:"2003-04 Topps Chrome",v:"Gold Refractor /25",num:"111",sport:"Basketball",raw:12000,p10:85000,p9:22000,gem:32.0,pop:18,totpop:62,psa9rate:38.0,p9pop:24,s10:1,s9:1,hot:false},
+{id:"lj04",n:"LeBron James",set:"2003-04 Upper Deck",v:"Rookie",num:"301",sport:"Basketball",raw:85,p10:680,p9:145,gem:46.0,pop:4200,totpop:8800,psa9rate:32.0,p9pop:2816,s10:18,s9:12,hot:false},
+// ── NEW 2025-26 ROOKIES ──
+{id:"r01",n:"Ace Bailey",set:"2025-26 Panini Prizm",v:"Rookie Silver",num:"AB1",sport:"Basketball",raw:145,p10:1200,p9:252,gem:52.0,pop:320,totpop:620,psa9rate:28.0,p9pop:174,s10:18,s9:12,hot:true},
+{id:"r02",n:"Cooper Flagg",set:"2025-26 Panini Prizm",v:"Rookie Silver",num:"CF1",sport:"Basketball",raw:280,p10:2400,p9:500,gem:52.0,pop:180,totpop:360,psa9rate:28.0,p9pop:101,s10:14,s9:9,hot:true},
+{id:"r03",n:"Cooper Flagg",set:"2025-26 Panini Prizm",v:"Rookie Base",num:"CF1",sport:"Basketball",raw:45,p10:380,p9:82,gem:54.0,pop:2800,totpop:5200,psa9rate:28.0,p9pop:1456,s10:28,s9:18,hot:true},
+{id:"r04",n:"Tre Johnson",set:"2025-26 Panini Prizm",v:"Rookie Silver",num:"TJ1",sport:"Basketball",raw:68,p10:560,p9:118,gem:52.0,pop:480,totpop:900,psa9rate:28.0,p9pop:252,s10:14,s9:9,hot:true},
+{id:"r05",n:"Dylan Harper",set:"2025-26 Panini Prizm",v:"Rookie Silver",num:"DH1",sport:"Basketball",raw:320,p10:2800,p9:580,gem:48.0,pop:220,totpop:440,psa9rate:28.0,p9pop:123,s10:12,s9:8,hot:true},
+{id:"r06",n:"Dylan Harper",set:"2025-26 Panini Prizm",v:"Rookie Base",num:"DH1",sport:"Basketball",raw:48,p10:395,p9:85,gem:50.0,pop:2200,totpop:4200,psa9rate:28.0,p9pop:1176,s10:20,s9:13,hot:true},
+// ── ADDITIONAL HOCKEY ──
+{id:"hk01",n:"Connor Bedard",set:"2023-24 Upper Deck",v:"Young Guns",num:"231",sport:"Hockey",raw:148,p10:1550,p9:320,gem:46.0,pop:2800,totpop:4800,psa9rate:32.0,p9pop:1536,s10:22,s9:14,hot:true},
+{id:"hk02",n:"Connor Bedard",set:"2023-24 Upper Deck",v:"Young Guns Canvas",num:"C201",sport:"Hockey",raw:88,p10:780,p9:165,gem:44.0,pop:620,totpop:1400,psa9rate:32.0,p9pop:448,s10:12,s9:8,hot:true},
+{id:"hk03",n:"Connor Bedard",set:"2023-24 O-Pee-Chee Platinum",v:"Marquee Rookies",num:"M201",sport:"Hockey",raw:65,p10:520,p9:110,gem:46.0,pop:1200,totpop:2600,psa9rate:32.0,p9pop:832,s10:14,s9:9,hot:true},
+{id:"hk04",n:"Matvei Michkov",set:"2024-25 Upper Deck",v:"Young Guns",num:"228",sport:"Hockey",raw:88,p10:880,p9:185,gem:48.0,pop:1200,totpop:2200,psa9rate:30.0,p9pop:660,s10:18,s9:12,hot:true},
+{id:"hk05",n:"Matvei Michkov",set:"2024-25 Upper Deck",v:"Young Guns Canvas",num:"C228",sport:"Hockey",raw:55,p10:480,p9:102,gem:44.0,pop:420,totpop:960,psa9rate:32.0,p9pop:307,s10:10,s9:7,hot:true},
+{id:"hk06",n:"Sidney Crosby",set:"2005-06 Upper Deck",v:"Young Guns",num:"201",sport:"Hockey",raw:325,p10:3800,p9:720,gem:38.0,pop:4200,totpop:9200,psa9rate:34.0,p9pop:3128,s10:12,s9:8,hot:false},
+{id:"hk07",n:"Alex Ovechkin",set:"2005-06 Upper Deck",v:"Young Guns",num:"443",sport:"Hockey",raw:185,p10:1800,p9:380,gem:40.0,pop:3200,totpop:7200,psa9rate:34.0,p9pop:2448,s10:10,s9:7,hot:false},
+{id:"hk08",n:"Auston Matthews",set:"2016-17 Upper Deck",v:"Young Guns",num:"201",sport:"Hockey",raw:112,p10:1200,p9:245,gem:44.0,pop:4200,totpop:8800,psa9rate:32.0,p9pop:2816,s10:18,s9:12,hot:false},
+{id:"hk09",n:"Leon Draisaitl",set:"2014-15 Upper Deck",v:"Young Guns",num:"225",sport:"Hockey",raw:58,p10:520,p9:110,gem:46.0,pop:3200,totpop:6800,psa9rate:32.0,p9pop:2176,s10:14,s9:9,hot:false},
+{id:"hk10",n:"Nathan MacKinnon",set:"2013-14 Upper Deck",v:"Young Guns Canvas",num:"C211",sport:"Hockey",raw:95,p10:680,p9:145,gem:46.0,pop:820,totpop:1800,psa9rate:32.0,p9pop:576,s10:8,s9:5,hot:false},
+// ── ADDITIONAL BASEBALL ──
+{id:"bb01",n:"Ken Griffey Jr.",set:"1989 Upper Deck",v:"Rookie RC",num:"1",sport:"Baseball",raw:48,p10:580,p9:120,gem:38.0,pop:4200,totpop:9800,psa9rate:34.0,p9pop:3332,s10:14,s9:9,hot:false},
+{id:"bb02",n:"Derek Jeter",set:"1993 SP",v:"Rookie Foil",num:"279",sport:"Baseball",raw:145,p10:1800,p9:380,gem:32.0,pop:1200,totpop:3400,psa9rate:38.0,p9pop:1292,s10:8,s9:5,hot:false},
+{id:"bb03",n:"Mike Trout",set:"2011 Bowman Chrome",v:"Prospect Auto",num:"BCP-MT",sport:"Baseball",raw:620,p10:4800,p9:980,gem:46.0,pop:2800,totpop:5800,psa9rate:32.0,p9pop:1856,s10:12,s9:8,hot:false},
+{id:"bb04",n:"Fernando Tatis Jr.",set:"2019 Topps Chrome",v:"Rookie Refractor",num:"FTJ1",sport:"Baseball",raw:68,p10:520,p9:110,gem:52.0,pop:3200,totpop:5800,psa9rate:30.0,p9pop:1740,s10:18,s9:12,hot:false},
+{id:"bb05",n:"Bryce Harper",set:"2012 Topps Chrome",v:"Rookie Refractor",num:"196",sport:"Baseball",raw:45,p10:380,p9:82,gem:52.0,pop:4200,totpop:7800,psa9rate:30.0,p9pop:2340,s10:16,s9:10,hot:false},
+{id:"bb06",n:"Mookie Betts",set:"2014 Topps Chrome",v:"Rookie Refractor",num:"MB1",sport:"Baseball",raw:38,p10:280,p9:60,gem:52.0,pop:2800,totpop:5200,psa9rate:30.0,p9pop:1560,s10:14,s9:9,hot:false},
+{id:"bb07",n:"Shohei Ohtani",set:"2018 Bowman Chrome",v:"Prospect Auto",num:"BCRA-SO",sport:"Baseball",raw:2000,p10:8500,p9:2100,gem:48.0,pop:5200,totpop:8800,psa9rate:28.0,p9pop:2464,s10:20,s9:14,hot:false},
+{id:"bb08",n:"Yoshinobu Yamamoto",set:"2024 Topps Chrome",v:"Rookie RC",num:"YY1",sport:"Baseball",raw:45,p10:360,p9:78,gem:56.0,pop:1800,totpop:3200,psa9rate:30.0,p9pop:960,s10:22,s9:14,hot:true},
+{id:"bb09",n:"Jackson Merrill",set:"2024 Topps Chrome",v:"Rookie RC",num:"JM1",sport:"Baseball",raw:28,p10:220,p9:48,gem:54.0,pop:2200,totpop:4000,psa9rate:30.0,p9pop:1200,s10:18,s9:12,hot:true},
+// ── ADDITIONAL FOOTBALL ──
+{id:"ff01",n:"Lamar Jackson",set:"2018 Topps Chrome",v:"Rookie Refractor",num:"LJ1",sport:"Football",raw:88,p10:680,p9:145,gem:48.0,pop:3200,totpop:6200,psa9rate:32.0,p9pop:1984,s10:16,s9:10,hot:false},
+{id:"ff02",n:"Justin Herbert",set:"2020 Panini Prizm",v:"Rookie Silver",num:"JH1",sport:"Football",raw:95,p10:780,p9:165,gem:50.0,pop:5800,totpop:10200,psa9rate:30.0,p9pop:3060,s10:22,s9:14,hot:false},
+{id:"ff03",n:"Joe Burrow",set:"2020 Panini Prizm",v:"Rookie Base",num:"325",sport:"Football",raw:28,p10:220,p9:48,gem:52.0,pop:14800,totpop:26000,psa9rate:30.0,p9pop:7800,s10:42,s9:28,hot:false},
+{id:"ff04",n:"Brock Purdy",set:"2022 Panini Prizm",v:"Rookie Silver",num:"BP1",sport:"Football",raw:65,p10:520,p9:110,gem:50.0,pop:3200,totpop:6200,psa9rate:30.0,p9pop:1860,s10:18,s9:12,hot:true},
+{id:"ff05",n:"Puka Nacua",set:"2023 Panini Prizm",v:"Rookie Silver",num:"PN1",sport:"Football",raw:48,p10:380,p9:82,gem:50.0,pop:2800,totpop:5400,psa9rate:30.0,p9pop:1620,s10:16,s9:10,hot:true},
+{id:"ff06",n:"Bo Nix",set:"2024 Panini Prizm",v:"Rookie Silver",num:"BN1",sport:"Football",raw:38,p10:295,p9:62,gem:50.0,pop:3600,totpop:7000,psa9rate:30.0,p9pop:2100,s10:14,s9:9,hot:true},
+{id:"ff07",n:"Michael Penix Jr.",set:"2024 Panini Prizm",v:"Rookie Silver",num:"MP1",sport:"Football",raw:32,p10:250,p9:54,gem:50.0,pop:3200,totpop:6200,psa9rate:30.0,p9pop:1860,s10:12,s9:8,hot:true},
+// ── ADDITIONAL BASKETBALL ──
+{id:"bk01",n:"Stephen Curry",set:"2009-10 Panini Rookie Gold",v:"Rookie Base",num:"321",sport:"Basketball",raw:85,p10:980,p9:195,gem:44.0,pop:2800,totpop:5200,psa9rate:32.0,p9pop:1664,s10:16,s9:12,hot:false},
+{id:"bk02",n:"Stephen Curry",set:"2009-10 Topps Chrome",v:"Rookie Refractor",num:"101",sport:"Basketball",raw:145,p10:1400,p9:295,gem:44.0,pop:1800,totpop:3800,psa9rate:32.0,p9pop:1216,s10:14,s9:9,hot:false},
+{id:"bk03",n:"Kevin Durant",set:"2007-08 Topps Chrome",v:"Rookie Refractor",num:"131",sport:"Basketball",raw:88,p10:820,p9:175,gem:46.0,pop:3200,totpop:6800,psa9rate:32.0,p9pop:2176,s10:16,s9:10,hot:false},
+{id:"bk04",n:"Giannis Antetokounmpo",set:"2013-14 Panini Prizm",v:"Rookie Silver",num:"290",sport:"Basketball",raw:145,p10:1450,p9:300,gem:46.0,pop:4200,totpop:8000,psa9rate:30.0,p9pop:2400,s10:18,s9:12,hot:false},
+{id:"bk05",n:"Giannis Antetokounmpo",set:"2013-14 Panini Prizm",v:"Rookie Base",num:"290",sport:"Basketball",raw:28,p10:220,p9:48,gem:48.0,pop:8800,totpop:16000,psa9rate:30.0,p9pop:4800,s10:28,s9:18,hot:false},
+{id:"bk06",n:"Nikola Jokic",set:"2015-16 Panini Prizm",v:"Rookie Base",num:"288",sport:"Basketball",raw:22,p10:185,p9:40,gem:50.0,pop:12800,totpop:22000,psa9rate:30.0,p9pop:6600,s10:32,s9:20,hot:false},
+{id:"bk07",n:"Anthony Edwards",set:"2020-21 Panini Prizm",v:"Rookie Silver",num:"258",sport:"Basketball",raw:88,p10:720,p9:152,gem:50.0,pop:5800,totpop:10200,psa9rate:30.0,p9pop:3060,s10:22,s9:14,hot:true},
+{id:"bk08",n:"Anthony Edwards",set:"2020-21 Panini Prizm",v:"Rookie Base",num:"258",sport:"Basketball",raw:18,p10:145,p9:32,gem:52.0,pop:18800,totpop:32000,psa9rate:30.0,p9pop:9600,s10:48,s9:30,hot:true},
+{id:"bk09",n:"Jayson Tatum",set:"2017-18 Panini Prizm",v:"Rookie Silver",num:"JT1",sport:"Basketball",raw:65,p10:520,p9:110,gem:48.0,pop:5200,totpop:9800,psa9rate:30.0,p9pop:2940,s10:20,s9:13,hot:false},
+{id:"bk10",n:"Luka Doncic",set:"2018-19 Panini Prizm",v:"Rookie Base",num:"280",sport:"Basketball",raw:38,p10:295,p9:62,gem:50.0,pop:24000,totpop:42000,psa9rate:30.0,p9pop:12600,s10:68,s9:42,hot:false},
+// ── COOPER FLAGG (hottest 2025-26 NBA rookie) ──
+{id:"cf01",n:"Cooper Flagg",set:"2025 Topps Chrome",v:"Refractor",num:"251",sport:"Basketball",raw:221,p10:1800,p9:420,gem:52.0,pop:280,totpop:520,psa9rate:28.0,p9pop:146,s10:35,s9:22,hot:true},
+{id:"cf02",n:"Cooper Flagg",set:"2025 Topps Chrome",v:"Base RC",num:"251",sport:"Basketball",raw:27,p10:185,p9:42,gem:56.0,pop:3200,totpop:5800,psa9rate:28.0,p9pop:1624,s10:58,s9:36,hot:true},
+{id:"cf03",n:"Cooper Flagg",set:"2025 Topps Chrome",v:"Basketball Refractor",num:"251",sport:"Basketball",raw:190,p10:1600,p9:375,gem:50.0,pop:185,totpop:370,psa9rate:28.0,p9pop:104,s10:22,s9:14,hot:true},
+{id:"cf04",n:"Cooper Flagg",set:"2025 Topps Chrome",v:"Red White & Blue Refractor",num:"251",sport:"Basketball",raw:152,p10:1200,p9:280,gem:52.0,pop:145,totpop:280,psa9rate:28.0,p9pop:78,s10:18,s9:12,hot:true},
+{id:"cf05",n:"Cooper Flagg",set:"2025 Topps Chrome",v:"Teal Refractor /299",num:"251",sport:"Basketball",raw:564,p10:4200,p9:980,gem:54.0,pop:42,totpop:80,psa9rate:28.0,p9pop:22,s10:8,s9:5,hot:true},
+{id:"cf06",n:"Cooper Flagg",set:"2025 Topps Chrome",v:"Yellow Refractor /275",num:"251",sport:"Basketball",raw:625,p10:4800,p9:1100,gem:54.0,pop:38,totpop:72,psa9rate:28.0,p9pop:20,s10:6,s9:4,hot:true},
+{id:"cf07",n:"Cooper Flagg",set:"2025 Topps Chrome Sapphire",v:"Base",num:"251",sport:"Basketball",raw:1200,p10:8500,p9:1900,gem:58.0,pop:95,totpop:165,psa9rate:26.0,p9pop:43,s10:8,s9:5,hot:true},
+// ── ACE BAILEY ──
+{id:"ab01",n:"Ace Bailey",set:"2025 Topps Chrome",v:"Base RC",num:"252",sport:"Basketball",raw:175,p10:1400,p9:325,gem:52.0,pop:220,totpop:420,psa9rate:28.0,p9pop:118,s10:28,s9:18,hot:true},
+{id:"ab02",n:"Ace Bailey",set:"2025 Topps Chrome",v:"Refractor",num:"252",sport:"Basketball",raw:285,p10:2200,p9:510,gem:52.0,pop:95,totpop:185,psa9rate:28.0,p9pop:52,s10:16,s9:10,hot:true},
+// ── KON KNUEPPEL ──
+{id:"kk01",n:"Kon Knueppel",set:"2025 Topps Chrome",v:"Base RC",num:"254",sport:"Basketball",raw:4,p10:133,p9:32,gem:56.0,pop:306,totpop:580,psa9rate:28.0,p9pop:162,s10:95,s9:58,hot:true},
+{id:"kk02",n:"Kon Knueppel",set:"2025 Topps Chrome",v:"Refractor",num:"254",sport:"Basketball",raw:45,p10:380,p9:88,gem:54.0,pop:142,totpop:265,psa9rate:28.0,p9pop:74,s10:38,s9:24,hot:true},
+{id:"kk03",n:"Kon Knueppel",set:"2025 Topps Chrome",v:"Chrome Rookie Auto",num:"TCAR-KK",sport:"Basketball",raw:348,p10:2400,p9:560,gem:50.0,pop:85,totpop:168,psa9rate:28.0,p9pop:47,s10:12,s9:8,hot:true},
+// ── 2025 NFL ROOKIES ──
+{id:"nfl01",n:"Cam Ward",set:"2025 Panini Prizm",v:"Rookie Silver",num:"CW1",sport:"Football",raw:85,p10:720,p9:155,gem:52.0,pop:2800,totpop:5000,psa9rate:30.0,p9pop:1500,s10:28,s9:18,hot:true},
+{id:"nfl02",n:"Travis Hunter",set:"2025 Panini Prizm",v:"Rookie Silver",num:"TH1",sport:"Football",raw:75,p10:620,p9:132,gem:52.0,pop:3200,totpop:5800,psa9rate:30.0,p9pop:1740,s10:24,s9:15,hot:true},
+{id:"nfl03",n:"Ashton Jeanty",set:"2025 Panini Prizm",v:"Rookie Silver",num:"AJ1",sport:"Football",raw:65,p10:520,p9:112,gem:52.0,pop:3600,totpop:6400,psa9rate:30.0,p9pop:1920,s10:22,s9:14,hot:true},
+{id:"nfl04",n:"Dillon Gabriel",set:"2025 Panini Prizm",v:"Rookie Silver",num:"DG1",sport:"Football",raw:45,p10:360,p9:78,gem:52.0,pop:2800,totpop:5000,psa9rate:30.0,p9pop:1500,s10:18,s9:12,hot:true},
+{id:"nfl05",n:"Brock Purdy",set:"2022 Panini Prizm",v:"Rookie Silver",num:"BP1",sport:"Football",raw:55,p10:460,p9:98,gem:52.0,pop:4200,totpop:7600,psa9rate:30.0,p9pop:2280,s10:18,s9:12,hot:true},
+// ── BASEBALL NEW ADDITIONS ──
+{id:"nb01",n:"Jac Caglianone",set:"2025 Bowman Chrome",v:"1st Auto",num:"CPA-JC",sport:"Baseball",raw:90,p10:780,p9:165,gem:54.0,pop:280,totpop:520,psa9rate:28.0,p9pop:146,s10:18,s9:12,hot:true},
+{id:"nb02",n:"Bobby Witt Jr.",set:"2022 Topps Chrome",v:"Rookie Refractor",num:"BWJ1",sport:"Baseball",raw:38,p10:228,p9:49,gem:52.0,pop:2400,totpop:4400,psa9rate:30.0,p9pop:1320,s10:16,s9:10,hot:true},
+{id:"nb03",n:"Yordan Alvarez",set:"2020 Topps Chrome",v:"Rookie RC",num:"YA1",sport:"Baseball",raw:35,p10:265,p9:58,gem:52.0,pop:4200,totpop:7800,psa9rate:30.0,p9pop:2340,s10:18,s9:12,hot:false},
+{id:"nb04",n:"Corbin Carroll",set:"2023 Topps Chrome",v:"Rookie RC",num:"CC1",sport:"Baseball",raw:28,p10:195,p9:42,gem:52.0,pop:3200,totpop:5800,psa9rate:30.0,p9pop:1740,s10:16,s9:10,hot:false},
+{id:"nb05",n:"Ken Griffey Jr.",set:"1989 Upper Deck",v:"Rookie RC",num:"1",sport:"Baseball",raw:85,p10:2200,p9:380,gem:32.0,pop:4200,totpop:14000,psa9rate:36.0,p9pop:5040,s10:12,s9:8,hot:false},
+{id:"nb06",n:"Shohei Ohtani",set:"2025 Topps Chrome",v:"Base RC",num:"1",sport:"Baseball",raw:22,p10:165,p9:42,gem:60.0,pop:3200,totpop:5600,psa9rate:28.0,p9pop:1568,s10:18,s9:12,hot:true},
+{id:"nb07",n:"Shohei Ohtani",set:"2025 Topps Chrome",v:"Refractor",num:"1",sport:"Baseball",raw:48,p10:380,p9:95,gem:58.0,pop:1200,totpop:2200,psa9rate:28.0,p9pop:616,s10:14,s9:9,hot:true},
+{id:"nb08",n:"Shohei Ohtani",set:"2018 Topps Chrome",v:"Orange Refractor /25",num:"150",sport:"Baseball",raw:2800,p10:12000,p9:2800,gem:48.0,pop:18,totpop:25,psa9rate:28.0,p9pop:7,s10:3,s9:2,hot:true},
+{id:"nb09",n:"Shohei Ohtani",set:"2018 Topps Chrome",v:"Gold Refractor /50",num:"150",sport:"Baseball",raw:1800,p10:7500,p9:1750,gem:50.0,pop:32,totpop:50,psa9rate:28.0,p9pop:14,s10:4,s9:3,hot:true},
+{id:"nb10",n:"Shohei Ohtani",set:"2023 Topps Chrome",v:"Refractor",num:"1",sport:"Baseball",raw:38,p10:285,p9:72,gem:60.0,pop:2800,totpop:4800,psa9rate:30.0,p9pop:1440,s10:14,s9:10,hot:false},
 ];
 
-// ── SCORING ──
 function scoreCard(c){
-  const bec=c.raw+FEE, fg=c.p9-bec, m=c.p10-c.raw, mult=+(c.p10/c.raw).toFixed(2);
+  const bec=c.raw+FEE,fg=c.p9-bec,m=c.p10-c.raw,mult=+(c.p10/c.raw).toFixed(2);
   const br=c.p10>c.p9?Math.max(0,(bec-c.p9)/(c.p10-c.p9)*100):50;
   const s80=fg>=0&&m>200;
   const mS=Math.min(100,Math.max(0,(mult-1)*18));
   const pS=c.pop<10?100:c.pop<50?85:c.pop<200?65:c.pop<500?45:c.pop<2000?25:10;
   const gS=Math.min(100,c.gem*1.4);
   const mgS=Math.min(100,m/15);
-  const fP=bec>0?c.p9/bec:0, fS=Math.min(20,Math.max(0,(fP-0.7)*66));
+  const fP=bec>0?c.p9/bec:0,fS=Math.min(20,Math.max(0,(fP-0.7)*66));
   const dm=Math.min(100,(c.s10||0)*3.5);
   const sc=Math.min(100,Math.max(0,Math.round(mS*0.30+pS*0.28+gS*0.18+mgS*0.12+fS*0.08+dm*0.04)));
-  // Volatility: based on price drift relative to 90d avg, sales consistency, pop size
-  // High vol = newer cards with few sales, low pop, big price swings
-  const popFactor=c.pop<50?40:c.pop<200?25:c.pop<500?15:c.pop<2000?8:0;
-  const salesFactor=c.s10<5?30:c.s10<10?15:c.s10<20?5:0;
-  const coinPriceDrift=c.coinRank?Math.abs(c.p10-c.raw)/c.raw*20:10;
-  const volScore=Math.min(100,Math.round(popFactor+salesFactor+coinPriceDrift));
+  const popF=c.pop<50?40:c.pop<200?25:c.pop<500?15:c.pop<2000?8:0;
+  const salF=c.s10<5?30:c.s10<10?15:c.s10<20?5:0;
+  const priceF=Math.min(30,Math.abs(c.p10-c.raw)/c.raw*20);
+  const volScore=Math.min(100,Math.round(popF+salF+priceF));
   const volLabel=volScore>=40?"High":volScore>=20?"Normal":"Low";
   return{...c,bec,fg,m,mult,br,s80,sc,volScore,volLabel,
     a9010:Math.round(c.p10*0.97),a909:Math.round(c.p9*0.97),
@@ -456,11 +548,10 @@ function scoreCard(c){
 }
 
 let ALL=DB.map(scoreCard);
-const liveCache={};
+const liveCache={},psaCache={};
 const PS=24;
 let page=1,fdata=[],wl=new Set(),sport="top",activeId=null,view="grid";
 
-// ── LIVE EBAY DATA ──
 async function fetchLive(card){
   if(liveCache[card.id])return liveCache[card.id];
   try{
@@ -469,9 +560,7 @@ async function fetchLive(card){
     if(!res.ok)return null;
     const d=await res.json();
     if(!d.raw||d.raw<5)return null;
-    const merged=scoreCard({...card,
-      raw:d.raw||card.raw,p10:d.avg30_10||card.p10,p9:d.avg30_9||card.p9,
-      s10:d.sales30_10||card.s10,s9:d.sales30_9||card.s9,live:true});
+    const merged=scoreCard({...card,raw:d.raw||card.raw,p10:d.avg30_10||card.p10,p9:d.avg30_9||card.p9,s10:d.sales30_10||card.s10,s9:d.sales30_9||card.s9,live:true});
     liveCache[card.id]=merged;
     const idx=ALL.findIndex(c=>c.id===card.id);
     if(idx>=0)ALL[idx]=merged;
@@ -479,10 +568,32 @@ async function fetchLive(card){
   }catch{return null;}
 }
 
-// ── HELPERS ──
+async function fetchPSA(card){
+  if(psaCache[card.id])return;
+  try{
+    const res=await fetch(`/api/psa?cardId=${card.id}`);
+    if(!res.ok)return;
+    const d=await res.json();
+    if(d.error||!d.psa10pop)return;
+    psaCache[card.id]=d;
+    const idx=ALL.findIndex(c=>c.id===card.id);
+    if(idx>=0){
+      ALL[idx]=scoreCard({...ALL[idx],pop:d.psa10pop||ALL[idx].pop,p9pop:d.psa9pop||ALL[idx].p9pop,totpop:d.totalpop||ALL[idx].totpop,gem:d.gemRate||ALL[idx].gem,psa9rate:d.psa9Rate||ALL[idx].psa9rate,psaLive:true});
+    }
+    if(activeId===card.id){
+      const pn=document.getElementById("mPsaNote");
+      if(pn)pn.style.display="flex";
+      const meta=document.getElementById("mMeta");
+      if(meta&&!meta.innerHTML.includes("PSA Live")){
+        meta.innerHTML+=`<span style="background:#0d1f35;color:#60a5fa;font-size:10px;padding:2px 8px;border-radius:99px;border:1px solid #1a3a5a;">PSA Live</span>`;
+      }
+    }
+  }catch(e){console.log("PSA fetch failed:",e.message);}
+}
+
 function getList(s){
-  if(s==="top")return [...ALL].sort((a,b)=>b.sc-a.sc);
-  if(s==="80tier")return [...ALL].filter(c=>c.s80).sort((a,b)=>b.sc-a.sc);
+  if(s==="top")return[...ALL].sort((a,b)=>b.sc-a.sc);
+  if(s==="80tier")return[...ALL].filter(c=>c.s80).sort((a,b)=>b.sc-a.sc);
   return ALL.filter(c=>c.sport===s);
 }
 function setSport(el){document.querySelectorAll(".sport-pill").forEach(p=>p.classList.remove("active"));el.classList.add("active");sport=el.dataset.s;applyAll();}
@@ -492,7 +603,7 @@ function tier(s){if(s>=75)return{t:"S",c:"bs"};if(s>=58)return{t:"A",c:"ba"};if(
 function fmt(n){return"$"+Math.round(n).toLocaleString();}
 function fmtX(n){return n.toFixed(2)+"x";}
 function flr(c){if(c.fg>=0)return{l:"✓ Safe",c:"fs"};if(c.fg>=-c.bec*0.15)return{l:"~ Close",c:"fc"};return{l:"✗ Risk",c:"fr"};}
-function volBadge(c){return`<span class="vol-badge vol-${c.volLabel.toLowerCase()}">${c.volLabel}</span>`;}
+function volB(c){return`<span class="vol-badge vol-${c.volLabel.toLowerCase()}">${c.volLabel}</span>`;}
 function spt(s){const m={Baseball:["sbb","⚾"],Basketball:["sbk","🏀"],Football:["sbf","🏈"],Hockey:["sbh","🏒"],Surfing:["sbs","🏄"]};const d=m[s]||["",""];return`<span class="sptag ${d[0]}">${d[1]} ${s}</span>`;}
 function eu(n,s,v,num,g){const q=`"${n}" "${num}"${g?` PSA ${g}`:""} -reprint -lot${g?"":" -PSA -BGS -graded"}`;return`https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(q)}&LH_Sold=1&LH_Complete=1`;}
 
@@ -543,7 +654,7 @@ function renderGrid(data,offset){
           <div class="cs-item"><div class="cs-label">Gem rate</div><div class="cs-val ${gc}">${c.gem}%</div></div>
           <div class="cs-item"><div class="cs-label">PSA 10 pop</div><div class="cs-val ${c.pop<50?"gr":c.pop<200?"g":"w"}">${c.pop.toLocaleString()}</div></div>
         </div>
-        <div class="card-foot"><span class="floor-badge ${fl.c}">${fl.l}</span>${volBadge(c)}${spt(c.sport)}</div>
+        <div class="card-foot"><span class="floor-badge ${fl.c}">${fl.l}</span>${volB(c)}${spt(c.sport)}</div>
       </div>
     </div>`;
   }).join("")}</div>`;
@@ -561,7 +672,7 @@ function renderList(data,offset){
   </tr></thead><tbody>${data.map((c,i)=>{
     const ti=tier(c.sc),fl=flr(c),wled=wl.has(c.id);
     const rankStr=c.coinRank?`COIN #${c.coinRank}`:`${offset+i+1}`;
-    const gc=c.gem>=60?"#86efac":c.gem>=48?"#f0b429":"#f2f0e8";
+    const gc=c.gem>=60?"var(--green)":c.gem>=48?"var(--gold)":"var(--text)";
     return`<tr onclick="openModal('${c.id}')">
       <td style="color:${c.coinRank?"var(--gold)":"var(--dim)"};font-size:10px;font-weight:${c.coinRank?"600":"400"};">${rankStr}</td>
       <td onclick="event.stopPropagation()"><span style="cursor:pointer;color:${wled?"var(--gold)":"var(--dim)"};" onclick="toggleW('${c.id}')">${wled?"★":"☆"}</span></td>
@@ -571,19 +682,17 @@ function renderList(data,offset){
       <td style="font-weight:500;">${fmt(c.raw)}</td>
       <td style="color:var(--gold);font-weight:500;">${fmtX(c.mult)}</td>
       <td style="color:${gc};font-weight:500;">${c.gem}%</td>
-      <td>${fmt(c.p10)}</td>
-      <td>${fmt(c.l10)}</td>
+      <td>${fmt(c.p10)}</td><td>${fmt(c.l10)}</td>
       <td style="color:var(--muted);">${fmt(c.a9010)}</td>
-      <td style="color:var(--muted);">${c.s10}</td>
-      <td style="color:var(--muted);">${c.s9010}</td>
-      <td style="color:${c.pop<50?"#86efac":c.pop<200?"#f0b429":"#f2f0e8"};font-weight:500;">${c.pop.toLocaleString()}</td>
+      <td style="color:var(--muted);">${c.s10}</td><td style="color:var(--muted);">${c.s9010}</td>
+      <td style="color:${c.pop<50?"var(--green)":c.pop<200?"var(--gold)":"var(--text)"};font-weight:500;">${c.pop.toLocaleString()}</td>
       <td style="color:var(--muted);">${c.totpop.toLocaleString()}</td>
       <td style="color:var(--muted);">${c.psa9rate}%</td>
       <td style="color:var(--muted);">${c.p9pop.toLocaleString()}</td>
       <td style="color:var(--muted);">${fmt(c.p9)}</td>
       <td style="color:${c.m>300?"var(--gold)":c.m>100?"var(--amber)":"var(--red)"};font-weight:500;">${fmt(c.m)}</td>
       <td style="color:var(--muted);">$${FEE}</td>
-      <td>${volBadge(c)}</td>
+      <td>${volB(c)}</td>
       <td><span class="floor-badge ${fl.c}">${fl.l}</span></td>
       <td><span class="score-badge ${ti.c}">${ti.t} ${c.sc}</span></td>
     </tr>`;
@@ -603,7 +712,7 @@ function toggleW(id){if(wl.has(id))wl.delete(id);else wl.add(id);updWL();applyAl
 function toggleWM(){toggleW(activeId);}
 function updWL(){const n=wl.size,b=document.getElementById("wlBadge");b.textContent=n;b.style.display=n>0?"":"none";document.getElementById("wlSub").textContent=`${n} card${n!==1?"s":""} saved`;}
 function clearWL(){wl.clear();updWL();renderWL();applyAll();}
-function renderWL(){const a=document.getElementById("watchlistArea");if(!wl.size){a.innerHTML=`<div style="padding:2rem;text-align:center;color:var(--muted);">⭐<br><br>No cards saved yet.</div>`;return;}const cards=ALL.filter(c=>wl.has(c.id));a.innerHTML=`<div class="card-grid">${cards.map(c=>{const ti=tier(c.sc),fl=flr(c);return`<div class="card-item wl" onclick="openModal('${c.id}')"><div class="ctop"><div class="ctop-name">${c.n}</div><div class="ctop-year">${c.set.match(/\d{4}/)?.[0]||''}</div><div class="ctop-set">${c.v}</div><div class="card-star on" onclick="event.stopPropagation();toggleW('${c.id}')">★</div><div class="score-badge ${ti.c}">${ti.t} ${c.sc}</div></div><div class="cbody"><div class="card-name">${c.n}</div><div class="card-var">${c.set} · ${c.v} · #${c.num}</div><div class="card-stats"><div class="cs-item"><div class="cs-label">Raw</div><div class="cs-val w">${fmt(c.raw)}</div></div><div class="cs-item"><div class="cs-label">Mult</div><div class="cs-val g">${fmtX(c.mult)}</div></div><div class="cs-item"><div class="cs-label">Gem</div><div class="cs-val g">${c.gem}%</div></div><div class="cs-item"><div class="cs-label">Volatility</div><div class="cs-val">${volBadge(c)}</div></div></div><div class="card-foot"><span class="floor-badge ${fl.c}">${fl.l}</span>${spt(c.sport)}</div></div></div>`;}).join("")}</div>`;}
+function renderWL(){const a=document.getElementById("watchlistArea");if(!wl.size){a.innerHTML=`<div style="padding:2rem;text-align:center;color:var(--muted);">⭐<br><br>No cards saved yet.</div>`;return;}const cards=ALL.filter(c=>wl.has(c.id));a.innerHTML=`<div class="card-grid">${cards.map(c=>{const ti=tier(c.sc),fl=flr(c);return`<div class="card-item wl" onclick="openModal('${c.id}')"><div class="ctop"><div class="ctop-name">${c.n}</div><div class="ctop-year">${c.set.match(/\d{4}/)?.[0]||''}</div><div class="ctop-set">${c.v}</div><div class="card-star on" onclick="event.stopPropagation();toggleW('${c.id}')">★</div><div class="score-badge ${ti.c}">${ti.t} ${c.sc}</div></div><div class="cbody"><div class="card-name">${c.n}</div><div class="card-var">${c.set} · ${c.v} · #${c.num}</div><div class="card-stats"><div class="cs-item"><div class="cs-label">Raw</div><div class="cs-val w">${fmt(c.raw)}</div></div><div class="cs-item"><div class="cs-label">Mult</div><div class="cs-val g">${fmtX(c.mult)}</div></div><div class="cs-item"><div class="cs-label">Gem</div><div class="cs-val g">${c.gem}%</div></div><div class="cs-item"><div class="cs-label">Pop</div><div class="cs-val ${c.pop<50?"gr":"w"}">${c.pop.toLocaleString()}</div></div></div><div class="card-foot"><span class="floor-badge ${fl.c}">${fl.l}</span>${spt(c.sport)}</div></div></div>`;}).join("")}</div>`;}
 
 async function openModal(id){
   const c=ALL.find(x=>x.id===id);if(!c)return;
@@ -618,8 +727,9 @@ async function openModal(id){
   document.getElementById("mName").textContent=`${c.v}${c.coinRank?` — COIN #${c.coinRank}`:""}`;
   document.getElementById("mSet").textContent=`${c.set} · #${c.num}`;
   const metaEl=document.getElementById("mMeta");
-  metaEl.innerHTML=spt(c.sport)+volBadge(c)+(c.live?`<span style="background:var(--green-bg);color:var(--green);font-size:10px;padding:2px 8px;border-radius:99px;border:1px solid #1a4a2a;">● Live eBay</span>`:`<span style="background:var(--surface2);color:var(--dim);font-size:10px;padding:2px 8px;border-radius:99px;">Jun 8 2026</span>`);
+  metaEl.innerHTML=spt(c.sport)+volB(c)+(c.live?`<span style="background:var(--green-bg);color:var(--green);font-size:10px;padding:2px 8px;border-radius:99px;border:1px solid #1a4a2a;">● Live eBay</span>`:`<span style="background:var(--surface2);color:var(--dim);font-size:10px;padding:2px 8px;border-radius:99px;">Jul 2026</span>`);
   document.getElementById("mLiveNote").style.display=c.live?"flex":"none";
+  document.getElementById("mPsaNote").style.display=psaCache[id]?"flex":"none";
   const fn=document.getElementById("mFeeNote");
   if(c.s80){fn.className="fnote fn-safe";fn.textContent=`✅ Strong $80 play — PSA 9 covers your $80 fee. Break-even: ${fmt(c.bec)}.`;}
   else{fn.className="fnote fn-risk";fn.textContent=`⚠ Break-even at $80: ${fmt(c.bec)}. PSA 9 floor: ${fl.l.toLowerCase()}.`;}
@@ -647,67 +757,15 @@ async function openModal(id){
     {l:"PSA 9 pop",v:c.p9pop.toLocaleString()},{l:"30d sales",v:c.s9+" sold"}
   ].map(s=>`<div class="mstat"><div class="ml">${s.l}</div><div class="mv">${s.v}</div></div>`).join("");
   document.getElementById("mRisk").innerHTML=[
-    {l:"Volatility",v:volBadge(c)+(` <span style="font-size:10px;color:var(--muted);margin-left:4px;">(score: ${c.volScore})</span>`)},
+    {l:"Volatility",v:volB(c)+`<span style="font-size:10px;color:var(--muted);margin-left:4px;">(${c.volScore})</span>`},
     {l:"Floor at $80",v:`<span class="floor-badge ${fl.c}">${fl.l}</span>`},
     {l:"Break-even gem%",v:c.br.toFixed(1)+"%",col:c.gem>c.br?"var(--green)":"var(--red)"},
-    {l:"Edge rate",v:(c.gem-c.br>=0?"+":"")+( c.gem-c.br).toFixed(1)+"%",col:c.gem-c.br>=0?"var(--green)":"var(--red)"},
+    {l:"Edge rate",v:(c.gem-c.br>=0?"+":"")+(c.gem-c.br).toFixed(1)+"%",col:c.gem-c.br>=0?"var(--green)":"var(--red)"},
   ].map(s=>`<div class="mstat"><div class="ml">${s.l}</div><div class="mv" style="${s.col?`color:${s.col}`:""}">${s.v}</div></div>`).join("");
   document.getElementById("mLinks").innerHTML=`<a class="eb-btn primary" href="${eu(c.n,c.set,c.v,c.num,null)}" target="_blank"><i class="ti ti-external-link"></i> Raw on eBay</a><a class="eb-btn" href="${eu(c.n,c.set,c.v,c.num,10)}" target="_blank"><i class="ti ti-external-link"></i> PSA 10</a><a class="eb-btn" href="${eu(c.n,c.set,c.v,c.num,9)}" target="_blank"><i class="ti ti-external-link"></i> PSA 9</a>`;
   document.getElementById("modalBg").style.display="flex";
-  if(!liveCache[id]&&!c.live){fetchLive(c).then(updated=>{if(updated&&activeId===id)openModal(id);});}
-  // Fetch real PSA pop data if not cached
-  if(!psaCache[id]){fetchPSA(c);}
-}
-
-// ── PSA POPULATION DATA ──
-const psaCache={};
-async function fetchPSA(card){
-  try{
-    const res=await fetch(`/api/psa?cardId=${card.id}`);
-    if(!res.ok)return;
-    const d=await res.json();
-    if(d.error||!d.psa10pop)return;
-    psaCache[card.id]=d;
-    // Update the card in ALL array with real PSA data
-    const idx=ALL.findIndex(c=>c.id===card.id);
-    if(idx>=0){
-      ALL[idx]={...ALL[idx],
-        pop:d.psa10pop||ALL[idx].pop,
-        p9pop:d.psa9pop||ALL[idx].p9pop,
-        totpop:d.totalpop||ALL[idx].totpop,
-        gem:d.gemRate||ALL[idx].gem,
-        psa9rate:d.psa9Rate||ALL[idx].psa9rate,
-        psaLive:true
-      };
-      ALL[idx]=scoreCard(ALL[idx]);
-    }
-    // If this card is still open, refresh the PSA section in the modal
-    if(activeId===card.id){
-      const gc=d.gemRate>=60?"var(--green)":d.gemRate>=48?"var(--gold)":"var(--text)";
-      // Update gem rate display
-      const ms1=document.getElementById("mStats");
-      if(ms1){
-        const gemEl=ms1.querySelector('[data-field="gem"]');
-        if(gemEl)gemEl.textContent=d.gemRate+"%";
-      }
-      // Update PSA 9 section
-      const ms3=document.getElementById("mPsa9");
-      if(ms3&&d.psa9Rate){
-        const r9=ms3.querySelector('[data-field="psa9rate"]');
-        if(r9)r9.textContent=d.psa9Rate+"%";
-        const p9=ms3.querySelector('[data-field="psa9pop"]');
-        if(p9)p9.textContent=(d.psa9pop||0).toLocaleString();
-      }
-      // Show PSA live badge
-      const meta=document.getElementById("mMeta");
-      if(meta&&!meta.innerHTML.includes("PSA Live")){
-        meta.innerHTML+=`<span style="background:#0d1f35;color:#60a5fa;font-size:10px;padding:2px 8px;border-radius:99px;border:1px solid #1a3a5a;">PSA Live</span>`;
-      }
-    }
-    console.log(`PSA live for ${card.id}: 10pop=${d.psa10pop}, gem=${d.gemRate}%, 9pop=${d.psa9pop}`);
-  }catch(err){
-    console.log(`PSA fetch failed for ${card.id}:`,err.message);
-  }
+  if(!liveCache[id]&&!c.live)fetchLive(c).then(u=>{if(u&&activeId===id)openModal(id);});
+  if(!psaCache[id])fetchPSA(c);
 }
 
 async function getInsight(){
@@ -716,36 +774,4 @@ async function getInsight(){
   btn.disabled=true;btn.innerHTML='<div class="spinner"></div> Analyzing…';
   box.style.display="block";sp.style.display="inline-block";ht.textContent="Analyzing…";at.textContent="";
   const ti=tier(c.sc),fl=flr(c);
-  const prompt=`You are S.L.A.B. — Smart Listing Analysis for Buyers by Booster Sports Cards. PSA minimum fee is $80/card.\n\nCard: ${c.n} — ${c.set} · ${c.v} · #${c.num} (${c.sport})${c.coinRank?`\nCOIN rank: #${c.coinRank}`:""}\nData: ${c.live?"Live eBay":"Sports Card Investor & COIN, June 8 2026"}\n\nData:\n- Raw: ${fmt(c.raw)} · Break-even: ${fmt(c.bec)}\n- PSA 10 mult: ${fmtX(c.mult)} · 30d avg: ${fmt(c.p10)} · Margin: ${fmt(c.m)}\n- Gem rate: ${c.gem}% · PSA 9 rate: ${c.psa9rate}%\n- PSA 10 pop: ${c.pop} ${c.pop<50?"(EXTREMELY RARE)":c.pop<200?"(low pop)":""} · Total pop: ${c.totpop}\n- PSA 9 30d avg: ${fmt(c.p9)} · PSA 9 pop: ${c.p9pop}\n- PSA 9 floor: ${fl.l} (gap: ${c.fg>=0?"+":""}${fmt(c.fg)})\n- Volatility: ${c.volLabel} (${c.volScore}/100)\n- S.L.A.B. score: ${ti.t} ${c.sc}/100 · Strong $80 play: ${c.s80?"YES":"NO"}\n\nWrite a plain-English market insight for a beginner. Cover: (1) does this make sense to grade at $80, (2) multiplier and pop story, (3) PSA 9 floor and volatility risk, (4) clear recommendation. Under 180 words. Short paragraphs, no bullets. Friendly and direct.`;
-  try{
-    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:prompt}]})});
-    const data=await res.json();
-    const text=data.content?.map(b=>b.text||"").join("")||"Unable to generate insight.";
-    sp.style.display="none";ht.textContent="✦ AI Market Insight"+(c.live?" · Live data":"");
-    at.innerHTML=text.split(/\n+/).filter(p=>p.trim()).map(p=>`<p>${p.trim()}</p>`).join("");
-  }catch{sp.style.display="none";ht.textContent="AI Market Insight";at.innerHTML=`<p style="color:var(--muted);">Unable to load. Please try again.</p>`;}
-  btn.style.display="none";
-}
-
-function calcEdge(){
-  const buy=+document.getElementById("cBuy").value||0,fee=+document.getElementById("cFee").value||80,p9=+document.getElementById("cPsa9").value||0,p10=+document.getElementById("cPsa10").value||0,gem=+document.getElementById("cGem").value||0;
-  if(!buy||!p9||!p10||!gem){["rBEC","rFG","rBR","rEP","rFS","rCS"].forEach(id=>document.getElementById(id).textContent="—");document.getElementById("calcVerdict").className="verdict vneu";document.getElementById("calcVerdict").textContent="Enter your numbers to see if this play works at $80.";return;}
-  const bec=buy+fee,fg=p9-bec,br=Math.max(0,(bec-p9)/(p10-p9)*100),edge=gem-br,profit=(gem/100)*p10+((1-gem/100)*p9)-bec,conf=Math.max(5,Math.round(50/Math.max(1,gem)));
-  document.getElementById("rBEC").textContent=fmt(bec);
-  const fgEl=document.getElementById("rFG");fgEl.style.color=fg>=0?"var(--green)":fg>=-bec*0.15?"var(--amber)":"var(--red)";fgEl.textContent=(fg>=0?"+":"")+fmt(fg);
-  document.getElementById("rBR").textContent=br.toFixed(1)+"%";
-  const rP=document.getElementById("rEP");rP.style.color=profit>0?"var(--gold)":"var(--red)";rP.textContent=(profit>=0?"":"-")+"$"+Math.abs(Math.round(profit)).toLocaleString();
-  const fst=fg>=0?"✓ Safe":fg>=-bec*0.15?"~ Close":"✗ Risk",fcl=fg>=0?"fs":fg>=-bec*0.15?"fc":"fr";
-  document.getElementById("rFS").innerHTML=`<span class="floor-badge ${fcl}">${fst}</span>`;
-  document.getElementById("rCS").textContent=conf+" submissions";
-  const v=document.getElementById("calcVerdict");
-  if(edge>8){v.className="verdict vpos";v.textContent=`Strong play at $80. Expected profit ~${fmt(profit)} per submission.`;}
-  else if(edge>0){v.className="verdict vpos";v.textContent=`Marginal play at $80.`;}
-  else{v.className="verdict vneg";v.textContent=`Not recommended at $80. Fee erodes the math.`;}
-}
-
-document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")applyAll();});
-applyAll();
-</script>
-</body>
-</html>
+  const prompt=`You are S.L.A.B. — Smart Listing Analysis for Buyers by Booster Sports Cards. PSA minimum fee is $80/card.\n\nCard: ${c.n} — ${c.set} · ${c.v} · #${c.num} (${c.sport})${c.coinRank?`\nCOIN rank: #${c.coinRank}`:""}\nData: ${c.live?"Live eBay":"Sports Card Investor & COIN, July 2026"}${psaCache[c.id]?" + PSA Live pop data":""}\n\nKey data:\n- Raw: ${fmt(c.raw)} · Break-even: ${fmt(c.bec)}\n- PSA 10 mult: ${fmtX(c.

@@ -428,7 +428,7 @@ async function fetchLive(card){
     if(!res.ok)return null;
     const d=await res.json();
     if(!d.raw||d.raw<5)return null;
-    const merged=scoreCard({...card,raw:d.raw||card.raw,p10:d.avg30_10||card.p10,p9:d.avg30_9||card.p9,s10:d.sales30_10||card.s10,s9:d.sales30_9||card.s9,live:true});
+    const merged=scoreCard({...card,raw:d.raw||card.raw,p10:d.avg30_10||card.p10,p9:d.avg30_9||card.p9,s10:d.sales30_10||card.s10,s9:d.sales30_9||card.s9,img:d.image||null,live:true});
     liveCache[card.id]=merged;
     const idx=ALL.findIndex(c=>c.id===card.id);
     if(idx>=0)ALL[idx]=merged;
@@ -462,14 +462,15 @@ function fmtX(n){return n.toFixed(2)+"x";}
 function flr(c){if(c.fg>=0)return{l:"✓ Safe",c:"fs"};if(c.fg>=-c.bec*0.15)return{l:"~ Close",c:"fc"};return{l:"✗ Risk",c:"fr"};}
 function volB(c){return`<span class="vol-badge vol-${c.volLabel.toLowerCase()}">${c.volLabel}</span>`;}
 function spt(s){const m={Baseball:["sbb","⚾"],Basketball:["sbk","🏀"],Football:["sbf","🏈"],Hockey:["sbh","🏒"],Surfing:["sbs","🏄"]};const d=m[s]||["",""];return`<span class="sptag ${d[0]}">${d[1]} ${s}</span>`;}
-function eu(n,s,v,num,g){const q=`"${n}" "${num}"${g?` PSA ${g}`:""} -reprint -lot${g?"":" -PSA -BGS -graded"}`;return`https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(q)}&LH_Sold=1&LH_Complete=1`;}
+function eu(n,s,v,num,g){const variant=(v||"").replace(/\bbase\b/gi,"").trim();const base=[`"${n}"`,s,variant,num].filter(Boolean).join(" ");const q=g?`${base} PSA ${g} -reprint -lot`:`${base} -reprint -lot -PSA -BGS -SGC -CGC -graded`;return`https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(q)}&LH_Sold=1&LH_Complete=1`;}
 function applyAll(){
   const q=document.getElementById("searchInput").value.trim().toLowerCase();
   const sort=document.getElementById("sortSel").value;
-  const asc={raw:1,fg:-1,pop:1,volScore:1}[sort]||(-1);
+  const ascKeys={raw:true,pop:true};
+  const dir=ascKeys[sort]?1:-1;
   let data=getList(sport);
   if(q)data=data.filter(c=>c.n.toLowerCase().includes(q)||c.set.toLowerCase().includes(q)||c.sport.toLowerCase().includes(q)||c.v.toLowerCase().includes(q)||c.num.toLowerCase().includes(q));
-  data.sort((a,b)=>(b[sort]-a[sort])*asc);
+  data.sort((a,b)=>(a[sort]-b[sort])*dir);
   fdata=data;page=1;renderPage();
 }
 function changePage(d){page+=d;renderPage();document.getElementById("resultsArea").scrollIntoView({behavior:"smooth"});}
@@ -492,7 +493,8 @@ function renderGrid(data,offset){
     const bot=c.live?`<div class="bot-left live-b">● Live</div>`:c.s80?`<div class="bot-left s80-b">✅ $80</div>`:c.hot?`<div class="bot-left hot-b">🔥 Hot</div>`:"";
     return`<div class="card-item${wled?" wl":""}" onclick="openModal('${c.id}')">
       <div class="ctop">
-        <div class="ctop-name">${c.n}</div>
+        ${c.img?`<img src="${c.img}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92" onerror="this.style.display='none'"/>`:''}
+        <div class="ctop-name" style="${c.img?'position:relative;background:rgba(10,10,12,.72);padding:2px 8px;border-radius:6px':''}">${c.n}</div>
         <div class="ctop-year">${c.set.match(/\d{4}/)?.[0]||''}</div>
         <div class="ctop-set">${c.v}</div>
         ${rl}
@@ -564,7 +566,7 @@ function toggleW(id){if(wl.has(id))wl.delete(id);else wl.add(id);updWL();applyAl
 function toggleWM(){toggleW(activeId);}
 function updWL(){const n=wl.size,b=document.getElementById("wlBadge");b.textContent=n;b.style.display=n>0?"":"none";document.getElementById("wlSub").textContent=`${n} card${n!==1?"s":""} saved`;}
 function clearWL(){wl.clear();updWL();renderWL();applyAll();}
-function renderWL(){const a=document.getElementById("watchlistArea");if(!wl.size){a.innerHTML=`<div style="padding:2rem;text-align:center;color:var(--muted);">⭐<br><br>No cards saved yet.</div>`;return;}const cards=ALL.filter(c=>wl.has(c.id));a.innerHTML=`<div class="card-grid">${cards.map(c=>{const ti=tier(c.sc),fl=flr(c);return`<div class="card-item wl" onclick="openModal('${c.id}')"><div class="ctop"><div class="ctop-name">${c.n}</div><div class="ctop-year">${c.set.match(/\d{4}/)?.[0]||''}</div><div class="ctop-set">${c.v}</div><div class="card-star on" onclick="event.stopPropagation();toggleW('${c.id}')">★</div><div class="score-badge ${ti.c}">${ti.t} ${c.sc}</div></div><div class="cbody"><div class="card-name">${c.n}</div><div class="card-var">${c.set} · ${c.v} · #${c.num}</div><div class="card-stats"><div class="cs-item"><div class="cs-label">Raw</div><div class="cs-val w">${fmt(c.raw)}</div></div><div class="cs-item"><div class="cs-label">Mult</div><div class="cs-val g">${fmtX(c.mult)}</div></div><div class="cs-item"><div class="cs-label">Gem</div><div class="cs-val g">${c.gem}%</div></div><div class="cs-item"><div class="cs-label">Pop</div><div class="cs-val ${c.pop<50?"gr":"w"}">${c.pop.toLocaleString()}</div></div></div><div class="card-foot"><span class="floor-badge ${fl.c}">${fl.l}</span>${spt(c.sport)}</div></div></div>`;}).join("")}</div>`;}
+function renderWL(){const a=document.getElementById("watchlistArea");if(!wl.size){a.innerHTML=`<div style="padding:2rem;text-align:center;color:var(--muted);">⭐<br><br>No cards saved yet.</div>`;return;}const cards=ALL.filter(c=>wl.has(c.id));a.innerHTML=`<div class="card-grid">${cards.map(c=>{const ti=tier(c.sc),fl=flr(c);return`<div class="card-item wl" onclick="openModal('${c.id}')"><div class="ctop">${c.img?`<img src="${c.img}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92" onerror="this.style.display='none'"/>`:''}<div class="ctop-name" style="${c.img?'position:relative;background:rgba(10,10,12,.72);padding:2px 8px;border-radius:6px':''}">${c.n}</div><div class="ctop-year">${c.set.match(/\d{4}/)?.[0]||''}</div><div class="ctop-set">${c.v}</div><div class="card-star on" onclick="event.stopPropagation();toggleW('${c.id}')">★</div><div class="score-badge ${ti.c}">${ti.t} ${c.sc}</div></div><div class="cbody"><div class="card-name">${c.n}</div><div class="card-var">${c.set} · ${c.v} · #${c.num}</div><div class="card-stats"><div class="cs-item"><div class="cs-label">Raw</div><div class="cs-val w">${fmt(c.raw)}</div></div><div class="cs-item"><div class="cs-label">Mult</div><div class="cs-val g">${fmtX(c.mult)}</div></div><div class="cs-item"><div class="cs-label">Gem</div><div class="cs-val g">${c.gem}%</div></div><div class="cs-item"><div class="cs-label">Pop</div><div class="cs-val ${c.pop<50?"gr":"w"}">${c.pop.toLocaleString()}</div></div></div><div class="card-foot"><span class="floor-badge ${fl.c}">${fl.l}</span>${spt(c.sport)}</div></div></div>`;}).join("")}</div>`;}
 async function openModal(id){
   const c=ALL.find(x=>x.id===id);if(!c)return;
   activeId=id;

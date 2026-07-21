@@ -230,8 +230,12 @@ export default async function handler(req, res) {
       ? Math.round(parseFloat(psa9Items[0].sellingStatus?.[0]?.currentPrice?.[0]?.['__value__'] || avg30_9))
       : avg30_9;
 
+    // Real seller thumbnail from the top matching raw sold listing (null if none)
+    const image = rawItems[0]?.galleryURL?.[0] || null;
+
     res.status(200).json({
-      raw, avg30_10, avg90_10: Math.round(avg30_10 * 0.97), latest10,
+      raw, image,
+      avg30_10, avg90_10: Math.round(avg30_10 * 0.97), latest10,
       avg30_9,  avg90_9: Math.round(avg30_9 * 0.97), latest9,
       sales30_10: psa10Items.length, sales30_9: psa9Items.length,
       sales90_10: Math.round(psa10Items.length * 2.8),

@@ -3,13 +3,13 @@
   "builds": [
     { "src": "api/search.js", "use": "@vercel/node" },
     { "src": "api/psa.js", "use": "@vercel/node" },
-    { "src": "public/**", "use": "@vercel/static" },
-    { "src": "api/sold.js", "use": "@vercel/node" }
+    { "src": "api/sold.js", "use": "@vercel/node" },
+    { "src": "public/**", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/api/search", "dest": "/api/search.js" },
     { "src": "/api/psa", "dest": "/api/psa.js" },
-    { "src": "/(.*)", "dest": "/public/$1" },
-    { "src": "/api/sold", "dest": "/api/sold.js" }
+    { "src": "/api/sold", "dest": "/api/sold.js" },
+    { "src": "/(.*)", "dest": "/public/$1" }
   ]
 }

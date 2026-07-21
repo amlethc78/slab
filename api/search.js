@@ -230,8 +230,10 @@ export default async function handler(req, res) {
       ? Math.round(parseFloat(psa9Items[0].sellingStatus?.[0]?.currentPrice?.[0]?.['__value__'] || avg30_9))
       : avg30_9;
 
-    // Real seller thumbnail from the top matching raw sold listing (null if none)
-    const image = rawItems[0]?.galleryURL?.[0] || null;
+    // Real seller thumbnail from the top matching raw sold listing (null if none).
+    // eBay returns these as http:// — upgrade to https:// so the https site doesn't block them.
+    let image = rawItems[0]?.galleryURL?.[0] || null;
+    if (image) image = image.replace(/^http:\/\//i, 'https://');
 
     res.status(200).json({
       raw, image,

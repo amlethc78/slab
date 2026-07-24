@@ -263,6 +263,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
     <div class="modal-body">
       <div id="mLiveNote" style="display:none;" class="live-note"><i class="ti ti-bolt"></i> Live eBay data loaded</div>
       <div id="mPsaNote" style="display:none;" class="psa-note"><i class="ti ti-chart-bar"></i> PSA pop data loaded</div>
+      <div id="mSoldNote" style="display:none;" class="live-note"><i class="ti ti-bolt"></i> Loading live sold comps…</div>
       <div class="fnote" id="mFeeNote"></div>
       <div class="modal-section"><h4>S.L.A.B. analysis</h4><div class="modal-grid" id="mStats"></div></div>
       <div class="modal-section"><h4>PSA 10 market data</h4><div class="modal-grid" id="mPsa10"></div></div>
@@ -417,7 +418,8 @@ function scoreCard(c){
     s9010:Math.round(c.s10*2.8),s909:Math.round(c.s9*2.8)};
 }
 let ALL=DB.map(scoreCard);
-const liveCache={},psaCache={};
+const liveCache={},psaCache={},soldCache={};
+const soldPending=new Set();
 const PS=24;
 let page=1,fdata=[],wl=new Set(),sport="top",activeId=null,view="grid";
 async function fetchLive(card){
@@ -447,6 +449,43 @@ async function fetchPSA(card){
     if(idx>=0){ALL[idx]=scoreCard({...ALL[idx],pop:d.psa10pop||ALL[idx].pop,totpop:d.totalpop||ALL[idx].totpop,gem:d.gemRate||ALL[idx].gem,psaLive:true});}
     if(activeId===card.id){const pn=document.getElementById("mPsaNote");if(pn)pn.style.display="flex";}
   }catch(e){}
+}
+async function fetchSold(card){
+  if(soldCache[card.id]||soldPending.has(card.id))return;
+  soldPending.add(card.id);
+  if(activeId===card.id){const sn=document.getElementById("mSoldNote");if(sn)sn.style.display="flex";}
+  try{
+    const qs=`name=${encodeURIComponent(card.n)}&set=${encodeURIComponent(card.set)}&variant=${encodeURIComponent(card.v)}&num=${encodeURIComponent(card.num)}`;
+    const startRes=await fetch(`/api/sold?${qs}`);
+    if(!startRes.ok)return;
+    const start=await startRes.json();
+    if(start.status!=="started"||!start.runId)return;
+    const deadline=Date.now()+180000;
+    let result=null;
+    while(Date.now()<deadline){
+      await new Promise(r=>setTimeout(r,5000));
+      const pollRes=await fetch(`/api/sold?runId=${encodeURIComponent(start.runId)}&${qs}`);
+      if(!pollRes.ok)continue;
+      const d=await pollRes.json();
+      if(d.status==="done"){result=d;break;}
+      if(d.status==="failed")break;
+    }
+    if(result){
+      const idx=ALL.findIndex(c=>c.id===card.id);
+      if(idx>=0){
+        const merged=scoreCard({...ALL[idx],raw:result.raw||ALL[idx].raw,p10:result.avg30_10||ALL[idx].p10,p9:result.avg30_9||ALL[idx].p9,soldLive:true});
+        ALL[idx]=merged;
+        soldCache[card.id]=merged;
+      }
+    }
+  }catch(e){}
+  finally{
+    soldPending.delete(card.id);
+    if(activeId===card.id){
+      const sn=document.getElementById("mSoldNote");if(sn)sn.style.display="none";
+      if(soldCache[card.id]){applyAll();openModal(card.id);}
+    }
+  }
 }
 function getList(s){
   if(s==="top")return[...ALL].sort((a,b)=>b.sc-a.sc);
@@ -583,6 +622,7 @@ async function openModal(id){
   metaEl.innerHTML=spt(c.sport)+volB(c)+(c.live?`<span style="background:var(--green-bg);color:var(--green);font-size:10px;padding:2px 8px;border-radius:99px;border:1px solid #1a4a2a;">● Live eBay</span>`:`<span style="background:var(--surface2);color:var(--dim);font-size:10px;padding:2px 8px;border-radius:99px;">Jul 2026</span>`);
   document.getElementById("mLiveNote").style.display=c.live?"flex":"none";
   document.getElementById("mPsaNote").style.display=psaCache[id]?"flex":"none";
+  document.getElementById("mSoldNote").style.display=soldPending.has(id)?"flex":"none";
   const fn=document.getElementById("mFeeNote");
   if(c.s80){fn.className="fnote fn-safe";fn.textContent=`✅ Strong $80 play — PSA 9 covers your $80 fee. Break-even: ${fmt(c.bec)}.`;}
   else{fn.className="fnote fn-risk";fn.textContent=`⚠ Break-even at $80: ${fmt(c.bec)}. PSA 9 floor: ${fl.l.toLowerCase()}.`;}
@@ -619,6 +659,7 @@ async function openModal(id){
   document.getElementById("modalBg").style.display="flex";
   if(!liveCache[id]&&!c.live)fetchLive(c).then(u=>{if(u&&activeId===id)openModal(id);});
   if(!psaCache[id])fetchPSA(c);
+  if(!soldCache[id])fetchSold(c);
 }
 async function getInsight(){
   const c=ALL.find(x=>x.id===activeId);if(!c)return;

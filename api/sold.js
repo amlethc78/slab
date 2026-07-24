@@ -11,12 +11,16 @@
 // NOTE ON SCOPE: this fetches sold comps for a SINGLE card on demand (called when a
 // card is opened). It does not re-rank the whole dashboard — that would need a batch
 // job that scrapes every card and stores the results. This is the per-card version.
+//
+// ASYNC FLOW: run-sync-get-dataset-items blocks until the scrape finishes, which
+// exceeds Vercel's function timeout (504). So instead: no runId starts the Apify run
+// and returns immediately; a runId polls that run's status and returns items once
+// Apify reports SUCCEEDED.
 
 const ACTOR = 'caffein.dev~ebay-sold-listings';
-const APIFY_RUN = `https://api.apify.com/v2/acts/${ACTOR}/run-sync-get-dataset-items`;
+const APIFY_BASE = 'https://api.apify.com/v2';
 
-// Allow up to 60s for the scrape (Vercel Pro; hobby tier caps lower — see README note).
-export const config = { maxDuration: 60 };
+export const config = { maxDuration: 30 };
 
 // ── parallel terms, to keep parallels out of a base-card raw average ──
 const PARALLEL_TERMS = [
@@ -63,76 +67,107 @@ function trimmedAvg(prices) {
 const soldPrice = it => parseFloat(it.soldPrice || it.totalPrice || 0);
 const lower = it => (it.title || '').toLowerCase();
 
-export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET');
-  if (req.method === 'OPTIONS') return res.status(200).end();
-
-  const { name, set, variant, num } = req.query;
-  if (!name) return res.status(400).json({ error: 'name required' });
-
-  const token = process.env.APIFY_TOKEN;
-  if (!token) return res.status(500).json({ error: 'APIFY_TOKEN not configured' });
-
+function buildKeywords(name, set, variant, num) {
   const vt = variantTerm(variant, set);
   const base = baseKeywords(name, set, num);
   const rawKw   = `${base} ${vt} -psa -bgs -sgc -cgc`.replace(/\s+/g, ' ').trim();
   const psa10Kw = `${base} PSA 10`.replace(/\s+/g, ' ').trim();
   const psa9Kw  = `${base} PSA 9`.replace(/\s+/g, ' ').trim();
+  return { vt, rawKw, psa10Kw, psa9Kw };
+}
 
-  const input = {
-    keywords: [rawKw, psa10Kw, psa9Kw],
-    daysToScrape: 30,
-    count: 50,
-    ebaySite: 'ebay.com',
-    sortOrder: 'endedRecently',
-    itemCondition: 'any',
-    currencyMode: 'USD',
-    detailedSearch: false,
+function scoreFromItems(items, rawKw, psa10Kw, psa9Kw, vt) {
+  // Bucket by which keyword produced each row (actor tags results with `keyword`),
+  // then apply title safety filters.
+  const byKw = kw => items.filter(it => (it.keyword || '') === kw);
+
+  const rawItems = byKw(rawKw).filter(it => {
+    const t = lower(it);
+    if (t.includes('psa') || t.includes('bgs') || t.includes('sgc') || t.includes('cgc')) return false;
+    if (!vt) return !PARALLEL_TERMS.some(term => t.includes(term)); // base card: drop parallels
+    return true;
+  });
+  const psa10Items = byKw(psa10Kw).filter(it => {
+    const t = lower(it);
+    return t.includes('psa') && (t.includes('psa 10') || t.includes('psa10') || t.includes('gem mint 10'));
+  });
+  const psa9Items = byKw(psa9Kw).filter(it => {
+    const t = lower(it);
+    return t.includes('psa') && (t.includes('psa 9') || t.includes('psa9'));
+  });
+
+  return {
+    raw: trimmedAvg(rawItems.map(soldPrice)),
+    avg30_10: trimmedAvg(psa10Items.map(soldPrice)),
+    avg30_9: trimmedAvg(psa9Items.map(soldPrice)),
+    sales30_10: psa10Items.length,
+    sales30_9: psa9Items.length,
+    dataType: 'sold_comps',
+    counts: { raw: rawItems.length, psa10: psa10Items.length, psa9: psa9Items.length, total: items.length },
   };
+}
+
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+
+  const { name, set, variant, num, runId } = req.query;
+  if (!name) return res.status(400).json({ error: 'name required' });
+
+  const token = process.env.APIFY_TOKEN;
+  if (!token) return res.status(500).json({ error: 'APIFY_TOKEN not configured' });
 
   try {
-    const r = await fetch(`${APIFY_RUN}?token=${encodeURIComponent(token)}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(input),
-    });
-    if (!r.ok) {
-      const t = await r.text().catch(() => '');
-      return res.status(502).json({ error: `Apify error ${r.status}: ${t.slice(0, 200)}` });
+    if (!runId) {
+      const { rawKw, psa10Kw, psa9Kw } = buildKeywords(name, set, variant, num);
+      const input = {
+        keywords: [rawKw, psa10Kw, psa9Kw],
+        daysToScrape: 30,
+        count: 50,
+        ebaySite: 'ebay.com',
+        sortOrder: 'endedRecently',
+        itemCondition: 'any',
+        currencyMode: 'USD',
+        detailedSearch: false,
+      };
+
+      const r = await fetch(`${APIFY_BASE}/acts/${ACTOR}/runs?token=${encodeURIComponent(token)}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(input),
+      });
+      if (!r.ok) {
+        const t = await r.text().catch(() => '');
+        return res.status(502).json({ error: `Apify error ${r.status}: ${t.slice(0, 200)}` });
+      }
+      const { data } = await r.json();
+      return res.status(200).json({ status: 'started', runId: data.id, datasetId: data.defaultDatasetId });
     }
-    const items = await r.json();
+
+    const runRes = await fetch(`${APIFY_BASE}/actor-runs/${runId}?token=${encodeURIComponent(token)}`);
+    if (!runRes.ok) {
+      const t = await runRes.text().catch(() => '');
+      return res.status(502).json({ error: `Apify error ${runRes.status}: ${t.slice(0, 200)}` });
+    }
+    const { data: run } = await runRes.json();
+
+    if (run.status === 'FAILED' || run.status === 'ABORTED' || run.status === 'TIMED-OUT') {
+      return res.status(200).json({ status: 'failed' });
+    }
+    if (run.status !== 'SUCCEEDED') {
+      return res.status(200).json({ status: 'running' });
+    }
+
+    const itemsRes = await fetch(`${APIFY_BASE}/datasets/${run.defaultDatasetId}/items?token=${encodeURIComponent(token)}`);
+    if (!itemsRes.ok) return res.status(502).json({ error: `Apify error ${itemsRes.status}` });
+    const items = await itemsRes.json();
     if (!Array.isArray(items)) return res.status(502).json({ error: 'unexpected Apify response' });
 
-    // Bucket by which keyword produced each row (actor tags results with `keyword`),
-    // then apply title safety filters.
-    const byKw = kw => items.filter(it => (it.keyword || '') === kw);
+    const { vt, rawKw, psa10Kw, psa9Kw } = buildKeywords(name, set, variant, num);
+    const scored = scoreFromItems(items, rawKw, psa10Kw, psa9Kw, vt);
 
-    const rawItems = byKw(rawKw).filter(it => {
-      const t = lower(it);
-      if (t.includes('psa') || t.includes('bgs') || t.includes('sgc') || t.includes('cgc')) return false;
-      if (!vt) return !PARALLEL_TERMS.some(term => t.includes(term)); // base card: drop parallels
-      return true;
-    });
-    const psa10Items = byKw(psa10Kw).filter(it => {
-      const t = lower(it);
-      return t.includes('psa') && (t.includes('psa 10') || t.includes('psa10') || t.includes('gem mint 10'));
-    });
-    const psa9Items = byKw(psa9Kw).filter(it => {
-      const t = lower(it);
-      return t.includes('psa') && (t.includes('psa 9') || t.includes('psa9'));
-    });
-
-    const raw      = trimmedAvg(rawItems.map(soldPrice));
-    const avg30_10 = trimmedAvg(psa10Items.map(soldPrice));
-    const avg30_9  = trimmedAvg(psa9Items.map(soldPrice));
-
-    res.status(200).json({
-      raw, avg30_10, avg30_9,
-      sales30_10: psa10Items.length, sales30_9: psa9Items.length,
-      dataType: 'sold_comps',
-      counts: { raw: rawItems.length, psa10: psa10Items.length, psa9: psa9Items.length, total: items.length },
-    });
+    return res.status(200).json({ ...scored, status: 'done' });
   } catch (err) {
     console.error('Sold scrape error:', err.message);
     res.status(500).json({ error: err.message });

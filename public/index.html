@@ -659,7 +659,6 @@ async function openModal(id){
   document.getElementById("modalBg").style.display="flex";
   if(!liveCache[id]&&!c.live)fetchLive(c).then(u=>{if(u&&activeId===id)openModal(id);});
   if(!psaCache[id])fetchPSA(c);
-  if(!soldCache[id])fetchSold(c);
 }
 async function getInsight(){
   const c=ALL.find(x=>x.id===activeId);if(!c)return;

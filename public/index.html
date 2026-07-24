@@ -502,6 +502,7 @@ function flr(c){if(c.fg>=0)return{l:"✓ Safe",c:"fs"};if(c.fg>=-c.bec*0.15)retu
 function volB(c){return`<span class="vol-badge vol-${c.volLabel.toLowerCase()}">${c.volLabel}</span>`;}
 function spt(s){const m={Baseball:["sbb","⚾"],Basketball:["sbk","🏀"],Football:["sbf","🏈"],Hockey:["sbh","🏒"],Surfing:["sbs","🏄"]};const d=m[s]||["",""];return`<span class="sptag ${d[0]}">${d[1]} ${s}</span>`;}
 function eu(n,s,v,num,g){const variant=(v||"").replace(/\bbase\b/gi,"").trim();const base=[`"${n}"`,s,variant,num].filter(Boolean).join(" ");const q=g?`${base} PSA ${g} -reprint -lot`:`${base} -reprint -lot -PSA -BGS -SGC -CGC -graded`;return`https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(q)}&LH_Sold=1&LH_Complete=1`;}
+function terapeakUrl(n,s,v,num){const variant=(v||"").replace(/\bbase\b/gi,"").trim();const q=[n,s,variant,num].filter(Boolean).join(" ");const end=Date.now(),start=end-30*24*60*60*1000;return`https://www.ebay.com/sh/research?marketplace=EBAY-US&keywords=${encodeURIComponent(q)}&dayRange=30&endDate=${end}&startDate=${start}&categoryId=0&offset=0&limit=50&tabName=SOLD&tz=America%2FNew_York`;}
 function applyAll(){
   const q=document.getElementById("searchInput").value.trim().toLowerCase();
   const sort=document.getElementById("sortSel").value;
@@ -655,7 +656,7 @@ async function openModal(id){
     {l:"Break-even gem%",v:c.br.toFixed(1)+"%",col:c.gem>c.br?"var(--green)":"var(--red)"},
     {l:"Edge rate",v:(c.gem-c.br>=0?"+":"")+(c.gem-c.br).toFixed(1)+"%",col:c.gem-c.br>=0?"var(--green)":"var(--red)"},
   ].map(s=>`<div class="mstat"><div class="ml">${s.l}</div><div class="mv" style="${s.col?`color:${s.col}`:""}">${s.v}</div></div>`).join("");
-  document.getElementById("mLinks").innerHTML=`<a class="eb-btn primary" href="${eu(c.n,c.set,c.v,c.num,null)}" target="_blank"><i class="ti ti-external-link"></i> Raw on eBay</a><a class="eb-btn" href="${eu(c.n,c.set,c.v,c.num,10)}" target="_blank"><i class="ti ti-external-link"></i> PSA 10</a><a class="eb-btn" href="${eu(c.n,c.set,c.v,c.num,9)}" target="_blank"><i class="ti ti-external-link"></i> PSA 9</a>`;
+  document.getElementById("mLinks").innerHTML=`<a class="eb-btn primary" href="${eu(c.n,c.set,c.v,c.num,null)}" target="_blank"><i class="ti ti-external-link"></i> Raw on eBay</a><a class="eb-btn" href="${eu(c.n,c.set,c.v,c.num,10)}" target="_blank"><i class="ti ti-external-link"></i> PSA 10</a><a class="eb-btn" href="${eu(c.n,c.set,c.v,c.num,9)}" target="_blank"><i class="ti ti-external-link"></i> PSA 9</a><a class="eb-btn" href="${terapeakUrl(c.n,c.set,c.v,c.num)}" target="_blank"><i class="ti ti-external-link"></i> Terapeak</a>`;
   document.getElementById("modalBg").style.display="flex";
   if(!liveCache[id]&&!c.live)fetchLive(c).then(u=>{if(u&&activeId===id)openModal(id);});
   if(!psaCache[id])fetchPSA(c);

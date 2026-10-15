@@ -226,7 +226,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
           <div class="res-box"><div class="rl">Floor status</div><div class="rv" id="rFS">—</div></div>
           <div class="res-box"><div class="rl">Confidence size</div><div class="rv" id="rCS">—</div></div>
         </div>
-        <div class="verdict vneu" id="calcVerdict">Enter your numbers to see if this play works at $80.</div>
+        <div class="verdict vneu" id="calcVerdict">Enter your numbers to see if this play works at $60.</div>
       </div></div>
     </div>
   </div>
@@ -239,7 +239,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
       <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">PSA 10 multiplier (30%)</span><span style="color:var(--muted);font-size:12px;">Primary driver.</span></div>
       <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--gold);font-size:12px;font-weight:500;">Pop scarcity (28%)</span><span style="color:var(--muted);font-size:12px;">Under 50 PSA 10s scores highest.</span></div>
       <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--muted);font-size:12px;">Gem rate (18%)</span><span style="color:var(--dim);font-size:12px;">% of submissions receiving PSA 10.</span></div>
-      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--muted);font-size:12px;">Margin (12%)</span><span style="color:var(--dim);font-size:12px;">Dollar profit after $80 fee.</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--muted);font-size:12px;">Margin (12%)</span><span style="color:var(--dim);font-size:12px;">Dollar profit after $60 fee.</span></div>
       <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;"><span style="color:var(--muted);font-size:12px;">PSA 9 floor (8%)</span><span style="color:var(--dim);font-size:12px;">Downside protection.</span></div>
       <div style="display:flex;justify-content:space-between;padding:7px 0;gap:12px;"><span style="color:var(--muted);font-size:12px;">Demand (4%)</span><span style="color:var(--dim);font-size:12px;">Sales velocity.</span></div>
     </div>
@@ -530,7 +530,7 @@ function renderGrid(data,offset){
     const ti=tier(c.sc),fl=flr(c),wled=wl.has(c.id);
     const gc=c.gem>=60?"gr":c.gem>=48?"g":"w";
     const rl=c.coinRank?`<div class="rank-lbl rank-coin">COIN #${c.coinRank}</div>`:`<div class="rank-lbl rank-num">#${offset+i+1}</div>`;
-    const bot=c.live?`<div class="bot-left live-b">● Live</div>`:c.s80?`<div class="bot-left s80-b">✅ $80</div>`:c.hot?`<div class="bot-left hot-b">🔥 Hot</div>`:"";
+    const bot=c.live?`<div class="bot-left live-b">● Live</div>`:c.s80?`<div class="bot-left s80-b">✅ $60</div>`:c.hot?`<div class="bot-left hot-b">🔥 Hot</div>`:"";
     return`<div class="card-item${wled?" wl":""}" onclick="openModal('${c.id}')">
       <div class="ctop">
         ${c.img?`<img src="${c.img}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92" onerror="this.style.display='none'"/>`:''}
@@ -564,7 +564,7 @@ function renderList(data,offset){
     <th>Raw</th><th>Mult</th><th>Gem%</th><th>30d PSA10</th><th>Latest</th>
     <th>90d PSA10</th><th>30d Sales</th><th>PSA10 Pop</th><th>Total Pop</th>
     <th>PSA9 Rate</th><th>PSA9 Pop</th><th>30d PSA9</th><th>Margin</th>
-    <th>Fee</th><th>Vol</th><th>$80 Floor</th><th>Score</th>
+    <th>Fee</th><th>Vol</th><th>$60 Floor</th><th>Score</th>
   </tr></thead><tbody>${data.map((c,i)=>{
     const ti=tier(c.sc),fl=flr(c),wled=wl.has(c.id);
     const rankStr=c.coinRank?`COIN #${c.coinRank}`:`${offset+i+1}`;
@@ -625,8 +625,8 @@ async function openModal(id){
   document.getElementById("mPsaNote").style.display=psaCache[id]?"flex":"none";
   document.getElementById("mSoldNote").style.display=soldPending.has(id)?"flex":"none";
   const fn=document.getElementById("mFeeNote");
-  if(c.s80){fn.className="fnote fn-safe";fn.textContent=`✅ Strong $80 play — PSA 9 covers your $80 fee. Break-even: ${fmt(c.bec)}.`;}
-  else{fn.className="fnote fn-risk";fn.textContent=`⚠ Break-even at $80: ${fmt(c.bec)}. PSA 9 floor: ${fl.l.toLowerCase()}.`;}
+  if(c.s80){fn.className="fnote fn-safe";fn.textContent=`✅ Strong $60 play — PSA 9 covers your $60 fee. Break-even: ${fmt(c.bec)}.`;}
+  else{fn.className="fnote fn-risk";fn.textContent=`⚠ Break-even at $60: ${fmt(c.bec)}. PSA 9 floor: ${fl.l.toLowerCase()}.`;}
   document.getElementById("mWatchBtn").textContent=wled?"★ In watchlist":"☆ Watchlist";
   const gc=c.gem>=60?"var(--green)":c.gem>=48?"var(--gold)":"var(--text)";
   document.getElementById("mStats").innerHTML=[
@@ -652,7 +652,7 @@ async function openModal(id){
   ].map(s=>`<div class="mstat"><div class="ml">${s.l}</div><div class="mv">${s.v}</div></div>`).join("");
   document.getElementById("mRisk").innerHTML=[
     {l:"Volatility",v:volB(c)+`<span style="font-size:10px;color:var(--muted);margin-left:4px;">(${c.volScore})</span>`},
-    {l:"Floor at $80",v:`<span class="floor-badge ${fl.c}">${fl.l}</span>`},
+    {l:"Floor at $60",v:`<span class="floor-badge ${fl.c}">${fl.l}</span>`},
     {l:"Break-even gem%",v:c.br.toFixed(1)+"%",col:c.gem>c.br?"var(--green)":"var(--red)"},
     {l:"Edge rate",v:(c.gem-c.br>=0?"+":"")+(c.gem-c.br).toFixed(1)+"%",col:c.gem-c.br>=0?"var(--green)":"var(--red)"},
   ].map(s=>`<div class="mstat"><div class="ml">${s.l}</div><div class="mv" style="${s.col?`color:${s.col}`:""}">${s.v}</div></div>`).join("");
@@ -667,7 +667,7 @@ async function getInsight(){
   btn.disabled=true;btn.innerHTML='<div class="spinner"></div> Analyzing…';
   box.style.display="block";sp.style.display="inline-block";ht.textContent="Analyzing…";at.textContent="";
   const ti=tier(c.sc),fl=flr(c);
-  const prompt=`You are S.L.A.B. — Smart Listing Analysis for Buyers by Booster Sports Cards. PSA minimum fee is $80/card.\n\nCard: ${c.n} — ${c.set} · ${c.v} · #${c.num} (${c.sport})${c.coinRank?`\nCOIN rank: #${c.coinRank}`:""}\n\nKey data:\n- Raw: ${fmt(c.raw)} · Break-even: ${fmt(c.bec)}\n- PSA 10 mult: ${fmtX(c.mult)} · 30d avg: ${fmt(c.p10)} · Margin: ${fmt(c.m)}\n- Gem rate: ${c.gem}% · PSA 9 rate: ${c.psa9rate}%\n- PSA 10 pop: ${c.pop} ${c.pop<50?"(EXTREMELY RARE)":c.pop<200?"(low pop)":""}\n- PSA 9 30d avg: ${fmt(c.p9)} · floor: ${fl.l} (gap: ${c.fg>=0?"+":""}${fmt(c.fg)})\n- Volatility: ${c.volLabel} · Score: ${ti.t} ${c.sc}/100 · Strong $80: ${c.s80?"YES":"NO"}\n\nWrite a plain-English market insight for a beginner. Cover: (1) does grading at $80 make sense, (2) multiplier and pop story, (3) PSA 9 floor risk, (4) clear recommendation. Under 180 words. Short paragraphs, no bullets. Friendly and direct.`;
+  const prompt=`You are S.L.A.B. — Smart Listing Analysis for Buyers by Booster Sports Cards. PSA minimum fee is $60/card.\n\nCard: ${c.n} — ${c.set} · ${c.v} · #${c.num} (${c.sport})${c.coinRank?`\nCOIN rank: #${c.coinRank}`:""}\n\nKey data:\n- Raw: ${fmt(c.raw)} · Break-even: ${fmt(c.bec)}\n- PSA 10 mult: ${fmtX(c.mult)} · 30d avg: ${fmt(c.p10)} · Margin: ${fmt(c.m)}\n- Gem rate: ${c.gem}% · PSA 9 rate: ${c.psa9rate}%\n- PSA 10 pop: ${c.pop} ${c.pop<50?"(EXTREMELY RARE)":c.pop<200?"(low pop)":""}\n- PSA 9 30d avg: ${fmt(c.p9)} · floor: ${fl.l} (gap: ${c.fg>=0?"+":""}${fmt(c.fg)})\n- Volatility: ${c.volLabel} · Score: ${ti.t} ${c.sc}/100 · Strong $60: ${c.s80?"YES":"NO"}\n\nWrite a plain-English market insight for a beginner. Cover: (1) does grading at $60 make sense, (2) multiplier and pop story, (3) PSA 9 floor risk, (4) clear recommendation. Under 180 words. Short paragraphs, no bullets. Friendly and direct.`;
   try{
     const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:prompt}]})});
     const data=await res.json();
@@ -679,7 +679,7 @@ async function getInsight(){
 }
 function calcEdge(){
   const buy=+document.getElementById("cBuy").value||0,fee=+document.getElementById("cFee").value||80,p9=+document.getElementById("cPsa9").value||0,p10=+document.getElementById("cPsa10").value||0,gem=+document.getElementById("cGem").value||0;
-  if(!buy||!p9||!p10||!gem){["rBEC","rFG","rBR","rEP","rFS","rCS"].forEach(id=>document.getElementById(id).textContent="—");document.getElementById("calcVerdict").className="verdict vneu";document.getElementById("calcVerdict").textContent="Enter your numbers to see if this play works at $80.";return;}
+  if(!buy||!p9||!p10||!gem){["rBEC","rFG","rBR","rEP","rFS","rCS"].forEach(id=>document.getElementById(id).textContent="—");document.getElementById("calcVerdict").className="verdict vneu";document.getElementById("calcVerdict").textContent="Enter your numbers to see if this play works at $60.";return;}
   const bec=buy+fee,fg=p9-bec,br=Math.max(0,(bec-p9)/(p10-p9)*100),edge=gem-br,profit=(gem/100)*p10+((1-gem/100)*p9)-bec,conf=Math.max(5,Math.round(50/Math.max(1,gem)));
   document.getElementById("rBEC").textContent=fmt(bec);
   const fgEl=document.getElementById("rFG");fgEl.style.color=fg>=0?"var(--green)":fg>=-bec*0.15?"var(--amber)":"var(--red)";fgEl.textContent=(fg>=0?"+":"")+fmt(fg);
@@ -689,9 +689,9 @@ function calcEdge(){
   document.getElementById("rFS").innerHTML=`<span class="floor-badge ${fcl}">${fst}</span>`;
   document.getElementById("rCS").textContent=conf+" submissions";
   const v=document.getElementById("calcVerdict");
-  if(edge>8){v.className="verdict vpos";v.textContent=`Strong play at $80. Expected profit ~${fmt(profit)} per submission.`;}
-  else if(edge>0){v.className="verdict vpos";v.textContent=`Marginal play at $80.`;}
-  else{v.className="verdict vneg";v.textContent=`Not recommended at $80. Fee erodes the math.`;}
+  if(edge>8){v.className="verdict vpos";v.textContent=`Strong play at $60. Expected profit ~${fmt(profit)} per submission.`;}
+  else if(edge>0){v.className="verdict vpos";v.textContent=`Marginal play at $60.`;}
+  else{v.className="verdict vneg";v.textContent=`Not recommended at $60. Fee erodes the math.`;}
 }
 document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")applyAll();});
 applyAll();
